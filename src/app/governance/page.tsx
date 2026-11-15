@@ -56,7 +56,7 @@ export default function GovernancePage() {
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(50% 60% at 86% 18%, rgba(185, 165, 210, 0.2), transparent 65%), radial-gradient(40% 50% at 15% 88%, rgba(143, 175, 131, 0.16), transparent 65%)",
+              "radial-gradient(50% 60% at 86% 18%, rgba(183, 202, 191, 0.16), transparent 65%), radial-gradient(40% 50% at 15% 88%, rgba(232, 154, 132, 0.12), transparent 65%)",
           }}
         />
 
@@ -79,7 +79,7 @@ export default function GovernancePage() {
                   className="text-display mt-6 text-white"
                 >
                   Open, Clear &amp;{" "}
-                  <em className="font-medium italic text-brand-orange">
+                  <em className="font-medium italic text-brand-tomato-soft">
                     Honest.
                   </em>
                 </h1>
@@ -226,7 +226,7 @@ export default function GovernancePage() {
               <div className="rounded-[var(--radius-panel)] border border-brand-orange/45 bg-bg-orange-wash/70 p-6 sm:p-8">
                 <div className="flex items-start gap-3">
                   <AlertCircle
-                    className="mt-0.5 h-5 w-5 shrink-0 text-[#9c4215]"
+                    className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange"
                     aria-hidden="true"
                   />
                   <div>

@@ -61,11 +61,11 @@ export function ContactHero() {
             >
               <a
                 href="#enquiry-form"
-                className="group inline-flex h-11 items-center gap-2 rounded-full bg-brand-forest px-6 text-sm font-medium text-text-inverse shadow-[var(--shadow-soft)] transition-all duration-250 hover:bg-[#293d2f] hover:shadow-[var(--shadow-elevated)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-lavender-deep focus-visible:ring-offset-2 focus-visible:ring-offset-bg-cream"
+                className="group inline-flex h-11 items-center gap-2 rounded-full bg-brand-forest px-6 text-sm font-medium text-text-inverse shadow-[var(--shadow-soft)] transition-all duration-250 hover:bg-[#1a312c] hover:shadow-[var(--shadow-elevated)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-lavender-deep focus-visible:ring-offset-2 focus-visible:ring-offset-bg-cream"
               >
                 <span>Write to Us</span>
                 <ArrowDownRight
-                  className="h-4 w-4 text-brand-orange transition-transform duration-200 group-hover:translate-x-0.5 group-hover:translate-y-0.5"
+                  className="h-4 w-4 text-brand-tomato-soft transition-transform duration-200 group-hover:translate-x-0.5 group-hover:translate-y-0.5"
                   aria-hidden="true"
                 />
               </a>
@@ -110,13 +110,13 @@ export function ContactHero() {
             className="lg:col-span-6"
           >
             <div className="relative rounded-[var(--radius-panel)] bg-brand-forest p-3 shadow-[var(--shadow-elevated)] sm:p-4">
-              {/* Subtle ambient lavender & warm orange corner glow */}
+              {/* Subtle ambient spruce & tomato corner glow */}
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -inset-2 -z-10 rounded-[2rem] opacity-75 blur-xl"
                 style={{
                   background:
-                    "radial-gradient(50% 50% at 85% 15%, rgba(185, 165, 210, 0.35), transparent 70%), radial-gradient(45% 45% at 15% 85%, rgba(241, 154, 85, 0.25), transparent 70%)",
+                    "radial-gradient(50% 50% at 85% 15%, rgba(124, 154, 142, 0.35), transparent 70%), radial-gradient(45% 45% at 15% 85%, rgba(131, 54, 51, 0.22), transparent 70%)",
                 }}
               />
 
@@ -131,7 +131,7 @@ export function ContactHero() {
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1f2e24]/55 via-transparent to-transparent"
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#172c27]/55 via-transparent to-transparent"
                 />
               </div>
 

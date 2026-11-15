@@ -9,9 +9,9 @@ const BASE_CLASSES =
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   primary:
-    "bg-brand-forest text-text-inverse shadow-[var(--shadow-soft)] hover:bg-[#293d2f] hover:shadow-[var(--shadow-elevated)] active:translate-y-px",
+    "bg-brand-forest text-text-inverse shadow-[var(--shadow-soft)] hover:bg-[#1a312c] hover:shadow-[var(--shadow-elevated)] active:translate-y-px",
   accent:
-    "bg-brand-orange text-text-primary shadow-[var(--shadow-soft)] hover:bg-[#ea8c42] hover:shadow-[var(--shadow-elevated)] active:translate-y-px",
+    "bg-brand-orange text-text-inverse shadow-[var(--shadow-soft)] hover:bg-[#6b2a27] hover:shadow-[var(--shadow-elevated)] active:translate-y-px",
   secondary:
     "bg-bg-white text-brand-forest ring-1 ring-border-forest shadow-[var(--shadow-soft)] hover:bg-bg-sage-wash hover:ring-brand-forest/45 active:translate-y-px",
   ghost:

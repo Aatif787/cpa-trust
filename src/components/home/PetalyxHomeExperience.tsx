@@ -4,7 +4,15 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Compass, FileCheck2, ShieldCheck } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Compass,
+  FileCheck2,
+  ShieldCheck,
+} from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
@@ -174,11 +182,46 @@ export function PetalyxHomeExperience() {
   const ctaRef = useRef<HTMLElement>(null);
   const ctaImgRef = useRef<HTMLImageElement>(null);
   const ctaCardRef = useRef<HTMLDivElement>(null);
+  const spotCardRef = useRef<HTMLDivElement>(null);
   const counterRefs = useRef<(HTMLElement | null)[]>([]);
 
   const [activePanel, setActivePanel] = useState(0);
+  const [activeFocus, setActiveFocus] = useState(0);
+  const [isFocusPaused, setIsFocusPaused] = useState(false);
 
   const { registration, trustees, regulatoryStatus } = SANTOSH_ARORA_TRUST;
+
+  const currentFocus = HOME_FOCUS_AREAS[activeFocus] ?? HOME_FOCUS_AREAS[0];
+
+  useEffect(() => {
+    if (isFocusPaused) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+    const timer = window.setInterval(() => {
+      setActiveFocus((prev) => (prev + 1) % HOME_FOCUS_AREAS.length);
+    }, 5500);
+    return () => window.clearInterval(timer);
+  }, [isFocusPaused]);
+
+  const handleSpotMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const el = spotCardRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const rect = el.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    el.style.transform = `perspective(1100px) rotateX(${(-y * 4.5).toFixed(2)}deg) rotateY(${(x * 5.5).toFixed(2)}deg) translate3d(0, 0, 0)`;
+  };
+
+  const handleSpotMouseLeave = () => {
+    const el = spotCardRef.current;
+    if (!el) return;
+    el.style.transform = "perspective(1100px) rotateX(0deg) rotateY(0deg) translate3d(0, 0, 0)";
+  };
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -443,17 +486,30 @@ export function PetalyxHomeExperience() {
           });
         });
 
-        // Directory cards reveal
-        gsap.from(".ptx-focus-tile", {
-          y: 22,
+        // Asymmetric Focus Stage reveal
+        gsap.from(".ptx-spot-card", {
+          y: 34,
+          scale: 0.97,
           opacity: 0,
-          duration: 0.65,
-          stagger: 0.06,
+          duration: 0.75,
           force3D: true,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: ".ptx-focus-grid",
-            start: "top 84%",
+            trigger: ".ptx-focus-stage",
+            start: "top 82%",
+            once: true,
+          },
+        });
+        gsap.from(".ptx-focus-item", {
+          y: 18,
+          opacity: 0,
+          duration: 0.55,
+          stagger: 0.05,
+          force3D: true,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".ptx-focus-stage",
+            start: "top 82%",
             once: true,
           },
         });
@@ -715,7 +771,7 @@ export function PetalyxHomeExperience() {
               carefully around the charitable goals recorded in our Trust Deed.{" "}
               <Link
                 href="/about"
-                className="font-semibold text-[#4d6a10] underline underline-offset-4"
+                className="font-semibold text-[#23403a] underline underline-offset-4"
               >
                 Read About the Trust
               </Link>
@@ -873,53 +929,187 @@ export function PetalyxHomeExperience() {
               </Link>
             </div>
 
-            <div className="ptx-focus-grid">
-              {HOME_FOCUS_AREAS.map((area, index) => (
-                <Link
-                  key={area.id}
-                  href={`/focus-areas#${area.id}`}
-                  className="ptx-focus-tile group"
-                >
-                  <div className="ptx-focus-media">
-                    <Image
-                      src={area.imageSrc}
-                      alt={area.imageAlt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="ptx-focus-body">
-                    <div>
-                      <span className="ptx-pill">
-                        {String(index + 1).padStart(2, "0")} · Focus Area
-                      </span>
+            <div
+              className="ptx-focus-stage"
+              onMouseEnter={() => setIsFocusPaused(true)}
+              onMouseLeave={() => setIsFocusPaused(false)}
+            >
+              {/* Left: Magnetic 3D Crossfading Focus Cinema Spotlight */}
+              <div
+                ref={spotCardRef}
+                className={`ptx-spot-card ${isFocusPaused ? "is-paused" : ""}`}
+                onMouseMove={handleSpotMouseMove}
+                onMouseLeave={handleSpotMouseLeave}
+              >
+                <div className="ptx-spot-media">
+                  {HOME_FOCUS_AREAS.map((area, index) => (
+                    <div
+                      key={area.id}
+                      className={`ptx-spot-slide ${index === activeFocus ? "is-active" : ""}`}
+                      aria-hidden={index !== activeFocus}
+                    >
+                      <Image
+                        src={area.imageSrc}
+                        alt={area.imageAlt}
+                        fill
+                        sizes="(max-width: 900px) 100vw, 56vw"
+                      />
                     </div>
-                    <h3>{area.title}</h3>
-                    <p>{area.description}</p>
+                  ))}
+                </div>
+
+                <div className="ptx-spot-scrim" aria-hidden="true" />
+                <div className="ptx-glass ptx-spot-glass-a" aria-hidden="true" />
+                <div className="ptx-glass ptx-spot-glass-b" aria-hidden="true" />
+
+                <div className="ptx-spot-top">
+                  <span className="ptx-spot-badge">
+                    <span className="ptx-spot-dot" aria-hidden="true" />
+                    {String(activeFocus + 1).padStart(2, "0")} /{" "}
+                    {String(HOME_FOCUS_AREAS.length).padStart(2, "0")} · Focus
+                    Area
+                  </span>
+
+                  <div className="ptx-spot-nav">
+                    <button
+                      type="button"
+                      className="ptx-spot-arrow"
+                      aria-label="Previous focus area"
+                      onClick={() =>
+                        setActiveFocus(
+                          (prev) =>
+                            (prev - 1 + HOME_FOCUS_AREAS.length) %
+                            HOME_FOCUS_AREAS.length,
+                        )
+                      }
+                    >
+                      <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                    <button
+                      type="button"
+                      className="ptx-spot-arrow"
+                      aria-label="Next focus area"
+                      onClick={() =>
+                        setActiveFocus(
+                          (prev) => (prev + 1) % HOME_FOCUS_AREAS.length,
+                        )
+                      }
+                    >
+                      <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                    </button>
                   </div>
-                </Link>
-              ))}
+                </div>
+
+                <div key={currentFocus.id} className="ptx-spot-content">
+                  <span className="ptx-pill">
+                    Focus {String(activeFocus + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="ptx-spot-title">{currentFocus.title}</h3>
+                  <p className="ptx-spot-desc">{currentFocus.description}</p>
+
+                  <div className="ptx-spot-foot">
+                    <Link
+                      href={`/focus-areas#${currentFocus.id}`}
+                      className="ptx-spot-cta"
+                    >
+                      <span>Explore Focus Area</span>
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </Link>
+
+                    <div
+                      className="ptx-spot-pips"
+                      role="tablist"
+                      aria-label="Choose focus area preview"
+                    >
+                      {HOME_FOCUS_AREAS.map((area, index) => (
+                        <button
+                          key={area.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={index === activeFocus}
+                          aria-label={`Show ${area.title}`}
+                          onClick={() => setActiveFocus(index)}
+                          className={`ptx-spot-pip ${index === activeFocus ? "is-active" : ""}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="ptx-spot-progress" aria-hidden="true">
+                  <div key={`bar-${activeFocus}`} className="ptx-spot-bar" />
+                </div>
+              </div>
+
+              {/* Right: Kinetic Expanding Ribbon Index */}
+              <div className="ptx-focus-rail">
+                {HOME_FOCUS_AREAS.map((area, index) => {
+                  const isActive = index === activeFocus;
+                  return (
+                    <div
+                      key={area.id}
+                      onMouseEnter={() => setActiveFocus(index)}
+                      className={`ptx-focus-item ${isActive ? "is-active" : ""}`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setActiveFocus(index)}
+                        onFocus={() => setActiveFocus(index)}
+                        aria-expanded={isActive}
+                        className="flex min-w-0 flex-1 items-center gap-3.5 text-left outline-none"
+                      >
+                        <span className="ptx-item-thumb">
+                          <Image
+                            src={area.imageSrc}
+                            alt=""
+                            fill
+                            sizes="64px"
+                          />
+                        </span>
+                        <span className="ptx-item-body">
+                          <span className="ptx-item-top">
+                            <span className="ptx-item-num">
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+                            <span className="ptx-item-title">{area.title}</span>
+                          </span>
+                          <span className="ptx-item-desc">
+                            {area.description}
+                          </span>
+                        </span>
+                      </button>
+
+                      <Link
+                        href={`/focus-areas#${area.id}`}
+                        aria-label={`Open ${area.title}`}
+                        className="ptx-item-go"
+                      >
+                        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                      </Link>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="ptx-records-split">
               <div>
                 <span className="ptx-pill">Our Plans</span>
-                <h3 className="mt-3 text-2xl font-medium tracking-tight text-[#121410]">
+                <h3 className="mt-3 text-2xl font-medium tracking-tight text-[#1e2b27]">
                   From Plans to Action
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#3d4336]">
+                <p className="mt-2 text-sm leading-relaxed text-[#4a5752]">
                   We are taking time to plan our first programmes well before
                   starting work on the ground.
                 </p>
 
-                <div className="mt-4 flex items-start gap-2.5 rounded-xl border border-[#eef0ea] bg-[#f8faf3] p-3.5 text-xs leading-relaxed text-[#3d4336]">
+                <div className="mt-4 flex items-start gap-2.5 rounded-xl border border-[#e4dbb0] bg-[#f9f6e1] p-3.5 text-xs leading-relaxed text-[#4a5752]">
                   <Compass
-                    className="mt-0.5 h-4 w-4 shrink-0 text-[#4d6a10]"
+                    className="mt-0.5 h-4 w-4 shrink-0 text-[#23403a]"
                     aria-hidden="true"
                   />
                   <span>
-                    <strong className="font-semibold text-[#121410]">
+                    <strong className="font-semibold text-[#1e2b27]">
                       Please note:
                     </strong>{" "}
                     These are plans for future work. We have not run these
@@ -931,15 +1121,15 @@ export function PetalyxHomeExperience() {
                   {HOME_PLANNED_INITIATIVES.map((item) => (
                     <div key={item.id} className="ptx-plan-card">
                       <div className="flex items-center justify-between gap-2 text-xs">
-                        <span className="font-semibold text-[#4d6a10]">
+                        <span className="font-semibold text-[#833633]">
                           {item.number}
                         </span>
                         <span className="ptx-pill">{item.statusLabel}</span>
                       </div>
-                      <h4 className="mt-2.5 text-sm font-semibold text-[#121410]">
+                      <h4 className="mt-2.5 text-sm font-semibold text-[#1e2b27]">
                         {item.title}
                       </h4>
-                      <p className="mt-1.5 text-xs leading-relaxed text-[#3d4336]">
+                      <p className="mt-1.5 text-xs leading-relaxed text-[#4a5752]">
                         {item.summary}
                       </p>
                     </div>
@@ -955,15 +1145,15 @@ export function PetalyxHomeExperience() {
               </div>
 
               <div className="ptx-ledger-card">
-                <div className="flex items-center gap-3 border-b border-[#e5eadc] pb-4">
-                  <span className="grid h-10 w-10 place-items-center rounded-full bg-[#4d6a10] text-white">
+                <div className="flex items-center gap-3 border-b border-[#e4dbb0] pb-4">
+                  <span className="grid h-10 w-10 place-items-center rounded-full bg-[#23403a] text-[#f5f0cc]">
                     <ShieldCheck className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#4d6a10]">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#23403a]">
                       Official Identity
                     </p>
-                    <p className="text-lg font-semibold text-[#121410]">
+                    <p className="text-lg font-semibold text-[#1e2b27]">
                       {registration.legalName}
                     </p>
                   </div>
@@ -971,42 +1161,42 @@ export function PetalyxHomeExperience() {
 
                 <dl className="ptx-ledger-grid text-xs">
                   <div className="ptx-ledger-cell">
-                    <dt className="font-semibold uppercase tracking-[0.1em] text-[#4d6a10]">
+                    <dt className="font-semibold uppercase tracking-[0.1em] text-[#23403a]">
                       Legal Status
                     </dt>
-                    <dd className="mt-1 font-medium text-[#121410]">
+                    <dd className="mt-1 font-medium text-[#1e2b27]">
                       {registration.entityType}
                     </dd>
                   </div>
                   <div className="ptx-ledger-cell">
-                    <dt className="font-semibold uppercase tracking-[0.1em] text-[#4d6a10]">
+                    <dt className="font-semibold uppercase tracking-[0.1em] text-[#23403a]">
                       Applicable Law
                     </dt>
-                    <dd className="mt-1 font-medium text-[#121410]">
+                    <dd className="mt-1 font-medium text-[#1e2b27]">
                       {registration.applicableLaw}
                     </dd>
                   </div>
                   <div className="ptx-ledger-cell">
-                    <dt className="font-semibold uppercase tracking-[0.1em] text-[#4d6a10]">
+                    <dt className="font-semibold uppercase tracking-[0.1em] text-[#23403a]">
                       Registration Number
                     </dt>
-                    <dd className="mt-1 font-medium text-[#121410]">
+                    <dd className="mt-1 font-medium text-[#1e2b27]">
                       {registration.registrationNumber}
                     </dd>
                   </div>
                   <div className="ptx-ledger-cell">
-                    <dt className="font-semibold uppercase tracking-[0.1em] text-[#4d6a10]">
+                    <dt className="font-semibold uppercase tracking-[0.1em] text-[#23403a]">
                       NGO DARPAN ID
                     </dt>
-                    <dd className="mt-1 font-medium text-[#121410]">
+                    <dd className="mt-1 font-medium text-[#1e2b27]">
                       {registration.darpanId} ({registration.darpanStatus})
                     </dd>
                   </div>
                   <div className="ptx-ledger-cell sm:col-span-2">
-                    <dt className="font-semibold uppercase tracking-[0.1em] text-[#4d6a10]">
+                    <dt className="font-semibold uppercase tracking-[0.1em] text-[#23403a]">
                       Trustees ({trustees.length})
                     </dt>
-                    <dd className="mt-1 font-medium text-[#121410]">
+                    <dd className="mt-1 font-medium text-[#1e2b27]">
                       {trustees
                         .map((t) => `${t.fullName} (${t.deedRole})`)
                         .join(" · ")}
@@ -1014,9 +1204,9 @@ export function PetalyxHomeExperience() {
                   </div>
                 </dl>
 
-                <div className="mt-4 flex items-start gap-2.5 rounded-xl border border-[#eef0ea] bg-white p-3.5 text-xs leading-relaxed text-[#3d4336]">
+                <div className="mt-4 flex items-start gap-2.5 rounded-xl border border-[#e4dbb0] bg-[#fcfaee] p-3.5 text-xs leading-relaxed text-[#4a5752]">
                   <FileCheck2
-                    className="mt-0.5 h-4 w-4 shrink-0 text-[#4d6a10]"
+                    className="mt-0.5 h-4 w-4 shrink-0 text-[#23403a]"
                     aria-hidden="true"
                   />
                   <p>{regulatoryStatus.disclosureNote}</p>

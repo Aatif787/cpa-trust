@@ -130,7 +130,7 @@ export default function FocusAreasPage() {
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(50% 60% at 85% 20%, rgba(185, 165, 210, 0.16), transparent 68%)",
+              "radial-gradient(50% 60% at 85% 20%, rgba(183, 202, 191, 0.14), transparent 68%)",
           }}
         />
         <div className="relative z-10 mx-auto max-w-[var(--container-standard)] px-5 sm:px-8 lg:px-10">
@@ -162,7 +162,7 @@ export default function FocusAreasPage() {
                 >
                   Women Empowerment
                 </h2>
-                <p className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-brand-orange">
+                <p className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-brand-tomato-soft">
                   Goal in our Trust Deed &amp; main area on DARPAN · No work completed yet
                 </p>
               </MotionReveal>

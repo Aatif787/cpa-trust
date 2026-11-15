@@ -26,7 +26,7 @@ export function OfficialContactPanel() {
         <span className="text-eyebrow inline-flex items-center gap-2 rounded-full bg-white/12 px-3.5 py-1.5 text-white ring-1 ring-white/20">
           <span
             aria-hidden="true"
-            className="h-1.5 w-1.5 rounded-full bg-brand-orange"
+            className="h-1.5 w-1.5 rounded-full bg-brand-tomato-soft"
           />
           Official Details
         </span>
@@ -44,7 +44,7 @@ export function OfficialContactPanel() {
         <dl className="mt-7 space-y-5 border-t border-white/15 pt-6 text-sm">
           {/* Verified Correspondence Email */}
           <div className="flex items-start gap-3.5">
-            <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/12 text-brand-orange ring-1 ring-white/20">
+            <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/12 text-brand-tomato-soft ring-1 ring-white/20">
               <Mail className="h-4 w-4" aria-hidden="true" />
             </span>
             <div className="min-w-0">
@@ -54,7 +54,7 @@ export function OfficialContactPanel() {
               <dd className="mt-1">
                 <a
                   href={`mailto:${registration.correspondenceEmail}`}
-                  className="break-all font-medium text-white underline decoration-brand-lime underline-offset-4 transition-colors hover:text-brand-orange"
+                  className="break-all font-medium text-white underline decoration-brand-tomato-soft underline-offset-4 transition-colors hover:text-brand-tomato-soft"
                 >
                   {registration.correspondenceEmail}
                 </a>
@@ -85,7 +85,7 @@ export function OfficialContactPanel() {
 
           {/* Registering Authority & Jurisdiction */}
           <div className="flex items-start gap-3.5">
-            <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/12 text-brand-lime ring-1 ring-white/20">
+            <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/12 text-brand-lavender ring-1 ring-white/20">
               <MapPin className="h-4 w-4" aria-hidden="true" />
             </span>
             <div>

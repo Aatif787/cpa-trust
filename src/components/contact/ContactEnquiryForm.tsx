@@ -325,7 +325,7 @@ export function ContactEnquiryForm() {
                 >
                   <div className="flex items-start gap-3">
                     <AlertCircle
-                      className="mt-0.5 h-5 w-5 shrink-0 text-[#9c4215]"
+                      className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange"
                       aria-hidden="true"
                     />
                     <div className="flex-1 space-y-3">
@@ -341,7 +341,7 @@ export function ContactEnquiryForm() {
                       <div className="flex flex-wrap items-center gap-3 pt-1">
                         <a
                           href={buildMailtoHref(values, correspondenceEmail)}
-                          className="inline-flex h-10 items-center gap-2 rounded-full bg-brand-forest px-5 text-xs font-semibold text-white shadow-[var(--shadow-soft)] transition-all hover:bg-[#293d2f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-lavender-deep focus-visible:ring-offset-2 sm:text-sm"
+                          className="inline-flex h-10 items-center gap-2 rounded-full bg-brand-forest px-5 text-xs font-semibold text-white shadow-[var(--shadow-soft)] transition-all hover:bg-[#1a312c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-lavender-deep focus-visible:ring-offset-2 sm:text-sm"
                         >
                           <Mail className="h-4 w-4" aria-hidden="true" />
                           <span>Open Email</span>
@@ -621,7 +621,7 @@ export function ContactEnquiryForm() {
                     <>
                       <span>Prepare My Email</span>
                       <Send
-                        className="h-4 w-4 text-brand-orange transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                        className="h-4 w-4 text-brand-tomato-soft transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                         aria-hidden="true"
                       />
                     </>

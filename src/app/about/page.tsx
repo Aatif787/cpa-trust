@@ -69,7 +69,7 @@ export default function AboutPage() {
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(50% 60% at 88% 15%, rgba(185, 165, 210, 0.22) 0%, transparent 65%), radial-gradient(45% 50% at 12% 85%, rgba(241, 154, 85, 0.14) 0%, transparent 65%)",
+              "radial-gradient(50% 60% at 88% 15%, rgba(183, 202, 191, 0.18) 0%, transparent 65%), radial-gradient(45% 50% at 12% 85%, rgba(232, 154, 132, 0.14) 0%, transparent 65%)",
           }}
         />
 

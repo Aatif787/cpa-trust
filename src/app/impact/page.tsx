@@ -198,7 +198,7 @@ export default function ImpactPage() {
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <MotionReveal className="lg:col-span-5">
             <span className="text-eyebrow inline-flex items-center gap-2 rounded-full bg-white/12 px-3.5 py-1.5 text-white ring-1 ring-white/25">
-              <Sparkles className="h-3.5 w-3.5 text-brand-orange" aria-hidden="true" />
+              <Sparkles className="h-3.5 w-3.5 text-brand-tomato-soft" aria-hidden="true" />
               Our Promise
             </span>
             <h2 className="text-heading-1 mt-5 text-white">
@@ -215,7 +215,7 @@ export default function ImpactPage() {
             {FUTURE_COMMITMENTS.map((item, idx) => (
               <MotionReveal key={item.title} delay={0.06 + idx * 0.06}>
                 <div className="h-full border-t border-white/25 pt-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-orange">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-tomato-soft">
                     {item.clause}
                   </p>
                   <h3 className="mt-2 font-serif text-2xl font-semibold text-white">
