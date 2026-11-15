@@ -1,0 +1,276 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* ==========================================================================
+     OFFICIAL SANTOSH ARORA TRUST COLOUR PALETTE — 60 / 30 / 10
+     60% Clotted Cream  (#F5F0CC) — page, section and card backgrounds
+     30% Spruce Velvet  (#23403A) — dark bands, headings, buttons, links
+     10% Heirloom Tomato (#833633) — accents, highlights, call-outs
+     The legacy lime / lavender / orange token names are kept so every
+     component picks up the new palette; they now resolve to tints of
+     the three core colours.
+     ========================================================================== */
+  --color-brand-cream: #f5f0cc;
+  --color-brand-spruce: #23403a;
+  --color-brand-tomato: #833633;
+  /* Lighter tomato for accents that sit on Spruce Velvet surfaces */
+  --color-brand-tomato-soft: #e89a84;
+
+  --color-brand-forest: #23403a;
+  --color-brand-lime: #7c9a8e;
+  --color-brand-orange: #833633;
+  --color-brand-lavender: #b7cabf;
+  --color-brand-lavender-deep: #3a5c53;
+
+  --color-bg-white: #fcfaee;
+  --color-bg-cream: #f5f0cc;
+  --color-bg-cream-soft: #f9f6e1;
+  --color-bg-cream-deep: #ebe3b7;
+  --color-bg-sage-wash: #e8ebd3;
+  --color-bg-lavender-wash: #eeecd2;
+  --color-bg-orange-wash: #f4e3cc;
+
+  --color-text-primary: #1e2b27;
+  --color-text-secondary: #56635d;
+  --color-text-subtle: #4a5752;
+  --color-text-inverse: #ffffff;
+
+  /* Tonal scale aliases mapped to the 60 / 30 / 10 palette */
+  --color-cream-50: #f9f6e1;
+  --color-cream-100: #f5f0cc;
+  --color-cream-200: #ebe3b7;
+  --color-cream-300: #ddd3a2;
+
+  --color-ink-900: #1e2b27;
+  --color-ink-700: #3a4743;
+  --color-ink-500: #56635d;
+
+  --color-lime-50: #eef0dd;
+  --color-lime-100: #e1e6d0;
+  --color-lime-300: #a9bdb2;
+  --color-lime-500: #7c9a8e;
+  --color-lime-700: #3a5c53;
+  --color-lime-900: #23403a;
+
+  --color-orange-50: #f4e3cc;
+  --color-orange-100: #eccdb7;
+  --color-orange-400: #a8463f;
+  --color-orange-500: #833633;
+  --color-orange-700: #6b2a27;
+  --color-orange-800: #4f1f1d;
+
+  --color-lavender-50: #f1f0da;
+  --color-lavender-100: #e6e8d2;
+  --color-lavender-200: #cfdacf;
+  --color-lavender-300: #b7cabf;
+  --color-lavender-500: #3a5c53;
+  --color-lavender-800: #23403a;
+
+  /* ==========================================================================
+     BORDERS, RADII, SHADOWS & BREAKPOINTS
+     ========================================================================== */
+  --color-border-subtle: rgba(35, 64, 58, 0.1);
+  --color-border-warm: #ddd3a2;
+  --color-border-forest: rgba(35, 64, 58, 0.24);
+  --color-border-lavender: rgba(58, 92, 83, 0.28);
+
+  --radius-card: 1.25rem;
+  --radius-panel: 1.75rem;
+  --radius-media: 1.25rem;
+  --radius-pill: 9999px;
+
+  --shadow-soft: 0 4px 20px -2px rgba(35, 64, 58, 0.06),
+    0 1px 4px -1px rgba(35, 64, 58, 0.04);
+  --shadow-elevated: 0 12px 36px -8px rgba(35, 64, 58, 0.12),
+    0 4px 12px -2px rgba(35, 64, 58, 0.05);
+  --shadow-card-hover: 0 18px 42px -12px rgba(35, 64, 58, 0.16),
+    0 6px 16px -4px rgba(131, 54, 51, 0.08);
+  --shadow-header: 0 8px 28px -10px rgba(35, 64, 58, 0.1);
+
+  --breakpoint-xs: 22.5rem; /* 360px */
+
+  /* ==========================================================================
+     TYPOGRAPHY & LAYOUT SCALE
+     ========================================================================== */
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+
+  --container-reading: 48rem;
+  --container-standard: 78rem;
+  --container-wide: 88rem;
+}
+
+:root {
+  --gradient-luminous-aura: radial-gradient(
+      65% 75% at 12% 15%,
+      rgba(124, 154, 142, 0.18) 0%,
+      rgba(124, 154, 142, 0) 65%
+    ),
+    radial-gradient(
+      55% 65% at 88% 18%,
+      rgba(35, 64, 58, 0.08) 0%,
+      rgba(35, 64, 58, 0) 62%
+    ),
+    radial-gradient(
+      50% 60% at 52% 95%,
+      rgba(131, 54, 51, 0.07) 0%,
+      rgba(131, 54, 51, 0) 65%
+    ),
+    linear-gradient(180deg, #fcfaee 0%, #f5f0cc 100%);
+
+  --gradient-cream-veil: linear-gradient(
+    135deg,
+    rgba(252, 250, 238, 0.94) 0%,
+    rgba(245, 240, 204, 0.94) 55%,
+    rgba(232, 235, 211, 0.88) 100%
+  );
+
+  --gradient-accent-hairline: linear-gradient(
+    90deg,
+    rgba(35, 64, 58, 0) 0%,
+    rgba(35, 64, 58, 0.45) 30%,
+    rgba(124, 154, 142, 0.55) 60%,
+    rgba(131, 54, 51, 0.6) 85%,
+    rgba(131, 54, 51, 0) 100%
+  );
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-bg-cream);
+    color: var(--color-text-primary);
+    font-size: 16px;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg-cream);
+    color: var(--color-text-primary);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-text-primary);
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background-color: rgba(131, 54, 51, 0.2);
+    color: var(--color-text-primary);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-lavender-deep);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   TYPOGRAPHIC SCALE UTILITIES
+   ========================================================================== */
+@utility text-display {
+  font-family: var(--font-serif);
+  font-size: clamp(2.35rem, 4.4vw, 4.15rem);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+
+@utility text-heading-1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.4vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+}
+
+@utility text-heading-2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.625rem, 2.5vw, 2.375rem);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+}
+
+@utility text-heading-3 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 1.6vw, 1.625rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+@utility text-lead {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.15vw, 1.1875rem);
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+@utility text-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   PREMIUM VISUAL EFFECT UTILITIES
+   ========================================================================== */
+@utility surface-luminous {
+  background-image: var(--gradient-luminous-aura);
+}
+
+@utility surface-cream-veil {
+  background-image: var(--gradient-cream-veil);
+}
+
+@utility surface-glass {
+  background-color: rgba(252, 250, 238, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    var(--shadow-soft);
+}
+
+@utility surface-reflective {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    var(--shadow-soft);
+}
+
+@utility separator-editorial {
+  height: 1px;
+  width: 100%;
+  background-image: var(--gradient-accent-hairline);
+}
+
+@utility hover-lift {
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 280ms ease;
+}

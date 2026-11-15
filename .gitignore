@@ -28,3 +28,7 @@ next-env.d.ts
 # OS
 .DS_Store
 Thumbs.db
+
+# Private scanned registration PDFs and stray CLI log artifact
+/public/brand/*.pdf
+/0.26.0
