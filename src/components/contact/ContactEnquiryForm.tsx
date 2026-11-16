@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   AlertTriangle,
   Check,
@@ -67,6 +67,15 @@ export function ContactEnquiryForm() {
   const [copiedMessage, setCopiedMessage] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
+  const emailTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const messageTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (emailTimerRef.current) clearTimeout(emailTimerRef.current);
+      if (messageTimerRef.current) clearTimeout(messageTimerRef.current);
+    };
+  }, []);
 
   const isSubmitting = status === "submitting";
 
@@ -107,8 +116,12 @@ export function ContactEnquiryForm() {
   async function handleCopyEmail() {
     try {
       await navigator.clipboard.writeText(correspondenceEmail);
+      if (emailTimerRef.current) clearTimeout(emailTimerRef.current);
       setCopiedEmail(true);
-      window.setTimeout(() => setCopiedEmail(false), 2500);
+      emailTimerRef.current = setTimeout(() => {
+        setCopiedEmail(false);
+        emailTimerRef.current = null;
+      }, 2500);
     } catch {
       setCopiedEmail(false);
     }
@@ -118,8 +131,12 @@ export function ContactEnquiryForm() {
     try {
       const fullDraft = `To: ${correspondenceEmail}\nSubject: [${values.category || "General Enquiry"}] ${values.subject.trim()}\n\n${buildFormattedBody(values)}`;
       await navigator.clipboard.writeText(fullDraft);
+      if (messageTimerRef.current) clearTimeout(messageTimerRef.current);
       setCopiedMessage(true);
-      window.setTimeout(() => setCopiedMessage(false), 2500);
+      messageTimerRef.current = setTimeout(() => {
+        setCopiedMessage(false);
+        messageTimerRef.current = null;
+      }, 2500);
     } catch {
       setCopiedMessage(false);
     }
