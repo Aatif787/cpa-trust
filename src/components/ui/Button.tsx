@@ -1,21 +1,22 @@
 import Link from "next/link";
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
+import { Magnetic } from "@/components/ui/MotionReveal";
 
 export type ButtonVariant = "primary" | "accent" | "secondary" | "ghost";
 export type ButtonSize = "sm" | "md" | "lg";
 
 const BASE_CLASSES =
-  "inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-[-0.01em] transition-all duration-250 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-lavender-deep focus-visible:ring-offset-2 focus-visible:ring-offset-bg-cream disabled:pointer-events-none disabled:opacity-55 cursor-pointer select-none";
+  "inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-[-0.01em] transition-all duration-250 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1b488c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#77a2e2] disabled:pointer-events-none disabled:opacity-55 active:scale-[0.98] cursor-pointer select-none";
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   primary:
-    "bg-brand-forest text-text-inverse shadow-[var(--shadow-soft)] hover:bg-[#1a312c] hover:shadow-[var(--shadow-elevated)] active:translate-y-px",
+    "bg-[#184385] text-white shadow-[var(--shadow-soft)] hover:bg-[#113368] hover:shadow-[var(--shadow-elevated)] active:translate-y-px",
   accent:
-    "bg-brand-orange text-text-inverse shadow-[var(--shadow-soft)] hover:bg-[#6b2a27] hover:shadow-[var(--shadow-elevated)] active:translate-y-px",
+    "bg-white text-[#0d2140] ring-1 ring-white/80 shadow-[var(--shadow-soft)] hover:bg-[#edf4fd] hover:shadow-[var(--shadow-elevated)] active:translate-y-px",
   secondary:
-    "bg-bg-white text-brand-forest ring-1 ring-border-forest shadow-[var(--shadow-soft)] hover:bg-bg-sage-wash hover:ring-brand-forest/45 active:translate-y-px",
+    "bg-white/90 text-[#0d2140] ring-1 ring-white/75 shadow-[var(--shadow-soft)] hover:bg-white active:translate-y-px",
   ghost:
-    "bg-transparent text-brand-forest hover:bg-bg-sage-wash/80 hover:text-text-primary",
+    "bg-transparent text-[#0d2140] hover:bg-white/40 hover:text-[#0d2140]",
 };
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {
@@ -43,13 +44,15 @@ export function Button({
   ...props
 }: ButtonProps) {
   return (
-    <button
-      type={type}
-      className={`${BASE_CLASSES} ${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]} ${className}`}
-      {...props}
-    >
-      {children}
-    </button>
+    <Magnetic>
+      <button
+        type={type}
+        className={`${BASE_CLASSES} ${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]} ${className}`}
+        {...props}
+      >
+        {children}
+      </button>
+    </Magnetic>
   );
 }
 
@@ -67,12 +70,14 @@ export function ButtonLink({
   ...props
 }: ButtonLinkProps) {
   return (
-    <Link
-      href={href}
-      className={`${BASE_CLASSES} ${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]} ${className}`}
-      {...props}
-    >
-      {children}
-    </Link>
+    <Magnetic>
+      <Link
+        href={href}
+        className={`${BASE_CLASSES} ${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]} ${className}`}
+        {...props}
+      >
+        {children}
+      </Link>
+    </Magnetic>
   );
 }

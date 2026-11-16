@@ -10,19 +10,19 @@ interface EyebrowProps {
 }
 
 const TONE_CLASSES: Record<EyebrowTone, string> = {
-  forest: "bg-brand-forest/10 text-brand-forest ring-brand-forest/20",
-  lime: "bg-bg-sage-wash text-brand-forest ring-brand-lime/45",
-  orange: "bg-bg-orange-wash text-text-primary ring-brand-orange/45",
-  lavender: "bg-bg-lavender-wash text-brand-lavender-deep ring-brand-lavender/45",
-  neutral: "bg-bg-cream text-text-subtle ring-border-warm",
+  forest: "bg-white/88 text-[#0d2140] ring-white/90 shadow-xs",
+  lime: "bg-[#edf4fd] text-[#0d2140] ring-white/90",
+  orange: "bg-white/90 text-[#184385] ring-[#77a2e2]/45",
+  lavender: "bg-white/92 text-[#1b488c] ring-[#77a2e2]/40",
+  neutral: "bg-[#edf4fd] text-[#24477d] ring-white/80",
 };
 
 const DOT_CLASSES: Record<EyebrowTone, string> = {
-  forest: "bg-brand-forest",
-  lime: "bg-brand-lime",
-  orange: "bg-brand-orange",
-  lavender: "bg-brand-lavender-deep",
-  neutral: "bg-text-secondary",
+  forest: "bg-[#2457a6]",
+  lime: "bg-[#77a2e2]",
+  orange: "bg-[#184385]",
+  lavender: "bg-[#4f81d1]",
+  neutral: "bg-[#24477d]",
 };
 
 export function Eyebrow({

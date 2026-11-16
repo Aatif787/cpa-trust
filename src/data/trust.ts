@@ -55,6 +55,7 @@ export interface TrustRegistrationRecord {
   darpanPrimarySector: string;
   darpanSecondarySector: string;
   correspondenceEmail: string;
+  correspondencePhone: string;
   /** Kept null until exact registration date discrepancy (12 Oct vs 13 Oct vs 28 Oct 2026) is clarified. */
   registrationDate: string | null;
   /** Kept null until exact canonical street address formatting across Deed p. 5, e-Stamp p. 1 & DARPAN p. 1 is confirmed. */
@@ -69,6 +70,7 @@ export interface TrusteeRecord {
   deedRole: string;
   darpanDesignation: string;
   summary: string;
+  photo: string;
 }
 
 export interface TrustObjective {
@@ -171,6 +173,7 @@ export const SANTOSH_ARORA_TRUST: TrustProfile = {
     darpanPrimarySector: "Women's Development & Empowerment",
     darpanSecondarySector: "Education & Literacy",
     correspondenceEmail: "santosharorafoundation@gmail.com",
+    correspondencePhone: "9811004236",
     registrationDate: null,
     registeredOfficeAddress: null,
     initialCorpusNote: null,
@@ -195,6 +198,7 @@ export const SANTOSH_ARORA_TRUST: TrustProfile = {
       darpanDesignation: "President (Registered Chief Functionary)",
       summary:
         "Founder of the trust and one of its first trustees. Listed as President on NGO DARPAN.",
+      photo: "/images/trustees/karun-arora.jpg",
     },
     {
       fullName: "Ridhima Arora",
@@ -202,6 +206,7 @@ export const SANTOSH_ARORA_TRUST: TrustProfile = {
       darpanDesignation: "Trustee",
       summary:
         "One of the first trustees. Helps guide how the trust is run and how its work is planned.",
+      photo: "/images/trustees/ridhima-arora.jpg",
     },
     {
       fullName: "Vansh Arora",
@@ -209,6 +214,7 @@ export const SANTOSH_ARORA_TRUST: TrustProfile = {
       darpanDesignation: "Trustee",
       summary:
         "One of the first trustees. Helps with the trust's day-to-day running and planning.",
+      photo: "/images/trustees/vansh-arora.jpg",
     },
     {
       fullName: "Manan Arora",
@@ -216,6 +222,7 @@ export const SANTOSH_ARORA_TRUST: TrustProfile = {
       darpanDesignation: "Trustee",
       summary:
         "One of the first trustees. Takes part in board decisions and keeps an eye on the trust's work.",
+      photo: "/images/trustees/manan-arora.jpg",
     },
   ],
 

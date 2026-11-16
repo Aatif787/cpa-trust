@@ -1,7 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useSafeReducedMotion } from "@/lib/useSafeReducedMotion";
 
 const REVEAL_EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -16,7 +17,7 @@ export function ImageReveal({
   delay = 0.05,
   className = "",
 }: ImageRevealProps) {
-  const prefersReduced = useReducedMotion();
+  const prefersReduced = useSafeReducedMotion();
 
   if (prefersReduced) {
     return <div className={className}>{children}</div>;

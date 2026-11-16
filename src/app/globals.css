@@ -2,98 +2,95 @@
 
 @theme inline {
   /* ==========================================================================
-     OFFICIAL SANTOSH ARORA TRUST COLOUR PALETTE — 60 / 30 / 10
-     60% Clotted Cream  (#F5F0CC) — page, section and card backgrounds
-     30% Spruce Velvet  (#23403A) — dark bands, headings, buttons, links
-     10% Heirloom Tomato (#833633) — accents, highlights, call-outs
-     The legacy lime / lavender / orange token names are kept so every
-     component picks up the new palette; they now resolve to tints of
-     the three core colours.
+     AZAKA SKY BLUE (#77A2E2) & MINIMAL WHITE EFFECTS PALETTE
+     Ground:    #77A2E2 — serene AZAKA cerulean sky blue backdrop
+     Minimal White Effects: #FFFFFF / frosted white glass & soft white halos
+     Ink:       #0D2140 / #1E3B68 — high-contrast midnight azure on sky/white
+     Deep Band: #2D5AA0 — rich tonal cerulean with crisp white typography
      ========================================================================== */
-  --color-brand-cream: #f5f0cc;
-  --color-brand-spruce: #23403a;
-  --color-brand-tomato: #833633;
-  /* Lighter tomato for accents that sit on Spruce Velvet surfaces */
-  --color-brand-tomato-soft: #e89a84;
+  --color-brand-cream: #ffffff;
+  --color-brand-spruce: #0d2140;
+  --color-brand-tomato: #2457a6;
+  --color-brand-tomato-soft: #e6effc;
 
-  --color-brand-forest: #23403a;
-  --color-brand-lime: #7c9a8e;
-  --color-brand-orange: #833633;
-  --color-brand-lavender: #b7cabf;
-  --color-brand-lavender-deep: #3a5c53;
+  --color-brand-forest: #0d2140;
+  --color-brand-lime: #77a2e2;
+  --color-brand-orange: #2457a6;
+  --color-brand-lavender: #ffffff;
+  --color-brand-lavender-deep: #1b488c;
 
-  --color-bg-white: #fcfaee;
-  --color-bg-cream: #f5f0cc;
-  --color-bg-cream-soft: #f9f6e1;
-  --color-bg-cream-deep: #ebe3b7;
-  --color-bg-sage-wash: #e8ebd3;
-  --color-bg-lavender-wash: #eeecd2;
-  --color-bg-orange-wash: #f4e3cc;
+  --color-bg-white: #ffffff;
+  --color-bg-cream: #77a2e2;
+  --color-bg-cream-soft: #85ace6;
+  --color-bg-cream-deep: #d9e6fa;
+  --color-bg-sage-wash: #edf3fc;
+  --color-bg-lavender-wash: #ffffff;
+  --color-bg-orange-wash: #e5effd;
 
-  --color-text-primary: #1e2b27;
-  --color-text-secondary: #56635d;
-  --color-text-subtle: #4a5752;
+  --color-text-primary: #0d2140;
+  --color-text-secondary: #1a3560;
+  --color-text-subtle: #24477d;
   --color-text-inverse: #ffffff;
 
-  /* Tonal scale aliases mapped to the 60 / 30 / 10 palette */
-  --color-cream-50: #f9f6e1;
-  --color-cream-100: #f5f0cc;
-  --color-cream-200: #ebe3b7;
-  --color-cream-300: #ddd3a2;
+  /* Tonal scale aliases mapped to AZAKA blue + minimal white */
+  --color-cream-50: #f6f9fe;
+  --color-cream-100: #77a2e2;
+  --color-cream-200: #d9e6fa;
+  --color-cream-300: #b7cef2;
 
-  --color-ink-900: #1e2b27;
-  --color-ink-700: #3a4743;
-  --color-ink-500: #56635d;
+  --color-ink-900: #0d2140;
+  --color-ink-700: #1a3560;
+  --color-ink-500: #284b82;
 
-  --color-lime-50: #eef0dd;
-  --color-lime-100: #e1e6d0;
-  --color-lime-300: #a9bdb2;
-  --color-lime-500: #7c9a8e;
-  --color-lime-700: #3a5c53;
-  --color-lime-900: #23403a;
+  --color-lime-50: #eef4fd;
+  --color-lime-100: #dce8fb;
+  --color-lime-300: #9ebbe9;
+  --color-lime-500: #77a2e2;
+  --color-lime-700: #2d5aa0;
+  --color-lime-900: #0d2140;
 
-  --color-orange-50: #f4e3cc;
-  --color-orange-100: #eccdb7;
-  --color-orange-400: #a8463f;
-  --color-orange-500: #833633;
-  --color-orange-700: #6b2a27;
-  --color-orange-800: #4f1f1d;
+  --color-orange-50: #e8f0fc;
+  --color-orange-100: #d2e2fa;
+  --color-orange-400: #4f81d1;
+  --color-orange-500: #2d5aa0;
+  --color-orange-700: #1b488c;
+  --color-orange-800: #0d2140;
 
-  --color-lavender-50: #f1f0da;
-  --color-lavender-100: #e6e8d2;
-  --color-lavender-200: #cfdacf;
-  --color-lavender-300: #b7cabf;
-  --color-lavender-500: #3a5c53;
-  --color-lavender-800: #23403a;
+  --color-lavender-50: #ffffff;
+  --color-lavender-100: #f3f7fe;
+  --color-lavender-200: #dce8fb;
+  --color-lavender-300: #bdd4f7;
+  --color-lavender-500: #2d5aa0;
+  --color-lavender-800: #0d2140;
 
   /* ==========================================================================
      BORDERS, RADII, SHADOWS & BREAKPOINTS
      ========================================================================== */
-  --color-border-subtle: rgba(35, 64, 58, 0.1);
-  --color-border-warm: #ddd3a2;
-  --color-border-forest: rgba(35, 64, 58, 0.24);
-  --color-border-lavender: rgba(58, 92, 83, 0.28);
+  --color-border-subtle: rgba(13, 33, 64, 0.12);
+  --color-border-warm: rgba(255, 255, 255, 0.58);
+  --color-border-forest: rgba(13, 33, 64, 0.24);
+  --color-border-lavender: rgba(119, 162, 226, 0.45);
 
   --radius-card: 1.25rem;
   --radius-panel: 1.75rem;
   --radius-media: 1.25rem;
   --radius-pill: 9999px;
 
-  --shadow-soft: 0 4px 20px -2px rgba(35, 64, 58, 0.06),
-    0 1px 4px -1px rgba(35, 64, 58, 0.04);
-  --shadow-elevated: 0 12px 36px -8px rgba(35, 64, 58, 0.12),
-    0 4px 12px -2px rgba(35, 64, 58, 0.05);
-  --shadow-card-hover: 0 18px 42px -12px rgba(35, 64, 58, 0.16),
-    0 6px 16px -4px rgba(131, 54, 51, 0.08);
-  --shadow-header: 0 8px 28px -10px rgba(35, 64, 58, 0.1);
+  --shadow-soft: 0 10px 28px -6px rgba(18, 48, 96, 0.14),
+    0 2px 6px -1px rgba(18, 48, 96, 0.08);
+  --shadow-elevated: 0 18px 44px -10px rgba(15, 42, 86, 0.2),
+    0 4px 14px -2px rgba(15, 42, 86, 0.1);
+  --shadow-card-hover: 0 22px 50px -12px rgba(15, 42, 86, 0.24),
+    0 0 0 1px rgba(255, 255, 255, 0.85);
+  --shadow-header: 0 10px 30px -10px rgba(15, 42, 86, 0.16);
 
   --breakpoint-xs: 22.5rem; /* 360px */
 
   /* ==========================================================================
      TYPOGRAPHY & LAYOUT SCALE
      ========================================================================== */
-  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-sans: var(--font-author), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-author), ui-sans-serif, system-ui, sans-serif;
 
   --container-reading: 48rem;
   --container-standard: 78rem;
@@ -103,35 +100,35 @@
 :root {
   --gradient-luminous-aura: radial-gradient(
       65% 75% at 12% 15%,
-      rgba(124, 154, 142, 0.18) 0%,
-      rgba(124, 154, 142, 0) 65%
+      rgba(255, 255, 255, 0.36) 0%,
+      rgba(255, 255, 255, 0) 65%
     ),
     radial-gradient(
       55% 65% at 88% 18%,
-      rgba(35, 64, 58, 0.08) 0%,
-      rgba(35, 64, 58, 0) 62%
+      rgba(255, 255, 255, 0.28) 0%,
+      rgba(255, 255, 255, 0) 62%
     ),
     radial-gradient(
       50% 60% at 52% 95%,
-      rgba(131, 54, 51, 0.07) 0%,
-      rgba(131, 54, 51, 0) 65%
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0) 65%
     ),
-    linear-gradient(180deg, #fcfaee 0%, #f5f0cc 100%);
+    linear-gradient(180deg, #88afe8 0%, #77a2e2 100%);
 
   --gradient-cream-veil: linear-gradient(
     135deg,
-    rgba(252, 250, 238, 0.94) 0%,
-    rgba(245, 240, 204, 0.94) 55%,
-    rgba(232, 235, 211, 0.88) 100%
+    rgba(255, 255, 255, 0.94) 0%,
+    rgba(241, 246, 254, 0.92) 55%,
+    rgba(227, 237, 252, 0.9) 100%
   );
 
   --gradient-accent-hairline: linear-gradient(
     90deg,
-    rgba(35, 64, 58, 0) 0%,
-    rgba(35, 64, 58, 0.45) 30%,
-    rgba(124, 154, 142, 0.55) 60%,
-    rgba(131, 54, 51, 0.6) 85%,
-    rgba(131, 54, 51, 0) 100%
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.65) 30%,
+    rgba(255, 255, 255, 0.95) 55%,
+    rgba(255, 255, 255, 0.55) 82%,
+    rgba(255, 255, 255, 0) 100%
   );
 }
 
@@ -162,12 +159,12 @@
   }
 
   ::selection {
-    background-color: rgba(131, 54, 51, 0.2);
-    color: var(--color-text-primary);
+    background-color: rgba(255, 255, 255, 0.45);
+    color: #0d2140;
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-brand-lavender-deep);
+    outline: 2px solid #0d2140;
     outline-offset: 2px;
   }
 
@@ -181,6 +178,7 @@
     *::after {
       transition-duration: 0.01ms !important;
       animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
     }
   }
 }
@@ -248,11 +246,11 @@
 }
 
 @utility surface-glass {
-  background-color: rgba(252, 250, 238, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
     var(--shadow-soft);
 }
 
@@ -273,4 +271,49 @@
     transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1),
     border-color 280ms ease;
+}
+
+/* Subtle lavender, lime, and orange ambient glows (non-distracting GPU layers) */
+.ambient-field {
+  position: relative;
+  overflow-x: clip;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  filter: blur(68px);
+  opacity: 0.42;
+  will-change: transform;
+  animation: ambientDrift 20s ease-in-out infinite alternate;
+}
+
+.ambient-orb-lavender {
+  background: radial-gradient(circle, rgba(216, 198, 255, 0.55) 0%, transparent 70%);
+}
+
+.ambient-orb-lime {
+  background: radial-gradient(circle, rgba(214, 245, 168, 0.45) 0%, transparent 70%);
+  animation-delay: -6s;
+}
+
+.ambient-orb-orange {
+  background: radial-gradient(circle, rgba(254, 215, 170, 0.48) 0%, transparent 70%);
+  animation-delay: -12s;
+}
+
+@keyframes ambientDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(18px, -14px, 0) scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-orb {
+    animation: none;
+  }
 }

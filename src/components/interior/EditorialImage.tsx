@@ -1,9 +1,18 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { LiquidReveal } from "@/components/ui/LiquidReveal";
+import { useReplayInView, useViewportFlags } from "@/components/ui/MotionReveal";
 
-const REVEAL_EASE = [0.22, 1, 0.36, 1] as const;
+const IMAGE_EASE = [0.16, 1, 0.3, 1] as const;
+
+export type EditorialImageDirection =
+  | "liquidBottom"
+  | "fromLeft"
+  | "fromRight"
+  | "scaleMask";
 
 interface EditorialImageProps {
   src: string;
@@ -12,6 +21,8 @@ interface EditorialImageProps {
   aspect?: "4/3" | "3/2" | "4/5" | "16/9" | "21/9" | "16/10";
   priority?: boolean;
   delay?: number;
+  direction?: EditorialImageDirection;
+  replay?: boolean;
   caption?: string;
   tone?: "light" | "dark";
   className?: string;
@@ -36,57 +47,117 @@ export function EditorialImage({
   sizes,
   aspect = "4/3",
   priority = false,
-  delay = 0.05,
+  delay = 0.06,
+  direction = "liquidBottom",
+  replay = true,
   caption,
   tone = "light",
   className = "",
   imageClassName = "",
 }: EditorialImageProps) {
-  const prefersReduced = useReducedMotion();
-
-  const frame = (
-    <div
-      className={`group relative overflow-hidden rounded-[var(--radius-media)] shadow-[var(--shadow-soft)] ${
-        tone === "dark" ? "bg-white/10" : "bg-bg-cream-deep"
-      } ${ASPECT_CLASSES[aspect]}`}
-    >
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        priority={priority}
-        sizes={sizes}
-        className={`object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045] ${imageClassName}`}
-      />
-    </div>
+  const frameRef = useRef<HTMLDivElement>(null);
+  const { isMobile } = useViewportFlags();
+  const { isVisible, prefersReduced } = useReplayInView(
+    frameRef,
+    replay,
+    priority
   );
+
+  const dx = isMobile ? 26 : 68;
+
+  const img = (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      priority={priority}
+      fetchPriority={priority ? "high" : undefined}
+      quality={priority ? 100 : 90}
+      sizes={sizes}
+      className={`object-cover transition-transform duration-[950ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.09] motion-reduce:transform-none ${imageClassName}`}
+    />
+  );
+
+  const maskHidden = (() => {
+    switch (direction) {
+      case "fromLeft":
+        return {
+          opacity: 0,
+          x: -dx,
+          scale: 1.07,
+          clipPath: "inset(0% 100% 0% 0%)",
+        };
+      case "fromRight":
+        return {
+          opacity: 0,
+          x: dx,
+          scale: 1.07,
+          clipPath: "inset(0% 0% 0% 100%)",
+        };
+      case "scaleMask":
+        return {
+          opacity: 0,
+          x: 0,
+          scale: 1.09,
+          clipPath: "inset(100% 0% 0% 0%)",
+        };
+      default:
+        return { opacity: 1, x: 0, scale: 1, clipPath: "inset(0% 0% 0% 0%)" };
+    }
+  })();
+
+  const maskVisible = {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    clipPath: "inset(0% 0% 0% 0%)",
+  };
 
   return (
     <figure className={`m-0 ${className}`}>
-      {prefersReduced ? (
-        frame
-      ) : (
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 22,
-            clipPath: "inset(10% 0% 0% 0% round 1.25rem)",
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-            clipPath: "inset(0% 0% 0% 0% round 1.25rem)",
-          }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.72, delay, ease: REVEAL_EASE }}
-        >
-          {frame}
-        </motion.div>
-      )}
+      <div
+        ref={frameRef}
+        data-cursor="media"
+        className={`group relative overflow-hidden rounded-[var(--radius-media)] border border-white/80 ${
+          tone === "dark" ? "bg-white/10" : "bg-bg-cream-deep"
+        } ${ASPECT_CLASSES[aspect]}`}
+      >
+        {direction === "liquidBottom" ? (
+          <LiquidReveal
+            delay={delay}
+            duration={1.35}
+            replay={replay}
+            priority={priority}
+          >
+            {img}
+          </LiquidReveal>
+        ) : (
+          <motion.div
+            initial={maskHidden}
+            animate={isVisible ? maskVisible : maskHidden}
+            transition={
+              prefersReduced
+                ? { duration: 0 }
+                : isVisible
+                  ? { duration: 1.15, delay, ease: IMAGE_EASE }
+                  : { duration: 0 }
+            }
+            className="relative h-full w-full will-change-transform motion-reduce:!transform-none motion-reduce:!opacity-100 motion-reduce:[clip-path:none!important]"
+          >
+            {img}
+          </motion.div>
+        )}
+
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-16deg] bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-[120%] motion-reduce:hidden"
+        />
+      </div>
+
       {caption ? (
         <figcaption
           className={`mt-3 text-xs leading-relaxed sm:text-sm ${
-            tone === "dark" ? "text-bg-cream/80" : "text-text-secondary"
+            tone === "dark" ? "text-white/75" : "text-text-secondary"
           }`}
         >
           {caption}

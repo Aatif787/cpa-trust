@@ -53,8 +53,8 @@ export const HOME_FOCUS_AREAS: readonly HomeFocusArea[] = [
     title: "Healthcare & Medical Relief",
     description:
       "Medical help, health awareness, good nutrition, care for mothers and children, mental health and yoga.",
-    imageSrc: "/images/home/focus-healthcare.jpg",
-    imageAlt: "Physician in a clinic consultation room reviewing notes at her desk",
+    imageSrc: "/images/home/focus-healthcare-india.jpg",
+    imageAlt: "Indian doctor in scrubs standing in a hospital corridor outside the recovery and operating rooms",
     accentTone: "lavender",
   },
   {

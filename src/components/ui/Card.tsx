@@ -18,17 +18,17 @@ interface CardProps {
 
 const VARIANT_CLASSES: Record<CardVariant, string> = {
   white:
-    "bg-bg-white border border-border-warm/80 surface-reflective",
+    "bg-white/95 border border-white/80 surface-reflective",
   cream:
-    "bg-bg-cream-soft border border-border-warm surface-reflective",
+    "bg-[#edf4fd] border border-white/85 surface-reflective",
   glass:
-    "surface-glass border border-white/70",
+    "surface-glass border border-white/80",
   sage:
-    "bg-bg-sage-wash border border-brand-lime/35 surface-reflective",
+    "bg-[#f4f8fe] border border-white/85 surface-reflective",
   lavender:
-    "bg-bg-lavender-wash border border-brand-lavender/45 surface-reflective",
+    "bg-[#eef4fd] border border-[#77a2e2]/35 surface-reflective",
   orange:
-    "bg-bg-orange-wash border border-brand-orange/40 surface-reflective",
+    "bg-[#e6effd] border border-[#77a2e2]/45 surface-reflective",
 };
 
 const PADDING_CLASSES: Record<NonNullable<CardProps["padding"]>, string> = {

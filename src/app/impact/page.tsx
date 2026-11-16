@@ -7,13 +7,29 @@ import { ButtonLink } from "@/components/ui/Button";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { EditorialImage } from "@/components/interior/EditorialImage";
 import { EditorialHeroReveal } from "@/components/interior/EditorialHeroReveal";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { SANTOSH_ARORA_TRUST } from "@/data/trust";
+import { buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Vision",
+export const metadata: Metadata = buildPageMetadata({
+  path: "/impact",
+  title: "Future Impact & Social Welfare Vision",
   description:
-    "The future Santosh Arora Trust hopes to help build: education, support for women, caring communities and honest reporting.",
-};
+    "Discover the long-term vision of Santosh Arora Trust for education and literacy, women empowerment, healthcare access, and accountable community development across India.",
+  keywords: [
+    "Future Impact & Vision",
+    "Social Welfare Organisation",
+    "Community Development",
+    "Education and Literacy",
+    "Women Empowerment",
+  ],
+  ogImage: {
+    url: "/images/interior/impact-hero.jpg",
+    width: 1280,
+    height: 853,
+    alt: "Community vision and future social welfare goals — Santosh Arora Trust",
+  },
+});
 
 const ASPIRATION_CHAPTERS = [
   {
@@ -83,6 +99,12 @@ export default function ImpactPage() {
 
   return (
     <>
+      <JsonLd
+        data={buildBreadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Vision", path: "/impact" },
+        ])}
+      />
       {/* 1. Warm Cream Poetic Essay Hero */}
       <section
         aria-labelledby="impact-hero-heading"
@@ -91,11 +113,11 @@ export default function ImpactPage() {
         <div className="mx-auto max-w-[var(--container-standard)] px-5 py-14 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
           <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-6">
-              <EditorialHeroReveal>
+              <EditorialHeroReveal variant="eyebrow">
                 <Eyebrow tone="lime">Vision</Eyebrow>
               </EditorialHeroReveal>
 
-              <EditorialHeroReveal delay={0.08}>
+              <EditorialHeroReveal variant="bottomMask" delay={0.08}>
                 <h1
                   id="impact-hero-heading"
                   className="text-display mt-5 text-text-primary"
@@ -107,7 +129,7 @@ export default function ImpactPage() {
                 </h1>
               </EditorialHeroReveal>
 
-              <EditorialHeroReveal delay={0.16}>
+              <EditorialHeroReveal variant="fromLeft" delay={0.16}>
                 <p className="text-lead mt-5 max-w-xl">
                   Santosh Arora Trust is new. This page shares the change we
                   hope to bring in the future. We do not show made-up numbers,
@@ -115,7 +137,7 @@ export default function ImpactPage() {
                 </p>
               </EditorialHeroReveal>
 
-              <EditorialHeroReveal delay={0.24}>
+              <EditorialHeroReveal variant="fromLeft" delay={0.24}>
                 <div className="mt-8 border-l-2 border-brand-lavender-deep pl-5 text-sm leading-relaxed text-text-secondary">
                   <p className="font-semibold text-text-primary">
                     Where We Are Today
@@ -135,6 +157,7 @@ export default function ImpactPage() {
                 src="/images/interior/impact-hero.jpg"
                 alt="Hands gently cradling a young green sapling rooted in dark soil"
                 aspect="4/3"
+                direction="liquidBottom"
                 priority
                 sizes="(max-width: 1024px) 100vw, 48vw"
                 caption="Real change grows slowly, with care and good planning."
@@ -147,7 +170,7 @@ export default function ImpactPage() {
 
       {/* 2. Long-Term Social Welfare Aspirations — Editorial Chapters */}
       <Section surface="white" spacing="lg" separatorBottom>
-        <MotionReveal>
+        <MotionReveal variant="bottomMask">
           <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-7">
               <Eyebrow tone="lavender">Our Hopes</Eyebrow>
@@ -163,48 +186,46 @@ export default function ImpactPage() {
 
         <div className="mt-14 divide-y divide-border-warm border-y border-border-warm">
           {ASPIRATION_CHAPTERS.map((chapter, idx) => (
-            <MotionReveal key={chapter.number} delay={idx * 0.06}>
-              <article className="grid gap-6 py-10 lg:grid-cols-12 lg:gap-10">
-                <div className="flex items-start gap-4 lg:col-span-5">
-                  <span className="font-serif text-4xl font-medium italic leading-none text-brand-lavender-deep sm:text-5xl">
-                    {chapter.number}
-                  </span>
-                  <div>
-                    <Eyebrow tone={chapter.tone} withDot={false}>
-                      {chapter.eyebrow}
-                    </Eyebrow>
-                    <h3 className="text-heading-2 mt-3 text-text-primary">
-                      {chapter.title}
-                    </h3>
-                  </div>
+            <article key={chapter.number} className="grid gap-6 py-10 lg:grid-cols-12 lg:gap-10">
+              <MotionReveal variant="fromLeft" delay={idx * 0.05} className="flex items-start gap-4 lg:col-span-5">
+                <span className="font-serif text-4xl font-medium italic leading-none text-brand-lavender-deep sm:text-5xl">
+                  {chapter.number}
+                </span>
+                <div>
+                  <Eyebrow tone={chapter.tone} withDot={false}>
+                    {chapter.eyebrow}
+                  </Eyebrow>
+                  <h3 className="text-heading-2 mt-3 text-text-primary">
+                    {chapter.title}
+                  </h3>
                 </div>
+              </MotionReveal>
 
-                <div className="space-y-3 lg:col-span-7">
-                  <p className="text-base leading-[1.8] text-text-secondary sm:text-[17px]">
-                    {chapter.narrative}
-                  </p>
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-text-subtle">
-                    From our Trust Deed: {chapter.deedAnchor}
-                  </p>
-                </div>
-              </article>
-            </MotionReveal>
+              <MotionReveal variant="fromRight" delay={idx * 0.05 + 0.06} className="space-y-3 lg:col-span-7">
+                <p className="text-base leading-[1.8] text-text-secondary sm:text-[17px]">
+                  {chapter.narrative}
+                </p>
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-text-subtle">
+                  From our Trust Deed: {chapter.deedAnchor}
+                </p>
+              </MotionReveal>
+            </article>
           ))}
         </div>
       </Section>
 
-      {/* 3. Responsible Future Initiatives — Deep Forest Green Band */}
+      {/* 3. Responsible Future Initiatives — Obsidian Dark Band */}
       <Section surface="forest" spacing="lg">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
-          <MotionReveal className="lg:col-span-5">
+          <MotionReveal variant="fromLeft" className="lg:col-span-5">
             <span className="text-eyebrow inline-flex items-center gap-2 rounded-full bg-white/12 px-3.5 py-1.5 text-white ring-1 ring-white/25">
-              <Sparkles className="h-3.5 w-3.5 text-brand-tomato-soft" aria-hidden="true" />
+              <Sparkles className="h-3.5 w-3.5 text-white" aria-hidden="true" />
               Our Promise
             </span>
             <h2 className="text-heading-1 mt-5 text-white">
               How We Will Work
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-bg-cream/90">
+            <p className="mt-4 text-base leading-relaxed text-white/80">
               How we do our work matters as much as what we want to achieve.
               All our future work will follow these four promises from our
               Trust Deed.
@@ -213,15 +234,19 @@ export default function ImpactPage() {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:col-span-7">
             {FUTURE_COMMITMENTS.map((item, idx) => (
-              <MotionReveal key={item.title} delay={0.06 + idx * 0.06}>
+              <MotionReveal
+                key={item.title}
+                variant={idx % 2 === 0 ? "fromRight" : "softScale"}
+                delay={0.06 + idx * 0.06}
+              >
                 <div className="h-full border-t border-white/25 pt-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-tomato-soft">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/75">
                     {item.clause}
                   </p>
                   <h3 className="mt-2 font-serif text-2xl font-semibold text-white">
                     {item.title}
                   </h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-bg-cream/85">
+                  <p className="mt-2.5 text-sm leading-relaxed text-white/75">
                     {item.body}
                   </p>
                 </div>
@@ -233,7 +258,7 @@ export default function ImpactPage() {
 
       {/* 4. Luminous Closing Commitment & Internal Navigation */}
       <Section surface="luminous" spacing="md">
-        <MotionReveal>
+        <MotionReveal variant="softScale">
           <div className="mx-auto max-w-4xl rounded-[var(--radius-panel)] border border-border-warm bg-bg-white/90 p-7 shadow-[var(--shadow-elevated)] backdrop-blur-sm sm:p-10">
             <div className="flex items-start gap-4">
               <span className="hidden h-12 w-12 shrink-0 place-items-center rounded-full bg-bg-sage-wash text-brand-forest sm:grid">

@@ -3,15 +3,16 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
+import { useSafeReducedMotion } from "@/lib/useSafeReducedMotion";
 
 const HERO_EASE = [0.22, 1, 0.36, 1] as const;
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const prefersReduced = useReducedMotion();
+  const prefersReduced = useSafeReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,

@@ -7,9 +7,12 @@ import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { SITE_ROUTES } from "@/data/navigation";
 import { Container } from "@/components/ui/Container";
+import { ScrollProgressBar } from "@/components/ui/MotionReveal";
+import { useSafeReducedMotion } from "@/lib/useSafeReducedMotion";
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const prefersReduced = useSafeReducedMotion();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -38,10 +41,10 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-40 transition-all duration-300 ease-out ${
+      className={`sticky top-0 z-40 transition-colors duration-300 ease-out ${
         scrolled || mobileOpen
-          ? "border-b border-border-warm/90 bg-bg-white/95 shadow-[var(--shadow-header)] backdrop-blur-md"
-          : "border-b border-transparent bg-bg-cream/65 backdrop-blur-sm"
+          ? "border-b border-[#d9e7fb] bg-white"
+          : "border-b border-white/80 bg-white/95"
       }`}
     >
       <Container size="wide">
@@ -79,12 +82,29 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   aria-current={isActive ? "page" : undefined}
-                  className={`relative whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium transition-colors duration-200 xl:px-3.5 xl:text-sm ${
+                  className={`group relative whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium transition-colors duration-200 xl:px-3.5 xl:text-sm ${
                     isActive
-                      ? "bg-bg-lavender-wash text-brand-forest ring-1 ring-brand-lavender/50"
-                      : "text-text-primary/80 hover:bg-bg-white/80 hover:text-brand-forest"
+                      ? "text-[#0d2140]"
+                      : "text-text-primary/80 hover:bg-[#edf4fd]/70 hover:text-[#0d2140]"
                   }`}
                 >
+                  {isActive ? (
+                    <motion.span
+                      layoutId="nav-active-pill"
+                      aria-hidden="true"
+                      transition={
+                        prefersReduced
+                          ? { duration: 0 }
+                          : { type: "spring", stiffness: 420, damping: 34 }
+                      }
+                      className="absolute inset-0 -z-10 rounded-full bg-[#edf4fd] ring-1 ring-[#77a2e2]/55"
+                    />
+                  ) : (
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-x-3 bottom-1 h-[1.5px] origin-left scale-x-0 rounded-full bg-[#184385]/70 transition-transform duration-300 ease-out group-hover:scale-x-100 motion-reduce:hidden"
+                    />
+                  )}
                   {item.label}
                 </Link>
               );
@@ -151,6 +171,8 @@ export function SiteHeader() {
           </motion.nav>
         ) : null}
       </AnimatePresence>
+
+      <ScrollProgressBar />
     </header>
   );
 }

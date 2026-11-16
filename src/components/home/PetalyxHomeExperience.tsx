@@ -18,6 +18,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { HOME_FOCUS_AREAS, HOME_PLANNED_INITIATIVES } from "@/data/home";
 import { SANTOSH_ARORA_TRUST } from "@/data/trust";
+import { FounderSection } from "@/components/home/FounderSection";
 import "./home-petalyx.css";
 
 const HERO_VIDEO =
@@ -725,6 +726,9 @@ export function PetalyxHomeExperience() {
           </div>
         </section>
 
+        {/* 1B. FOUNDER TRIBUTE & ANIMATED PORTRAIT SECTION (FIRST SCROLL AFTER HERO) */}
+        <FounderSection />
+
         {/* 2. PINNED WHO WE ARE & CHERRY TREE SECTION */}
         <section
           id="stats"
@@ -1196,10 +1200,31 @@ export function PetalyxHomeExperience() {
                     <dt className="font-semibold uppercase tracking-[0.1em] text-[#23403a]">
                       Trustees ({trustees.length})
                     </dt>
-                    <dd className="mt-1 font-medium text-[#1e2b27]">
-                      {trustees
-                        .map((t) => `${t.fullName} (${t.deedRole})`)
-                        .join(" · ")}
+                    <dd className="mt-2.5 grid gap-2.5 sm:grid-cols-2">
+                      {trustees.map((t) => (
+                        <div
+                          key={t.fullName}
+                          className="flex items-center gap-2.5 rounded-xl border border-[#e4dbb0]/80 bg-[#fcfaee] p-2"
+                        >
+                          <div className="relative h-12 w-9 shrink-0 overflow-hidden rounded-lg bg-[#ebe3b7]">
+                            <Image
+                              src={t.photo}
+                              alt={`Portrait of ${t.fullName}`}
+                              fill
+                              sizes="36px"
+                              className="object-cover object-[50%_15%]"
+                            />
+                          </div>
+                          <div className="min-w-0">
+                            <div className="truncate text-xs font-semibold text-[#1e2b27]">
+                              {t.fullName}
+                            </div>
+                            <div className="truncate text-[11px] text-[#4a5752]">
+                              {t.deedRole}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </dd>
                   </div>
                 </dl>

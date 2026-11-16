@@ -6,13 +6,30 @@ import { ButtonLink } from "@/components/ui/Button";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { EditorialImage } from "@/components/interior/EditorialImage";
 import { EditorialHeroReveal } from "@/components/interior/EditorialHeroReveal";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { SANTOSH_ARORA_TRUST, type TrustObjective } from "@/data/trust";
+import { buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Focus Areas",
+export const metadata: Metadata = buildPageMetadata({
+  path: "/focus-areas",
+  title: "Charitable Focus Areas — Education, Women Empowerment & Healthcare",
   description:
-    "The six areas Santosh Arora Trust wants to support, covering the ten goals in our Trust Deed.",
-};
+    "Explore the six core focus areas and ten Trust Deed objectives of Santosh Arora Trust: women empowerment, education and literacy, skill development, healthcare and medical relief, social welfare, and community development.",
+  keywords: [
+    "Women Empowerment",
+    "Education and Literacy",
+    "Skill Development",
+    "Healthcare and Medical Relief",
+    "Community Development",
+    "Charitable Activities",
+  ],
+  ogImage: {
+    url: "/images/home/focus-education.jpg",
+    width: 1280,
+    height: 853,
+    alt: "Students engaged in education and literacy activities supported by Santosh Arora Trust",
+  },
+});
 
 const ANCHOR_NAV = [
   { id: "women-empowerment", num: "01", label: "Women Empowerment" },
@@ -46,6 +63,12 @@ export default function FocusAreasPage() {
 
   return (
     <>
+      <JsonLd
+        data={buildBreadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Focus Areas", path: "/focus-areas" },
+        ])}
+      />
       {/* 1. Luminous Editorial Hero + Anchor Navigation Strip */}
       <section
         aria-labelledby="focus-hero-heading"
@@ -54,10 +77,10 @@ export default function FocusAreasPage() {
         <div className="mx-auto max-w-[var(--container-standard)] px-5 pb-12 pt-14 sm:px-8 sm:pb-16 sm:pt-20 lg:px-10 lg:pt-24">
           <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-8">
-              <EditorialHeroReveal>
+              <EditorialHeroReveal variant="eyebrow">
                 <Eyebrow tone="lime">Focus Areas</Eyebrow>
               </EditorialHeroReveal>
-              <EditorialHeroReveal delay={0.08}>
+              <EditorialHeroReveal variant="bottomMask" delay={0.08}>
                 <h1
                   id="focus-hero-heading"
                   className="text-display mt-5 text-text-primary"
@@ -68,7 +91,7 @@ export default function FocusAreasPage() {
                   </em>
                 </h1>
               </EditorialHeroReveal>
-              <EditorialHeroReveal delay={0.16}>
+              <EditorialHeroReveal variant="fromLeft" delay={0.16}>
                 <p className="text-lead mt-5 max-w-2xl">
                   Our Trust Deed (Clause 4) lists ten charity goals, from (a) to
                   (j). Below we explain each one simply. These are the causes we
@@ -77,7 +100,7 @@ export default function FocusAreasPage() {
               </EditorialHeroReveal>
             </div>
 
-            <EditorialHeroReveal delay={0.2} className="lg:col-span-4">
+            <EditorialHeroReveal variant="fromRight" delay={0.2} className="lg:col-span-4">
               <div className="border-l-2 border-brand-forest pl-5">
                 <p className="text-eyebrow text-brand-forest">
                   Our Areas on NGO DARPAN
@@ -96,7 +119,7 @@ export default function FocusAreasPage() {
           </div>
 
           {/* Direct Smooth Anchor Jump Links matching Homepage Mosaic */}
-          <EditorialHeroReveal delay={0.26}>
+          <EditorialHeroReveal variant="rise" delay={0.26}>
             <nav
               aria-label="Focus areas quick navigation"
               className="mt-10 flex flex-wrap gap-2.5 border-t border-border-warm pt-6"
@@ -119,18 +142,18 @@ export default function FocusAreasPage() {
         <div aria-hidden="true" className="separator-editorial" />
       </section>
 
-      {/* SECTION 01: Women Empowerment — Immersive Deep Forest Green Spread */}
+      {/* SECTION 01: Women Empowerment — Cerulean Spread */}
       <section
         id="women-empowerment"
         aria-labelledby="women-empowerment-heading"
-        className="relative scroll-mt-24 overflow-hidden bg-brand-forest py-16 text-text-inverse sm:scroll-mt-28 sm:py-24"
+        className="relative scroll-mt-24 overflow-hidden border-y border-white/40 bg-gradient-to-br from-[#2a579c] via-[#3f6fba] to-[#5687d4] py-16 text-white sm:scroll-mt-28 sm:py-24"
       >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(50% 60% at 85% 20%, rgba(183, 202, 191, 0.14), transparent 68%)",
+              "radial-gradient(50% 60% at 85% 20%, rgba(255, 255, 255, 0.24), transparent 68%)",
           }}
         />
         <div className="relative z-10 mx-auto max-w-[var(--container-standard)] px-5 sm:px-8 lg:px-10">
@@ -140,16 +163,18 @@ export default function FocusAreasPage() {
                 src="/images/home/focus-women.jpg"
                 alt="Woman artisan weaving brightly coloured threads on a traditional handloom"
                 aspect="4/5"
+                direction="scaleMask"
                 tone="dark"
+                priority
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 imageClassName="object-[50%_28%]"
               />
             </div>
 
             <div className="space-y-6 lg:col-span-7">
-              <MotionReveal>
+              <MotionReveal variant="fromRight">
                 <div className="flex flex-wrap items-center gap-3">
-                  <span className="font-serif text-4xl font-medium italic text-brand-lavender">
+                  <span className="font-serif text-4xl font-medium italic text-white/80">
                     01
                   </span>
                   <span className="text-eyebrow rounded-full bg-white/12 px-3.5 py-1 text-white ring-1 ring-white/25">
@@ -162,21 +187,21 @@ export default function FocusAreasPage() {
                 >
                   Women Empowerment
                 </h2>
-                <p className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-brand-tomato-soft">
+                <p className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-white/75">
                   Goal in our Trust Deed &amp; main area on DARPAN · No work completed yet
                 </p>
               </MotionReveal>
 
-              {womenClauses.map((clause) => (
-                <MotionReveal key={clause.id} delay={0.1}>
+              {womenClauses.map((clause, idx) => (
+                <MotionReveal key={clause.id} variant="fromRight" delay={0.08 + idx * 0.08}>
                   <div className="border-t border-white/15 pt-5">
                     <h3 className="font-serif text-2xl font-semibold text-white">
                       {clause.title}
                     </h3>
-                    <p className="mt-3 text-base leading-relaxed text-bg-cream/90 sm:text-lg">
+                    <p className="mt-3 text-base leading-relaxed text-white/80 sm:text-lg">
                       {clause.summary}
                     </p>
-                    <p className="mt-3 text-xs text-bg-cream/65">
+                    <p className="mt-3 text-xs text-white/55">
                       Source: {clause.sourcePage}
                     </p>
                   </div>
@@ -198,7 +223,7 @@ export default function FocusAreasPage() {
       >
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="order-2 space-y-6 lg:order-1 lg:col-span-6">
-            <MotionReveal>
+            <MotionReveal variant="fromLeft">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="font-serif text-4xl font-medium italic text-brand-forest">
                   02
@@ -217,7 +242,7 @@ export default function FocusAreasPage() {
 
             <div className="divide-y divide-border-subtle border-y border-border-subtle">
               {eduClauses.map((clause, idx) => (
-                <MotionReveal key={clause.id} delay={idx * 0.08}>
+                <MotionReveal key={clause.id} variant="fromLeft" delay={idx * 0.08}>
                   <div className="py-5">
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-forest">
@@ -244,6 +269,7 @@ export default function FocusAreasPage() {
               src="/images/home/focus-education.jpg"
               alt="Students reading and studying together at shared tables in a public library"
               aspect="16/10"
+              direction="fromRight"
               sizes="(max-width: 1024px) 100vw, 48vw"
               caption="Libraries, scholarships, books and uniforms for girls and students who need help."
             />
@@ -266,12 +292,13 @@ export default function FocusAreasPage() {
               src="/images/home/focus-skills.jpg"
               alt="Close-up of a tailor guiding striped fabric carefully under a sewing machine needle"
               aspect="3/2"
+              direction="liquidBottom"
               sizes="(max-width: 1024px) 100vw, 48vw"
             />
           </div>
 
           <div className="space-y-5 lg:col-span-6">
-            <MotionReveal>
+            <MotionReveal variant="fromRight">
               <div className="flex items-center gap-3">
                 <span className="font-serif text-4xl font-medium italic text-text-primary">
                   03
@@ -289,8 +316,8 @@ export default function FocusAreasPage() {
               />
             </MotionReveal>
 
-            {skillClauses.map((clause) => (
-              <MotionReveal key={clause.id} delay={0.1}>
+            {skillClauses.map((clause, idx) => (
+              <MotionReveal key={clause.id} variant="fromRight" delay={0.08 + idx * 0.08}>
                 <h3 className="font-serif text-2xl font-semibold text-text-primary">
                   {clause.title}
                 </h3>
@@ -318,16 +345,17 @@ export default function FocusAreasPage() {
         <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-4">
             <EditorialImage
-              src="/images/home/focus-healthcare.jpg"
-              alt="Physician in a clinic consultation room reviewing medical notes at her desk"
+              src="/images/home/focus-healthcare-india.jpg"
+              alt="Indian doctor in scrubs standing in a hospital corridor outside the recovery and operating rooms"
               aspect="4/5"
+              direction="fromLeft"
               sizes="(max-width: 1024px) 100vw, 32vw"
               imageClassName="object-[52%_30%]"
             />
           </div>
 
           <div className="space-y-8 lg:col-span-8">
-            <MotionReveal>
+            <MotionReveal variant="fromRight">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="font-serif text-4xl font-medium italic text-brand-lavender-deep">
                   04
@@ -347,7 +375,11 @@ export default function FocusAreasPage() {
 
             <div className="grid gap-6 sm:grid-cols-2">
               {healthClauses.map((clause, idx) => (
-                <MotionReveal key={clause.id} delay={0.08 + idx * 0.08}>
+                <MotionReveal
+                  key={clause.id}
+                  variant={idx % 2 === 0 ? "fromLeft" : "fromRight"}
+                  delay={0.08 + idx * 0.08}
+                >
                   <div className="h-full rounded-[var(--radius-card)] border border-brand-lavender/45 bg-bg-white p-6 shadow-[var(--shadow-soft)]">
                     <span className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-lavender-deep">
                       {clause.clauseRef}
@@ -380,7 +412,7 @@ export default function FocusAreasPage() {
       >
         <div className="space-y-10">
           <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
-            <MotionReveal className="lg:col-span-6">
+            <MotionReveal variant="fromLeft" className="lg:col-span-6">
               <div className="flex items-center gap-3">
                 <span className="font-serif text-4xl font-medium italic text-text-primary">
                   05
@@ -393,7 +425,7 @@ export default function FocusAreasPage() {
                 Social Welfare &amp; Relief
               </h2>
             </MotionReveal>
-            <MotionReveal delay={0.1} className="lg:col-span-6">
+            <MotionReveal variant="fromRight" delay={0.1} className="lg:col-span-6">
               <p className="text-lead">
                 Three goals from our Trust Deed: caring for people in need,
                 helping people know their legal rights and get free or low-cost
@@ -406,13 +438,18 @@ export default function FocusAreasPage() {
             src="/images/home/focus-welfare.jpg"
             alt="Community members sharing a warm meal seated together in a communal hall"
             aspect="21/9"
+            direction="scaleMask"
             sizes="100vw"
             imageClassName="object-[50%_55%]"
           />
 
           <div className="grid gap-8 border-t border-border-warm pt-8 md:grid-cols-3">
             {welfareClauses.map((clause, idx) => (
-              <MotionReveal key={clause.id} delay={idx * 0.08}>
+              <MotionReveal
+                key={clause.id}
+                variant={idx === 0 ? "fromLeft" : idx === 1 ? "rise" : "fromRight"}
+                delay={idx * 0.08}
+              >
                 <div className="border-t-2 border-brand-orange pt-4">
                   <span className="text-xs font-semibold uppercase tracking-[0.14em] text-text-subtle">
                     {clause.clauseRef} · {clause.sourcePage}
@@ -444,12 +481,13 @@ export default function FocusAreasPage() {
               src="/images/home/focus-environment.jpg"
               alt="Community planters carrying bundles of young tree saplings along a woodland trail"
               aspect="4/3"
+              direction="fromLeft"
               sizes="(max-width: 1024px) 100vw, 48vw"
             />
           </div>
 
           <div className="space-y-6 lg:col-span-6">
-            <MotionReveal>
+            <MotionReveal variant="fromRight">
               <div className="flex items-center gap-3">
                 <span className="font-serif text-4xl font-medium italic text-brand-forest">
                   06
@@ -463,8 +501,8 @@ export default function FocusAreasPage() {
               </h2>
             </MotionReveal>
 
-            {envClauses.map((clause) => (
-              <MotionReveal key={clause.id} delay={0.08}>
+            {envClauses.map((clause, idx) => (
+              <MotionReveal key={clause.id} variant="fromRight" delay={0.08 + idx * 0.08}>
                 <h3 className="font-serif text-2xl font-semibold text-text-primary">
                   {clause.title}
                 </h3>
@@ -478,7 +516,7 @@ export default function FocusAreasPage() {
             ))}
 
             {/* Constitutional Conditions & Next Step Links */}
-            <MotionReveal delay={0.14}>
+            <MotionReveal variant="rise" delay={0.14}>
               <div className="border-t border-brand-forest/20 pt-6">
                 <p className="text-eyebrow text-brand-forest">
                   Important Rules

@@ -12,9 +12,15 @@ import {
   RefreshCw,
   Send,
 } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useSafeReducedMotion } from "@/lib/useSafeReducedMotion";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+import {
+  MotionReveal,
+  MotionStagger,
+  MotionStaggerItem,
+} from "@/components/ui/MotionReveal";
 import { SANTOSH_ARORA_TRUST } from "@/data/trust";
 
 export const ENQUIRY_CATEGORIES = [
@@ -130,7 +136,7 @@ function SubmissionSuccessPanel({
       className="rounded-[var(--radius-card)] border border-brand-lime/55 bg-bg-sage-wash p-6 sm:p-8"
     >
       <div className="flex items-start gap-4">
-        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-brand-forest text-white shadow-[var(--shadow-soft)]">
+        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#184385] text-white shadow-[var(--shadow-soft)]">
           <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
         </span>
         <div>
@@ -157,7 +163,7 @@ function SubmissionSuccessPanel({
 }
 
 export function ContactEnquiryForm() {
-  const prefersReduced = useReducedMotion();
+  const prefersReduced = useSafeReducedMotion();
   const { correspondenceEmail } = SANTOSH_ARORA_TRUST.registration;
 
   const [values, setValues] = useState<EnquiryFormValues>(INITIAL_VALUES);
@@ -170,13 +176,13 @@ export function ContactEnquiryForm() {
   const formRef = useRef<HTMLFormElement>(null);
 
   const inputBaseClass =
-    "mt-2 block w-full rounded-xl border bg-bg-cream-soft/65 px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/70 transition-all duration-200 focus:bg-bg-white focus:outline-none focus:ring-4 sm:text-[15px]";
+    "mt-2 block w-full rounded-xl border bg-[#f4f8fe] px-4 py-3 text-sm text-[#0d2140] placeholder:text-[#4b6a99]/80 transition-all duration-200 focus:bg-white focus:outline-none focus:ring-4 sm:text-[15px]";
 
   function getFieldClasses(hasError: boolean): string {
     if (hasError) {
-      return `${inputBaseClass} border-[#b43c2f] focus:border-[#b43c2f] focus:ring-[#b43c2f]/15`;
+      return `${inputBaseClass} border-[#184385] focus:border-[#184385] focus:ring-[#77a2e2]/30`;
     }
-    return `${inputBaseClass} border-border-warm hover:border-brand-forest/40 focus:border-brand-forest focus:ring-brand-lavender/30`;
+    return `${inputBaseClass} border-[#b9cff0] hover:border-[#77a2e2] focus:border-[#184385] focus:ring-[#77a2e2]/25`;
   }
 
   function handleChange<K extends FieldName>(
@@ -260,39 +266,41 @@ export function ContactEnquiryForm() {
       id="enquiry-form"
       className="scroll-mt-28 rounded-[var(--radius-panel)] border border-border-warm bg-bg-white p-6 shadow-[var(--shadow-elevated)] sm:p-8 lg:p-10"
     >
-      <div className="border-b border-border-subtle pb-6">
-        <Eyebrow tone="lime">Message Form</Eyebrow>
-        <h2 className="text-heading-2 mt-4 text-text-primary">
-          Send Us a Message
-        </h2>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-text-secondary sm:text-base">
-          Write to us with questions about the trust, our goals, or working
-          together.
-        </p>
-
-        {/* Honest Backend Configuration Notice */}
-        <div
-          role="note"
-          className="mt-5 flex items-start gap-3 rounded-xl border border-brand-lavender/45 bg-bg-lavender-wash/75 p-4"
-        >
-          <Info
-            className="mt-0.5 h-4 w-4 shrink-0 text-brand-lavender-deep"
-            aria-hidden="true"
-          />
-          <p className="text-xs leading-relaxed text-text-primary sm:text-[13px]">
-            <strong>Please note:</strong> This form cannot send messages by
-            itself yet. When you press the button, we check your details and
-            open a ready-to-send email to{" "}
-            <a
-              href={`mailto:${correspondenceEmail}`}
-              className="font-semibold text-brand-forest underline decoration-brand-lime underline-offset-4 hover:text-text-primary"
-            >
-              {correspondenceEmail}
-            </a>{" "}
-            in your email app. We do not save your message.
+      <MotionReveal variant="fromLeft">
+        <div className="border-b border-border-subtle pb-6">
+          <Eyebrow tone="lime">Message Form</Eyebrow>
+          <h2 className="text-heading-2 mt-4 text-text-primary">
+            Send Us a Message
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-text-secondary sm:text-base">
+            Write to us with questions about the trust, our goals, or working
+            together.
           </p>
+
+          {/* Honest Backend Configuration Notice */}
+          <div
+            role="note"
+            className="mt-5 flex items-start gap-3 rounded-xl border border-brand-lavender/45 bg-bg-lavender-wash/75 p-4"
+          >
+            <Info
+              className="mt-0.5 h-4 w-4 shrink-0 text-brand-lavender-deep"
+              aria-hidden="true"
+            />
+            <p className="text-xs leading-relaxed text-text-primary sm:text-[13px]">
+              <strong>Please note:</strong> This form cannot send messages by
+              itself yet. When you press the button, we check your details and
+              open a ready-to-send email to{" "}
+              <a
+                href={`mailto:${correspondenceEmail}`}
+                className="font-semibold text-brand-forest underline decoration-brand-lime underline-offset-4 hover:text-text-primary"
+              >
+                {correspondenceEmail}
+              </a>{" "}
+              in your email app. We do not save your message.
+            </p>
+          </div>
         </div>
-      </div>
+      </MotionReveal>
 
       <div className="mt-6">
         <AnimatePresence mode="wait">
@@ -341,7 +349,7 @@ export function ContactEnquiryForm() {
                       <div className="flex flex-wrap items-center gap-3 pt-1">
                         <a
                           href={buildMailtoHref(values, correspondenceEmail)}
-                          className="inline-flex h-10 items-center gap-2 rounded-full bg-brand-forest px-5 text-xs font-semibold text-white shadow-[var(--shadow-soft)] transition-all hover:bg-[#1a312c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-lavender-deep focus-visible:ring-offset-2 sm:text-sm"
+                          className="inline-flex h-10 items-center gap-2 rounded-full bg-[#184385] px-5 text-xs font-semibold text-white shadow-[var(--shadow-soft)] transition-all hover:bg-[#113368] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#184385] focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:text-sm"
                         >
                           <Mail className="h-4 w-4" aria-hidden="true" />
                           <span>Open Email</span>
@@ -381,253 +389,269 @@ export function ContactEnquiryForm() {
                 </div>
               ) : null}
 
-              <div className="grid gap-5 sm:grid-cols-2">
-                {/* Full Name */}
-                <div>
-                  <label
-                    htmlFor="contact-full-name"
-                    className="block text-xs font-semibold uppercase tracking-[0.12em] text-text-primary"
-                  >
-                    Full Name <span aria-hidden="true" className="text-[#b43c2f]">*</span>
-                  </label>
-                  <input
-                    id="contact-full-name"
-                    name="fullName"
-                    type="text"
-                    autoComplete="name"
-                    required
-                    aria-required="true"
-                    aria-invalid={Boolean(errors.fullName)}
-                    aria-describedby={
-                      errors.fullName ? "contact-full-name-error" : undefined
-                    }
-                    value={values.fullName}
-                    onChange={(e) => handleChange("fullName", e.target.value)}
-                    onBlur={() => handleBlur("fullName")}
-                    placeholder="e.g. Ananya Sharma"
-                    className={getFieldClasses(Boolean(errors.fullName))}
-                  />
-                  {errors.fullName ? (
-                    <p
-                      id="contact-full-name-error"
-                      className="mt-1.5 text-xs font-medium text-[#b43c2f]"
-                    >
-                      {errors.fullName}
-                    </p>
-                  ) : null}
-                </div>
-
-                {/* Email Address */}
-                <div>
-                  <label
-                    htmlFor="contact-email"
-                    className="block text-xs font-semibold uppercase tracking-[0.12em] text-text-primary"
-                  >
-                    Email Address <span aria-hidden="true" className="text-[#b43c2f]">*</span>
-                  </label>
-                  <input
-                    id="contact-email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    aria-required="true"
-                    aria-invalid={Boolean(errors.email)}
-                    aria-describedby={
-                      errors.email ? "contact-email-error" : undefined
-                    }
-                    value={values.email}
-                    onChange={(e) => handleChange("email", e.target.value)}
-                    onBlur={() => handleBlur("email")}
-                    placeholder="you@organisation.org"
-                    className={getFieldClasses(Boolean(errors.email))}
-                  />
-                  {errors.email ? (
-                    <p
-                      id="contact-email-error"
-                      className="mt-1.5 text-xs font-medium text-[#b43c2f]"
-                    >
-                      {errors.email}
-                    </p>
-                  ) : null}
-                </div>
-
-                {/* Organisation (optional) */}
-                <div>
-                  <label
-                    htmlFor="contact-organisation"
-                    className="block text-xs font-semibold uppercase tracking-[0.12em] text-text-primary"
-                  >
-                    Organisation{" "}
-                    <span className="font-normal normal-case tracking-normal text-text-subtle">
-                      (optional)
-                    </span>
-                  </label>
-                  <input
-                    id="contact-organisation"
-                    name="organisation"
-                    type="text"
-                    autoComplete="organization"
-                    value={values.organisation}
-                    onChange={(e) => handleChange("organisation", e.target.value)}
-                    onBlur={() => handleBlur("organisation")}
-                    placeholder="Institution, NGO, or community group"
-                    className={getFieldClasses(false)}
-                  />
-                </div>
-
-                {/* Enquiry Category */}
-                <div>
-                  <label
-                    htmlFor="contact-category"
-                    className="block text-xs font-semibold uppercase tracking-[0.12em] text-text-primary"
-                  >
-                    Topic <span aria-hidden="true" className="text-[#b43c2f]">*</span>
-                  </label>
-                  <select
-                    id="contact-category"
-                    name="category"
-                    required
-                    aria-required="true"
-                    aria-invalid={Boolean(errors.category)}
-                    aria-describedby={
-                      errors.category ? "contact-category-error" : undefined
-                    }
-                    value={values.category}
-                    onChange={(e) =>
-                      handleChange(
-                        "category",
-                        e.target.value as EnquiryFormValues["category"]
-                      )
-                    }
-                    onBlur={() => handleBlur("category")}
-                    className={getFieldClasses(Boolean(errors.category))}
-                  >
-                    <option value="">Select a topic...</option>
-                    {ENQUIRY_CATEGORIES.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.category ? (
-                    <p
-                      id="contact-category-error"
-                      className="mt-1.5 text-xs font-medium text-[#b43c2f]"
-                    >
-                      {errors.category}
-                    </p>
-                  ) : null}
-                </div>
-              </div>
-
-              {/* Subject */}
-              <div>
-                <label
-                  htmlFor="contact-subject"
-                  className="block text-xs font-semibold uppercase tracking-[0.12em] text-text-primary"
-                >
-                  Subject <span aria-hidden="true" className="text-[#b43c2f]">*</span>
-                </label>
-                <input
-                  id="contact-subject"
-                  name="subject"
-                  type="text"
-                  required
-                  aria-required="true"
-                  aria-invalid={Boolean(errors.subject)}
-                  aria-describedby={
-                    errors.subject ? "contact-subject-error" : undefined
-                  }
-                  value={values.subject}
-                  onChange={(e) => handleChange("subject", e.target.value)}
-                  onBlur={() => handleBlur("subject")}
-                  placeholder="What is your message about?"
-                  className={getFieldClasses(Boolean(errors.subject))}
-                />
-                {errors.subject ? (
-                  <p
-                    id="contact-subject-error"
-                    className="mt-1.5 text-xs font-medium text-[#b43c2f]"
-                  >
-                    {errors.subject}
-                  </p>
-                ) : null}
-              </div>
-
-              {/* Message */}
-              <div>
-                <div className="flex items-baseline justify-between gap-2">
-                  <label
-                    htmlFor="contact-message"
-                    className="block text-xs font-semibold uppercase tracking-[0.12em] text-text-primary"
-                  >
-                    Message <span aria-hidden="true" className="text-[#b43c2f]">*</span>
-                  </label>
-                  <span className="text-[11px] text-text-subtle">
-                    Minimum 15 characters
-                  </span>
-                </div>
-                <textarea
-                  id="contact-message"
-                  name="message"
-                  rows={5}
-                  required
-                  aria-required="true"
-                  aria-invalid={Boolean(errors.message)}
-                  aria-describedby={
-                    errors.message ? "contact-message-error" : undefined
-                  }
-                  value={values.message}
-                  onChange={(e) => handleChange("message", e.target.value)}
-                  onBlur={() => handleBlur("message")}
-                  placeholder="Tell us how we can help or how you would like to work with us..."
-                  className={`${getFieldClasses(Boolean(errors.message))} resize-y`}
-                />
-                {errors.message ? (
-                  <p
-                    id="contact-message-error"
-                    className="mt-1.5 text-xs font-medium text-[#b43c2f]"
-                  >
-                    {errors.message}
-                  </p>
-                ) : null}
-              </div>
-
-              {/* Actions Row */}
-              <div className="flex flex-col items-start justify-between gap-4 border-t border-border-subtle pt-5 sm:flex-row sm:items-center">
-                <p className="text-xs leading-relaxed text-text-subtle">
-                  Fields marked <span className="text-[#b43c2f]">*</span> are
-                  required.
-                </p>
-
-                <Button
-                  type="submit"
-                  variant="primary"
-                  size="lg"
-                  disabled={status === "submitting"}
-                  aria-busy={status === "submitting"}
-                  className="group w-full sm:w-auto"
-                >
-                  {status === "submitting" ? (
-                    <>
-                      <Loader2
-                        className="h-4 w-4 animate-spin"
-                        aria-hidden="true"
+              <MotionStagger staggerDelay={0.07} className="space-y-6">
+                <div className="grid gap-5 sm:grid-cols-2">
+                  {/* Full Name */}
+                  <MotionStaggerItem direction="fromLeft">
+                    <div>
+                      <label
+                        htmlFor="contact-full-name"
+                        className="block text-xs font-semibold uppercase tracking-[0.12em] text-text-primary"
+                      >
+                        Full Name <span aria-hidden="true" className="text-[#184385]">*</span>
+                      </label>
+                      <input
+                        id="contact-full-name"
+                        name="fullName"
+                        type="text"
+                        autoComplete="name"
+                        required
+                        aria-required="true"
+                        aria-invalid={Boolean(errors.fullName)}
+                        aria-describedby={
+                          errors.fullName ? "contact-full-name-error" : undefined
+                        }
+                        value={values.fullName}
+                        onChange={(e) => handleChange("fullName", e.target.value)}
+                        onBlur={() => handleBlur("fullName")}
+                        placeholder="e.g. Ananya Sharma"
+                        className={getFieldClasses(Boolean(errors.fullName))}
                       />
-                      <span>Sending Enquiry...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Prepare My Email</span>
-                      <Send
-                        className="h-4 w-4 text-brand-tomato-soft transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                        aria-hidden="true"
+                      {errors.fullName ? (
+                        <p
+                          id="contact-full-name-error"
+                          className="mt-1.5 text-xs font-medium text-[#184385]"
+                        >
+                          {errors.fullName}
+                        </p>
+                      ) : null}
+                    </div>
+                  </MotionStaggerItem>
+
+                  {/* Email Address */}
+                  <MotionStaggerItem direction="fromLeft">
+                    <div>
+                      <label
+                        htmlFor="contact-email"
+                        className="block text-xs font-semibold uppercase tracking-[0.12em] text-text-primary"
+                      >
+                        Email Address <span aria-hidden="true" className="text-[#184385]">*</span>
+                      </label>
+                      <input
+                        id="contact-email"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        required
+                        aria-required="true"
+                        aria-invalid={Boolean(errors.email)}
+                        aria-describedby={
+                          errors.email ? "contact-email-error" : undefined
+                        }
+                        value={values.email}
+                        onChange={(e) => handleChange("email", e.target.value)}
+                        onBlur={() => handleBlur("email")}
+                        placeholder="you@organisation.org"
+                        className={getFieldClasses(Boolean(errors.email))}
                       />
-                    </>
-                  )}
-                </Button>
-              </div>
+                      {errors.email ? (
+                        <p
+                          id="contact-email-error"
+                          className="mt-1.5 text-xs font-medium text-[#184385]"
+                        >
+                          {errors.email}
+                        </p>
+                      ) : null}
+                    </div>
+                  </MotionStaggerItem>
+
+                  {/* Organisation (optional) */}
+                  <MotionStaggerItem direction="fromLeft">
+                    <div>
+                      <label
+                        htmlFor="contact-organisation"
+                        className="block text-xs font-semibold uppercase tracking-[0.12em] text-text-primary"
+                      >
+                        Organisation{" "}
+                        <span className="font-normal normal-case tracking-normal text-text-subtle">
+                          (optional)
+                        </span>
+                      </label>
+                      <input
+                        id="contact-organisation"
+                        name="organisation"
+                        type="text"
+                        autoComplete="organization"
+                        value={values.organisation}
+                        onChange={(e) => handleChange("organisation", e.target.value)}
+                        onBlur={() => handleBlur("organisation")}
+                        placeholder="Institution, NGO, or community group"
+                        className={getFieldClasses(false)}
+                      />
+                    </div>
+                  </MotionStaggerItem>
+
+                  {/* Enquiry Category */}
+                  <MotionStaggerItem direction="fromLeft">
+                    <div>
+                      <label
+                        htmlFor="contact-category"
+                        className="block text-xs font-semibold uppercase tracking-[0.12em] text-text-primary"
+                      >
+                        Topic <span aria-hidden="true" className="text-[#184385]">*</span>
+                      </label>
+                      <select
+                        id="contact-category"
+                        name="category"
+                        required
+                        aria-required="true"
+                        aria-invalid={Boolean(errors.category)}
+                        aria-describedby={
+                          errors.category ? "contact-category-error" : undefined
+                        }
+                        value={values.category}
+                        onChange={(e) =>
+                          handleChange(
+                            "category",
+                            e.target.value as EnquiryFormValues["category"]
+                          )
+                        }
+                        onBlur={() => handleBlur("category")}
+                        className={getFieldClasses(Boolean(errors.category))}
+                      >
+                        <option value="" className="bg-white text-[#0d2140]">Select a topic...</option>
+                        {ENQUIRY_CATEGORIES.map((category) => (
+                          <option key={category} value={category} className="bg-white text-[#0d2140]">
+                            {category}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.category ? (
+                        <p
+                          id="contact-category-error"
+                          className="mt-1.5 text-xs font-medium text-[#184385]"
+                        >
+                          {errors.category}
+                        </p>
+                      ) : null}
+                    </div>
+                  </MotionStaggerItem>
+                </div>
+
+                {/* Subject */}
+                <MotionStaggerItem direction="fromLeft">
+                  <div>
+                    <label
+                      htmlFor="contact-subject"
+                      className="block text-xs font-semibold uppercase tracking-[0.12em] text-text-primary"
+                    >
+                      Subject <span aria-hidden="true" className="text-[#184385]">*</span>
+                    </label>
+                    <input
+                      id="contact-subject"
+                      name="subject"
+                      type="text"
+                      required
+                      aria-required="true"
+                      aria-invalid={Boolean(errors.subject)}
+                      aria-describedby={
+                        errors.subject ? "contact-subject-error" : undefined
+                      }
+                      value={values.subject}
+                      onChange={(e) => handleChange("subject", e.target.value)}
+                      onBlur={() => handleBlur("subject")}
+                      placeholder="What is your message about?"
+                      className={getFieldClasses(Boolean(errors.subject))}
+                    />
+                    {errors.subject ? (
+                      <p
+                        id="contact-subject-error"
+                        className="mt-1.5 text-xs font-medium text-[#184385]"
+                      >
+                        {errors.subject}
+                      </p>
+                    ) : null}
+                  </div>
+                </MotionStaggerItem>
+
+                {/* Message */}
+                <MotionStaggerItem direction="fromLeft">
+                  <div>
+                    <div className="flex items-baseline justify-between gap-2">
+                      <label
+                        htmlFor="contact-message"
+                        className="block text-xs font-semibold uppercase tracking-[0.12em] text-text-primary"
+                      >
+                        Message <span aria-hidden="true" className="text-[#184385]">*</span>
+                      </label>
+                      <span className="text-[11px] text-text-subtle">
+                        Minimum 15 characters
+                      </span>
+                    </div>
+                    <textarea
+                      id="contact-message"
+                      name="message"
+                      rows={5}
+                      required
+                      aria-required="true"
+                      aria-invalid={Boolean(errors.message)}
+                      aria-describedby={
+                        errors.message ? "contact-message-error" : undefined
+                      }
+                      value={values.message}
+                      onChange={(e) => handleChange("message", e.target.value)}
+                      onBlur={() => handleBlur("message")}
+                      placeholder="Tell us how we can help or how you would like to work with us..."
+                      className={`${getFieldClasses(Boolean(errors.message))} resize-y`}
+                    />
+                    {errors.message ? (
+                      <p
+                        id="contact-message-error"
+                        className="mt-1.5 text-xs font-medium text-[#184385]"
+                      >
+                        {errors.message}
+                      </p>
+                    ) : null}
+                  </div>
+                </MotionStaggerItem>
+
+                {/* Actions Row */}
+                <MotionStaggerItem direction="rise">
+                  <div className="flex flex-col items-start justify-between gap-4 border-t border-border-subtle pt-5 sm:flex-row sm:items-center">
+                    <p className="text-xs leading-relaxed text-text-subtle">
+                      Fields marked <span className="text-[#184385]">*</span> are
+                      required.
+                    </p>
+
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      size="lg"
+                      disabled={status === "submitting"}
+                      aria-busy={status === "submitting"}
+                      className="group w-full sm:w-auto"
+                    >
+                      {status === "submitting" ? (
+                        <>
+                          <Loader2
+                            className="h-4 w-4 animate-spin"
+                            aria-hidden="true"
+                          />
+                          <span>Sending Enquiry...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Prepare My Email</span>
+                          <Send
+                            className="h-4 w-4 text-white transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                            aria-hidden="true"
+                          />
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </MotionStaggerItem>
+              </MotionStagger>
             </motion.form>
           )}
         </AnimatePresence>

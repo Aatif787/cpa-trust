@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   AlertCircle,
@@ -16,13 +17,28 @@ import { ButtonLink } from "@/components/ui/Button";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { EditorialImage } from "@/components/interior/EditorialImage";
 import { EditorialHeroReveal } from "@/components/interior/EditorialHeroReveal";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { SANTOSH_ARORA_TRUST } from "@/data/trust";
+import { buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Governance & Registration",
+export const metadata: Metadata = buildPageMetadata({
+  path: "/governance",
+  title: "Governance, Registration & NGO DARPAN Disclosures",
   description:
-    "Registration details, DARPAN ID, trustees, rules, accounts, audit and tax status of Santosh Arora Trust.",
-};
+    "Verified registration number (2026/22/IV/1415), NGO DARPAN Unique ID (DL/2026/1252835), Board of Trustees, Trust Deed provisions, annual audit rules, and transparent statutory status of Santosh Arora Trust.",
+  keywords: [
+    "Santosh Arora Trust Governance",
+    "Charitable Trust in Delhi",
+    "NGO DARPAN DL/2026/1252835",
+    "Indian Trusts Act 1882",
+  ],
+  ogImage: {
+    url: "/images/interior/governance-hero.jpg",
+    width: 1920,
+    height: 806,
+    alt: "Institutional governance and verified registration records — Santosh Arora Trust",
+  },
+});
 
 export default function GovernancePage() {
   const {
@@ -46,55 +62,61 @@ export default function GovernancePage() {
 
   return (
     <>
-      {/* 1. Dignified Forest Green Institutional Hero */}
+      <JsonLd
+        data={buildBreadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Governance & Registration", path: "/governance" },
+        ])}
+      />
+      {/* 1. Cerulean & White Institutional Hero */}
       <section
         aria-labelledby="governance-hero-heading"
-        className="relative overflow-hidden bg-brand-forest text-text-inverse"
+        className="relative overflow-hidden border-b border-white/40 bg-gradient-to-br from-[#2a579c] via-[#3f6fba] to-[#5687d4] text-white"
       >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(50% 60% at 86% 18%, rgba(183, 202, 191, 0.16), transparent 65%), radial-gradient(40% 50% at 15% 88%, rgba(232, 154, 132, 0.12), transparent 65%)",
+              "radial-gradient(50% 60% at 86% 18%, rgba(255, 255, 255, 0.24), transparent 65%), radial-gradient(40% 50% at 15% 88%, rgba(255, 255, 255, 0.14), transparent 65%)",
           }}
         />
 
         <div className="relative z-10 mx-auto max-w-[var(--container-standard)] px-5 py-14 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
           <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-6">
-              <EditorialHeroReveal>
+              <EditorialHeroReveal variant="eyebrow">
                 <span className="text-eyebrow inline-flex items-center gap-2 rounded-full bg-white/12 px-4 py-1.5 text-white ring-1 ring-white/25">
                   <span
                     aria-hidden="true"
-                    className="h-1.5 w-1.5 rounded-full bg-brand-lavender"
+                    className="h-1.5 w-1.5 rounded-full bg-white"
                   />
                   Governance &amp; Registration
                 </span>
               </EditorialHeroReveal>
 
-              <EditorialHeroReveal delay={0.08}>
+              <EditorialHeroReveal variant="bottomMask" delay={0.08}>
                 <h1
                   id="governance-hero-heading"
                   className="text-display mt-6 text-white"
                 >
                   Open, Clear &amp;{" "}
-                  <em className="font-medium italic text-brand-tomato-soft">
+                  <em className="font-medium italic text-white/85">
                     Honest.
                   </em>
                 </h1>
               </EditorialHeroReveal>
 
-              <EditorialHeroReveal delay={0.16}>
-                <p className="mt-5 max-w-xl text-base leading-relaxed text-bg-cream/90 sm:text-lg">
+              <EditorialHeroReveal variant="fromLeft" delay={0.16}>
+                <p className="mt-5 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
                   Our registration details, NGO DARPAN listing, how our trustees
                   make decisions and how our money is checked, exactly as written
                   in our Trust Deed and registration certificate.
                 </p>
               </EditorialHeroReveal>
 
-              <EditorialHeroReveal delay={0.24}>
-                <div className="mt-8 flex flex-wrap gap-3 text-xs font-medium text-bg-cream/90 sm:text-sm">
+              <EditorialHeroReveal variant="rise" delay={0.24}>
+                <div className="mt-8 flex flex-wrap gap-3 text-xs font-medium text-white/85 sm:text-sm">
                   <span className="rounded-full bg-white/10 px-4 py-1.5 ring-1 ring-white/20">
                     Reg. No. {registration.registrationNumber}
                   </span>
@@ -110,6 +132,7 @@ export default function GovernancePage() {
                 src="/images/interior/governance-hero.jpg"
                 alt="Historic sandstone institutional architecture along Raisina Hill in New Delhi representing legal registration jurisdiction"
                 aspect="16/10"
+                direction="fromRight"
                 priority
                 tone="dark"
                 sizes="(max-width: 1024px) 100vw, 48vw"
@@ -125,7 +148,7 @@ export default function GovernancePage() {
         <div className="grid gap-12 lg:grid-cols-12">
           {/* Official Ledger */}
           <div className="lg:col-span-7">
-            <MotionReveal>
+            <MotionReveal variant="fromLeft">
               <div className="flex items-center gap-3">
                 <span className="grid h-10 w-10 place-items-center rounded-full bg-bg-sage-wash text-brand-forest">
                   <ShieldCheck className="h-5 w-5" aria-hidden="true" />
@@ -139,7 +162,7 @@ export default function GovernancePage() {
               </h2>
             </MotionReveal>
 
-            <MotionReveal delay={0.08}>
+            <MotionReveal variant="fromLeft" delay={0.08}>
               <dl className="mt-8 divide-y divide-border-subtle border-y border-border-subtle text-sm sm:text-[15px]">
                 <div className="grid gap-1 py-4 sm:grid-cols-12 sm:gap-4">
                   <dt className="font-semibold text-text-subtle sm:col-span-5">
@@ -222,7 +245,7 @@ export default function GovernancePage() {
 
           {/* Pending Clarification Ledger (Unpublished Disputed Fields) */}
           <div className="lg:col-span-5">
-            <MotionReveal delay={0.1}>
+            <MotionReveal variant="fromRight" delay={0.1}>
               <div className="rounded-[var(--radius-panel)] border border-brand-orange/45 bg-bg-orange-wash/70 p-6 sm:p-8">
                 <div className="flex items-start gap-3">
                   <AlertCircle
@@ -269,7 +292,7 @@ export default function GovernancePage() {
       <Section surface="cream" spacing="lg" separatorBottom>
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-5">
-            <MotionReveal>
+            <MotionReveal variant="fromLeft">
               <div className="flex items-center gap-3">
                 <span className="grid h-10 w-10 place-items-center rounded-full bg-bg-white text-brand-forest ring-1 ring-border-warm">
                   <Users className="h-5 w-5" aria-hidden="true" />
@@ -323,20 +346,31 @@ export default function GovernancePage() {
           <div className="lg:col-span-7">
             <div className="divide-y divide-border-warm border-y border-border-warm bg-bg-white px-6 sm:px-8">
               {trustees.map((trustee, idx) => (
-                <MotionReveal key={trustee.fullName} delay={idx * 0.06}>
-                  <div className="grid gap-3 py-6 sm:grid-cols-12 sm:items-center sm:gap-4">
-                    <div className="sm:col-span-5">
-                      <h3 className="font-serif text-2xl font-semibold text-text-primary">
-                        {trustee.fullName}
-                      </h3>
-                      <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-brand-forest">
-                        {trustee.deedRole}
-                      </p>
-                      <p className="mt-0.5 text-xs text-text-subtle">
-                        DARPAN: {trustee.darpanDesignation}
-                      </p>
+                <MotionReveal key={trustee.fullName} variant="fromRight" delay={idx * 0.06}>
+                  <div className="grid gap-4 py-6 sm:grid-cols-12 sm:items-center sm:gap-5">
+                    <div className="flex items-center gap-4 sm:col-span-6">
+                      <div className="relative aspect-[3/4] w-20 shrink-0 overflow-hidden rounded-xl bg-bg-cream ring-1 ring-border-warm">
+                        <Image
+                          src={trustee.photo}
+                          alt={`Portrait of ${trustee.fullName}, ${trustee.deedRole}`}
+                          fill
+                          sizes="80px"
+                          className="object-cover object-[50%_15%]"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-serif text-2xl font-semibold text-text-primary">
+                          {trustee.fullName}
+                        </h3>
+                        <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-brand-forest">
+                          {trustee.deedRole}
+                        </p>
+                        <p className="mt-0.5 text-xs text-text-subtle">
+                          DARPAN: {trustee.darpanDesignation}
+                        </p>
+                      </div>
                     </div>
-                    <p className="text-sm leading-relaxed text-text-secondary sm:col-span-7">
+                    <p className="text-sm leading-relaxed text-text-secondary sm:col-span-6">
                       {trustee.summary}
                     </p>
                   </div>
@@ -353,7 +387,7 @@ export default function GovernancePage() {
 
       {/* 4. Board Meetings, Decision-Making, Financial Management & Audit */}
       <Section surface="white" spacing="lg" separatorBottom>
-        <MotionReveal>
+        <MotionReveal variant="bottomMask">
           <div className="max-w-3xl">
             <Eyebrow tone="orange">Clauses 5–15 · Our Rules</Eyebrow>
             <h2 className="text-heading-1 mt-4 text-text-primary">
@@ -378,7 +412,7 @@ export default function GovernancePage() {
 
             <div className="space-y-6">
               {meetingAndBoardRules.map((item, idx) => (
-                <MotionReveal key={item.id} delay={idx * 0.06}>
+                <MotionReveal key={item.id} variant="fromLeft" delay={idx * 0.06}>
                   <div className="border-l-2 border-brand-lavender pl-5">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <span className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-lavender-deep">
@@ -411,7 +445,7 @@ export default function GovernancePage() {
 
             <div className="space-y-6">
               {financialAndContinuityRules.map((item, idx) => (
-                <MotionReveal key={item.id} delay={idx * 0.06}>
+                <MotionReveal key={item.id} variant="fromRight" delay={idx * 0.06}>
                   <div className="border-l-2 border-brand-lime pl-5">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <span className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-forest">
@@ -438,7 +472,7 @@ export default function GovernancePage() {
       {/* 5. Regulatory & Tax Status Disclosure */}
       <Section surface="lavender" spacing="md">
         <div className="grid items-center gap-8 lg:grid-cols-12">
-          <MotionReveal className="lg:col-span-8">
+          <MotionReveal variant="fromLeft" className="lg:col-span-8">
             <div className="flex items-center gap-3">
               <FileCheck2
                 className="h-5 w-5 text-brand-lavender-deep"
@@ -459,7 +493,7 @@ export default function GovernancePage() {
             </p>
           </MotionReveal>
 
-          <MotionReveal delay={0.1} className="lg:col-span-4">
+          <MotionReveal variant="fromRight" delay={0.1} className="lg:col-span-4">
             <div className="space-y-3 rounded-[var(--radius-card)] bg-bg-white p-5 shadow-[var(--shadow-soft)] ring-1 ring-brand-lavender/45">
               <div className="flex items-center justify-between text-sm">
                 <span className="font-medium text-text-primary">Foreign Donations (FCRA)</span>

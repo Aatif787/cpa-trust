@@ -1,19 +1,36 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Compass, HeartHandshake, ShieldCheck } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ButtonLink } from "@/components/ui/Button";
-import { MotionReveal } from "@/components/ui/MotionReveal";
+import { MotionReveal, MotionStagger, MotionStaggerItem } from "@/components/ui/MotionReveal";
+import { LiquidReveal } from "@/components/ui/LiquidReveal";
 import { EditorialImage } from "@/components/interior/EditorialImage";
 import { EditorialHeroReveal } from "@/components/interior/EditorialHeroReveal";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { SANTOSH_ARORA_TRUST } from "@/data/trust";
+import { buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About the Trust",
+export const metadata: Metadata = buildPageMetadata({
+  path: "/about",
+  title: "About the Trust — Social Welfare Organisation in Delhi",
   description:
-    "Why Santosh Arora Trust was set up, our vision, our mission, our values and our trustees.",
-};
+    "Learn why Santosh Arora Trust was established as an irrevocable public charitable trust in New Delhi, our vision, charitable values, non-discrimination mandate, and Board of Trustees.",
+  keywords: [
+    "About Santosh Arora Trust",
+    "Charitable Trust in Delhi",
+    "Social Welfare Organisation",
+    "Board of Trustees",
+  ],
+  ogImage: {
+    url: "/images/interior/about-hero.jpg",
+    width: 1280,
+    height: 853,
+    alt: "Community learning and social welfare support — About Santosh Arora Trust",
+  },
+});
 
 const CORE_VALUES = [
   {
@@ -59,53 +76,59 @@ export default function AboutPage() {
 
   return (
     <>
-      {/* 1. Deep Forest Green Asymmetric Split Hero */}
+      <JsonLd
+        data={buildBreadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "About the Trust", path: "/about" },
+        ])}
+      />
+      {/* 1. Cerulean & White Split Hero */}
       <section
         aria-labelledby="about-hero-heading"
-        className="relative overflow-hidden bg-brand-forest text-text-inverse"
+        className="relative overflow-hidden border-b border-white/40 bg-gradient-to-br from-[#2a579c] via-[#3f6fba] to-[#5687d4] text-white"
       >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(50% 60% at 88% 15%, rgba(183, 202, 191, 0.18) 0%, transparent 65%), radial-gradient(45% 50% at 12% 85%, rgba(232, 154, 132, 0.14) 0%, transparent 65%)",
+              "radial-gradient(50% 60% at 88% 15%, rgba(255, 255, 255, 0.24) 0%, transparent 65%), radial-gradient(45% 50% at 12% 85%, rgba(255, 255, 255, 0.14) 0%, transparent 65%)",
           }}
         />
 
         <div className="relative z-10 mx-auto max-w-[var(--container-standard)] px-5 py-14 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
           <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
-              <EditorialHeroReveal>
+              <EditorialHeroReveal variant="eyebrow">
                 <span className="text-eyebrow inline-flex items-center gap-2.5 rounded-full bg-white/12 px-4 py-1.5 text-white ring-1 ring-white/25">
                   <span
                     aria-hidden="true"
-                    className="h-1.5 w-1.5 rounded-full bg-brand-lime"
+                    className="h-1.5 w-1.5 rounded-full bg-white"
                   />
                   About the Trust
                 </span>
               </EditorialHeroReveal>
 
-              <EditorialHeroReveal delay={0.08}>
+              <EditorialHeroReveal variant="bottomMask" delay={0.08}>
                 <h1
                   id="about-hero-heading"
                   className="text-display mt-6 text-white"
                 >
                   A Lasting Trust for the{" "}
-                  <em className="font-medium italic text-brand-lavender">
+                  <em className="font-medium italic text-white/85">
                     Public Good.
                   </em>
                 </h1>
               </EditorialHeroReveal>
 
-              <EditorialHeroReveal delay={0.16}>
-                <p className="mt-5 max-w-2xl text-base leading-relaxed text-bg-cream/90 sm:text-lg">
+              <EditorialHeroReveal variant="fromLeft" delay={0.16}>
+                <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">
                   {preamblePurpose}
                 </p>
               </EditorialHeroReveal>
 
-              <EditorialHeroReveal delay={0.24}>
-                <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/15 pt-6 text-xs text-bg-cream/85 sm:text-sm">
+              <EditorialHeroReveal variant="rise" delay={0.24}>
+                <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/15 pt-6 text-xs text-white/75 sm:text-sm">
                   <span>
                     <strong className="font-semibold text-white">Type:</strong>{" "}
                     {registration.entityType}
@@ -127,6 +150,7 @@ export default function AboutPage() {
                 src="/images/interior/about-hero.jpg"
                 alt="Two young schoolgirls seated at a wooden desk reading an illustrated textbook together"
                 aspect="4/3"
+                direction="fromRight"
                 priority
                 tone="dark"
                 sizes="(max-width: 1024px) 100vw, 42vw"
@@ -142,7 +166,7 @@ export default function AboutPage() {
       <Section surface="cream" spacing="lg" separatorBottom>
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-4">
-            <MotionReveal className="lg:sticky lg:top-28">
+            <MotionReveal variant="fromLeft" className="lg:sticky lg:top-28">
               <Eyebrow tone="lavender">In Simple Words</Eyebrow>
               <blockquote className="mt-5 border-l-2 border-brand-orange pl-5 font-serif text-2xl font-medium italic leading-snug text-text-primary sm:text-3xl">
                 &ldquo;Set up only for charity, not for profit, to support women
@@ -155,13 +179,13 @@ export default function AboutPage() {
           </div>
 
           <div className="space-y-6 lg:col-span-8">
-            <MotionReveal>
+            <MotionReveal variant="bottomMask">
               <h2 className="text-heading-1 text-text-primary">
                 Why We Started Santosh Arora Trust
               </h2>
             </MotionReveal>
 
-            <MotionReveal delay={0.08}>
+            <MotionReveal variant="fromRight" delay={0.08}>
               <div className="space-y-5 text-base leading-[1.8] text-text-secondary sm:text-[17px]">
                 <p>
                   Santosh Arora Trust was started by Mr. Karun Arora, together
@@ -193,8 +217,8 @@ export default function AboutPage() {
             </MotionReveal>
 
             {/* Editorial Inline Fact Strip (No heavy boxed cards) */}
-            <MotionReveal delay={0.14}>
-              <div className="grid gap-6 border-t border-border-warm pt-7 sm:grid-cols-3">
+            <MotionStagger className="grid gap-6 border-t border-border-warm pt-7 sm:grid-cols-3">
+              <MotionStaggerItem direction="fromLeft">
                 <div>
                   <p className="text-eyebrow text-brand-forest">Where We Are</p>
                   <p className="mt-2 font-serif text-2xl font-semibold text-text-primary">
@@ -204,6 +228,8 @@ export default function AboutPage() {
                     Setting up and planning our work.
                   </p>
                 </div>
+              </MotionStaggerItem>
+              <MotionStaggerItem direction="rise">
                 <div>
                   <p className="text-eyebrow text-brand-lavender-deep">
                     Our Goals
@@ -215,6 +241,8 @@ export default function AboutPage() {
                     Clause 4(a) to 4(j) of our Trust Deed.
                   </p>
                 </div>
+              </MotionStaggerItem>
+              <MotionStaggerItem direction="fromRight">
                 <div>
                   <p className="text-eyebrow text-text-primary">
                     Who We Help
@@ -226,8 +254,8 @@ export default function AboutPage() {
                     Used only for charity within India.
                   </p>
                 </div>
-              </div>
-            </MotionReveal>
+              </MotionStaggerItem>
+            </MotionStagger>
           </div>
         </div>
       </Section>
@@ -236,7 +264,7 @@ export default function AboutPage() {
       <Section surface="white" spacing="lg" separatorBottom>
         <div className="grid items-start gap-12 lg:grid-cols-12">
           <div className="space-y-8 lg:col-span-6">
-            <MotionReveal>
+            <MotionReveal variant="fromLeft">
               <div className="flex items-center gap-3">
                 <span className="grid h-10 w-10 place-items-center rounded-full bg-bg-sage-wash text-brand-forest">
                   <Compass className="h-5 w-5" aria-hidden="true" />
@@ -250,7 +278,7 @@ export default function AboutPage() {
               </h2>
             </MotionReveal>
 
-            <MotionReveal delay={0.08}>
+            <MotionReveal variant="fromLeft" delay={0.08}>
               <div className="space-y-6 border-t border-border-subtle pt-6">
                 <div>
                   <h3 className="font-serif text-2xl font-semibold text-brand-forest">
@@ -284,11 +312,12 @@ export default function AboutPage() {
               src="/images/home/intro.jpg"
               alt="Parent sharing an open book with a young child seated together at a sunlit wooden table"
               aspect="4/3"
+              direction="liquidBottom"
               sizes="(max-width: 1024px) 100vw, 48vw"
               caption="We want to help with education, support families and build strong communities."
             />
 
-            <MotionReveal delay={0.12}>
+            <MotionReveal variant="fromRight" delay={0.12}>
               <div className="rounded-[var(--radius-panel)] border border-border-warm bg-bg-cream-soft p-6 sm:p-8">
                 <div className="flex items-center gap-2.5">
                   <HeartHandshake
@@ -323,7 +352,7 @@ export default function AboutPage() {
       <Section surface="lavender" spacing="lg" separatorBottom>
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <MotionReveal>
+            <MotionReveal variant="fromLeft">
               <Eyebrow tone="lavender">Our Values</Eyebrow>
               <h2 className="text-heading-1 mt-4 text-text-primary">
                 Values Written Into Our Trust Deed
@@ -338,8 +367,8 @@ export default function AboutPage() {
           <div className="lg:col-span-8">
             <div className="divide-y divide-brand-lavender/45 border-y border-brand-lavender/45">
               {CORE_VALUES.map((value, idx) => (
-                <MotionReveal key={value.number} delay={idx * 0.06}>
-                  <div className="grid gap-3 py-6 sm:grid-cols-12 sm:items-baseline sm:gap-6">
+                <MotionReveal key={value.number} variant="fromRight" delay={idx * 0.06}>
+                  <div className="grid gap-3 py-6 transition-transform duration-300 hover:translate-x-1.5 sm:grid-cols-12 sm:items-baseline sm:gap-6">
                     <div className="flex items-center gap-3 sm:col-span-5">
                       <span
                         aria-hidden="true"
@@ -366,7 +395,7 @@ export default function AboutPage() {
       {/* 5. Founding Board of Trustees Roster & Internal Navigation */}
       <Section surface="cream" spacing="lg">
         <div className="flex flex-col justify-between gap-6 border-b border-border-warm pb-8 md:flex-row md:items-end">
-          <MotionReveal>
+          <MotionReveal variant="fromLeft">
             <Eyebrow tone="forest">Our People</Eyebrow>
             <h2 className="text-heading-1 mt-4 text-text-primary">
               Our Trustees
@@ -380,7 +409,7 @@ export default function AboutPage() {
             </p>
           </MotionReveal>
 
-          <MotionReveal delay={0.1}>
+          <MotionReveal variant="fromRight" delay={0.1}>
             <Link
               href="/governance"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-forest underline decoration-brand-lime underline-offset-4 transition-colors hover:text-text-primary"
@@ -400,10 +429,26 @@ export default function AboutPage() {
               "border-brand-lime",
             ];
             return (
-              <MotionReveal key={trustee.fullName} delay={index * 0.06}>
+              <MotionReveal
+                key={trustee.fullName}
+                variant={index % 2 === 0 ? "softScale" : "rise"}
+                delay={index * 0.06}
+              >
                 <div
-                  className={`border-t-2 ${topBorders[index % topBorders.length]} pt-5`}
+                  data-cursor="media"
+                  className={`group border-t-2 ${topBorders[index % topBorders.length]} pt-5`}
                 >
+                  <div className="relative mb-5 aspect-[3/4] w-full overflow-hidden rounded-2xl bg-bg-white ring-1 ring-border-warm">
+                    <LiquidReveal delay={index * 0.08} duration={1.35} replay>
+                      <Image
+                        src={trustee.photo}
+                        alt={`Portrait of ${trustee.fullName}, ${trustee.deedRole} of Santosh Arora Trust`}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 24vw"
+                        className="object-cover object-[50%_15%] transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                      />
+                    </LiquidReveal>
+                  </div>
                   <h3 className="font-serif text-2xl font-semibold text-text-primary">
                     {trustee.fullName}
                   </h3>
@@ -423,7 +468,7 @@ export default function AboutPage() {
         </div>
 
         {/* Bottom Internal Navigation */}
-        <MotionReveal delay={0.14}>
+        <MotionReveal variant="softScale" delay={0.14}>
           <div className="mt-14 flex flex-col justify-between gap-6 rounded-[var(--radius-panel)] border border-border-warm bg-bg-white p-6 shadow-[var(--shadow-soft)] sm:flex-row sm:items-center sm:p-8">
             <div>
               <p className="text-eyebrow text-text-subtle">Keep Reading</p>

@@ -11,7 +11,7 @@
   --bg: #f5f0cc;
   --surface: #fcfaee;
   --radius: 22px;
-  font-family: var(--font-inter-tight), "Inter Tight", system-ui, sans-serif;
+  font-family: var(--font-author), system-ui, sans-serif;
   color: var(--ink);
   background: #ebe3b7;
   position: relative;

@@ -3,6 +3,7 @@ import { SITE_ROUTES } from "@/data/navigation";
 import { HOME_FOCUS_AREAS } from "@/data/home";
 import { SANTOSH_ARORA_TRUST } from "@/data/trust";
 import { Container } from "@/components/ui/Container";
+import { ElegantContactDetails } from "@/components/contact/ElegantContactDetails";
 
 export function SiteFooter() {
   const { registration, regulatoryStatus } = SANTOSH_ARORA_TRUST;
@@ -94,20 +95,11 @@ export function SiteFooter() {
                 </dt>
                 <dd className="inline">{registration.jurisdiction}</dd>
               </div>
-              <div>
-                <dt className="inline font-medium text-text-primary">
-                  Email:{" "}
-                </dt>
-                <dd className="inline">
-                  <a
-                    href={`mailto:${registration.correspondenceEmail}`}
-                    className="break-all font-medium text-brand-forest underline decoration-brand-lime underline-offset-4 hover:text-text-primary"
-                  >
-                    {registration.correspondenceEmail}
-                  </a>
-                </dd>
-              </div>
             </dl>
+
+            <div className="mt-4">
+              <ElegantContactDetails layout="stack" />
+            </div>
 
             <p className="mt-3 text-xs leading-relaxed text-text-subtle">
               See all our official details on{" "}

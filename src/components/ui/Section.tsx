@@ -25,12 +25,12 @@ interface SectionProps {
 }
 
 const SURFACE_CLASSES: Record<SectionSurface, string> = {
-  white: "bg-bg-white text-text-primary",
-  cream: "bg-bg-cream text-text-primary",
-  luminous: "surface-luminous text-text-primary",
-  sage: "bg-bg-sage-wash text-text-primary",
-  lavender: "bg-bg-lavender-wash text-text-primary",
-  forest: "bg-brand-forest text-text-inverse",
+  white: "bg-white text-[#0d2140]",
+  cream: "bg-[#77a2e2] text-[#0d2140]",
+  luminous: "surface-luminous text-[#0d2140]",
+  sage: "bg-[#edf4fd] text-[#0d2140]",
+  lavender: "bg-[#e3edfc] text-[#0d2140]",
+  forest: "bg-gradient-to-br from-[#2b589d] via-[#4173bf] to-[#5888d4] text-white",
 };
 
 const SPACING_CLASSES: Record<SectionSpacing, string> = {
