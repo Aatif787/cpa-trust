@@ -56,7 +56,7 @@ export function Section({
     <section
       id={id}
       aria-label={ariaLabel}
-      className={`relative ${SURFACE_CLASSES[surface]} ${SPACING_CLASSES[spacing]} ${className}`}
+      className={`relative overflow-x-clip ${SURFACE_CLASSES[surface]} ${SPACING_CLASSES[spacing]} ${className}`}
     >
       {separatorTop ? (
         <div aria-hidden="true" className="separator-editorial absolute inset-x-0 top-0" />

@@ -104,7 +104,7 @@ export function CustomCursor() {
         ref={ringRef}
         aria-hidden="true"
         data-mode="default"
-        className="pointer-events-none fixed left-0 top-0 z-[90] hidden h-9 w-9 items-center justify-center rounded-full border-2 border-[#0d2140]/60 bg-white/25 opacity-0 backdrop-blur-[2px] transition-[width,height,border-color,background-color,opacity] duration-200 ease-out will-change-transform lg:flex [&[data-mode='interactive']]:h-13 [&[data-mode='interactive']]:w-13 [&[data-mode='interactive']]:border-[#184385] [&[data-mode='interactive']]:bg-[#edf4fd]/40 [&[data-mode='media']]:h-16 [&[data-mode='media']]:w-16 [&[data-mode='media']]:border-white [&[data-mode='media']]:bg-[#0d2140]/85 [&[data-mode='explore']]:h-18 [&[data-mode='explore']]:w-18 [&[data-mode='explore']]:border-[#8FAF83] [&[data-mode='explore']]:bg-[#344C3B]/92 motion-reduce:!hidden"
+        className="pointer-events-none fixed left-0 top-0 z-[90] hidden h-9 w-9 items-center justify-center rounded-full border-2 border-[#0d2140]/60 bg-white/25 opacity-0 backdrop-blur-[2px] transition-[width,height,border-color,background-color,opacity] duration-200 ease-out will-change-transform lg:flex [&[data-mode='interactive']]:h-13 [&[data-mode='interactive']]:w-13 [&[data-mode='interactive']]:border-[#184385] [&[data-mode='interactive']]:bg-[#edf4fd]/40 [&[data-mode='media']]:h-16 [&[data-mode='media']]:w-16 [&[data-mode='media']]:border-white [&[data-mode='media']]:bg-[#0d2140]/85 [&[data-mode='explore']]:h-18 [&[data-mode='explore']]:w-18 [&[data-mode='explore']]:border-[#77a2e2] [&[data-mode='explore']]:bg-[#132f5c]/92 motion-reduce:!hidden"
         style={{
           boxShadow: "0 0 0 1.5px rgba(255, 255, 255, 0.78)",
         }}
@@ -112,7 +112,7 @@ export function CustomCursor() {
         <span className="cursor-view-label hidden text-[10px] font-bold tracking-[0.18em] text-white [[data-mode='media']>&]:inline">
           VIEW
         </span>
-        <span className="cursor-explore-label hidden text-[9.5px] font-bold tracking-[0.16em] text-[#F5F0E6] [[data-mode='explore']>&]:inline">
+        <span className="cursor-explore-label hidden text-[9.5px] font-bold tracking-[0.16em] text-white [[data-mode='explore']>&]:inline">
           EXPLORE
         </span>
       </div>

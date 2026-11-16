@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { SITE_ROUTES } from "@/data/navigation";
+import { HEADER_NAV_ITEMS } from "@/data/navigation";
 import { Container } from "@/components/ui/Container";
 import { ScrollProgressBar } from "@/components/ui/MotionReveal";
 import { useSafeReducedMotion } from "@/lib/useSafeReducedMotion";
@@ -49,44 +50,62 @@ export function SiteHeader() {
     >
       <Container size="wide">
         <div className="flex h-16 items-center justify-between gap-4 sm:h-[4.5rem]">
-          {/* Temporary typographic wordmark until an official Trust logo is approved */}
           <Link
             href="/"
             onClick={() => setMobileOpen(false)}
-            className="group inline-flex flex-col leading-none focus-visible:rounded-md"
+            className="group inline-flex items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#184385]"
           >
-            <span className="font-serif text-xl font-semibold tracking-tight text-text-primary transition-colors group-hover:text-brand-forest sm:text-2xl">
-              Santosh Arora Trust
-            </span>
-            <span className="mt-1 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-text-secondary">
-              <span
-                aria-hidden="true"
-                className="inline-block h-px w-4 bg-brand-orange transition-all duration-300 group-hover:w-6"
-              />
-              Public Charitable Trust
-            </span>
+            <Image
+              src="/brand/logo.png"
+              alt="Santosh Arora Trust"
+              width={519}
+              height={262}
+              priority
+              className="h-12 w-auto shrink-0 transition-transform duration-300 group-hover:scale-[1.03] sm:h-14"
+            />
           </Link>
 
           <nav
             aria-label="Primary navigation"
-            className="hidden lg:flex lg:items-center lg:gap-1 xl:gap-1.5"
+            className="hidden lg:flex lg:items-center lg:gap-0.5 xl:gap-1.5"
           >
-            {SITE_ROUTES.map((item) => {
-              const isActive =
+            {HEADER_NAV_ITEMS.map((item) => {
+              const isActive = !item.external && (
                 item.href === "/"
                   ? pathname === "/"
-                  : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                  : pathname === item.href || pathname.startsWith(`${item.href}/`)
+              );
+
+              const linkClass = `group relative whitespace-nowrap rounded-full px-2.5 py-2 text-[13px] font-medium transition-colors duration-200 xl:px-3.5 xl:text-sm ${
+                isActive
+                  ? "text-[#0d2140]"
+                  : "text-text-primary/80 hover:bg-[#edf4fd]/70 hover:text-[#0d2140]"
+              }`;
+
+              if (item.external) {
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={linkClass}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-x-3 bottom-1 h-[1.5px] origin-left scale-x-0 rounded-full bg-[#184385]/70 transition-transform duration-300 ease-out group-hover:scale-x-100 motion-reduce:hidden"
+                    />
+                    {item.label}
+                  </a>
+                );
+              }
 
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   aria-current={isActive ? "page" : undefined}
-                  className={`group relative whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium transition-colors duration-200 xl:px-3.5 xl:text-sm ${
-                    isActive
-                      ? "text-[#0d2140]"
-                      : "text-text-primary/80 hover:bg-[#edf4fd]/70 hover:text-[#0d2140]"
-                  }`}
+                  className={linkClass}
                 >
                   {isActive ? (
                     <motion.span
@@ -137,32 +156,46 @@ export function SiteHeader() {
           >
             <Container className="py-4">
               <ul className="flex flex-col gap-1.5">
-                {SITE_ROUTES.map((item) => {
-                  const isActive =
+                {HEADER_NAV_ITEMS.map((item) => {
+                  const isActive = !item.external && (
                     item.href === "/"
                       ? pathname === "/"
-                      : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                      : pathname === item.href || pathname.startsWith(`${item.href}/`)
+                  );
+                  const mobileClass = `flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
+                    isActive
+                      ? "bg-bg-lavender-wash text-brand-forest ring-1 ring-brand-lavender/45"
+                      : "text-text-primary hover:bg-bg-cream-soft hover:text-brand-forest"
+                  }`;
 
                   return (
                     <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        aria-current={isActive ? "page" : undefined}
-                        onClick={() => setMobileOpen(false)}
-                        className={`flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
-                          isActive
-                            ? "bg-bg-lavender-wash text-brand-forest ring-1 ring-brand-lavender/45"
-                            : "text-text-primary hover:bg-bg-cream-soft hover:text-brand-forest"
-                        }`}
-                      >
-                        <span>{item.label}</span>
-                        {isActive ? (
-                          <span
-                            aria-hidden="true"
-                            className="h-1.5 w-1.5 rounded-full bg-brand-orange"
-                          />
-                        ) : null}
-                      </Link>
+                      {item.external ? (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setMobileOpen(false)}
+                          className={mobileClass}
+                        >
+                          <span>{item.label}</span>
+                        </a>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          aria-current={isActive ? "page" : undefined}
+                          onClick={() => setMobileOpen(false)}
+                          className={mobileClass}
+                        >
+                          <span>{item.label}</span>
+                          {isActive ? (
+                            <span
+                              aria-hidden="true"
+                              className="h-1.5 w-1.5 rounded-full bg-brand-orange"
+                            />
+                          ) : null}
+                        </Link>
+                      )}
                     </li>
                   );
                 })}

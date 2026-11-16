@@ -35,7 +35,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
           ? { duration: 0 }
           : { duration: 0.45, ease: PAGE_EASE }
       }
-      className="motion-reduce:!transform-none motion-reduce:[clip-path:none!important]"
+      className="overflow-x-clip motion-reduce:!transform-none motion-reduce:[clip-path:none!important]"
     >
       {children}
     </motion.div>

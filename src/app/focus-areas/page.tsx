@@ -14,7 +14,7 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/focus-areas",
   title: "Charitable Focus Areas — Education, Women Empowerment & Healthcare",
   description:
-    "Explore the six core focus areas and ten Trust Deed objectives of Santosh Arora Trust: women empowerment, education and literacy, skill development, healthcare and medical relief, social welfare, and community development.",
+    "Six charitable focus areas and ten Trust Deed goals covering women empowerment, education, vocational skills, healthcare, and community welfare.",
   keywords: [
     "Women Empowerment",
     "Education and Literacy",
@@ -108,10 +108,10 @@ export default function FocusAreasPage() {
                 <p className="mt-2 text-sm font-semibold text-text-primary">
                   Main: {registration.darpanPrimarySector}
                 </p>
-                <p className="mt-1 text-sm text-text-secondary">
+                <p className="mt-1 text-sm font-medium text-[#0d2140]">
                   Second: {registration.darpanSecondarySector}
                 </p>
-                <p className="mt-2 text-xs text-text-subtle">
+                <p className="mt-2 text-xs leading-relaxed text-[#14305a]">
                   Who we want to help: {intendedBeneficiaryScope}
                 </p>
               </div>
@@ -119,16 +119,16 @@ export default function FocusAreasPage() {
           </div>
 
           {/* Direct Smooth Anchor Jump Links matching Homepage Mosaic */}
-          <EditorialHeroReveal variant="rise" delay={0.26}>
+          <EditorialHeroReveal variant="rise" delay={0.14}>
             <nav
               aria-label="Focus areas quick navigation"
-              className="mt-10 flex flex-wrap gap-2.5 border-t border-border-warm pt-6"
+              className="mt-10 flex flex-wrap gap-2.5 border-t border-white/45 pt-6"
             >
               {ANCHOR_NAV.map((item) => (
                 <a
                   key={item.id}
                   href={`#${item.id}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-border-warm bg-bg-white/90 px-4 py-2 text-xs font-medium text-text-primary shadow-[var(--shadow-soft)] transition-all duration-200 hover:-translate-y-px hover:border-brand-forest hover:bg-bg-sage-wash focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-lavender-deep sm:text-sm"
+                  className="inline-flex min-h-[40px] items-center gap-2 rounded-full border border-white bg-white px-4 py-2 text-xs font-semibold text-[#0d2140] shadow-[var(--shadow-soft)] transition-all duration-200 hover:-translate-y-px hover:bg-[#edf4fd] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0d2140] sm:text-sm"
                 >
                   <span className="font-serif italic text-brand-lavender-deep">
                     {item.num}

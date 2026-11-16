@@ -2,12 +2,10 @@
 
 import { useRef, useState, type FormEvent } from "react";
 import {
-  AlertCircle,
   Check,
   CheckCircle2,
   Copy,
   Info,
-  Loader2,
   Mail,
   RefreshCw,
   Send,
@@ -46,7 +44,7 @@ export interface EnquiryFormValues {
 
 type FieldName = keyof EnquiryFormValues;
 type FieldErrors = Partial<Record<FieldName, string>>;
-type FormStatus = "idle" | "submitting" | "success" | "error";
+type FormStatus = "idle" | "ready";
 
 const INITIAL_VALUES: EnquiryFormValues = {
   fullName: "",
@@ -59,14 +57,6 @@ const INITIAL_VALUES: EnquiryFormValues = {
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const STATE_EASE = [0.22, 1, 0.36, 1] as const;
-
-/**
- * Inspects the workspace configuration honestly:
- * No email transport, API endpoint, or serverless mailer is currently configured
- * in this repository. Switch this boundary only once a real server-side route
- * handler or verified delivery integration is connected and tested.
- */
-const BACKEND_DELIVERY_ENABLED = false;
 
 function validateEnquiry(values: EnquiryFormValues): FieldErrors {
   const errors: FieldErrors = {};
@@ -103,12 +93,8 @@ function validateEnquiry(values: EnquiryFormValues): FieldErrors {
   return errors;
 }
 
-function buildMailtoHref(values: EnquiryFormValues, recipient: string): string {
-  const subjectPrefix = values.category ? `[${values.category}] ` : "";
-  const subject = encodeURIComponent(
-    `${subjectPrefix}${values.subject.trim()}`
-  );
-  const lines = [
+function buildFormattedBody(values: EnquiryFormValues): string {
+  return [
     `Name: ${values.fullName.trim()}`,
     values.organisation.trim()
       ? `Organisation: ${values.organisation.trim()}`
@@ -117,49 +103,19 @@ function buildMailtoHref(values: EnquiryFormValues, recipient: string): string {
     `Reply Email: ${values.email.trim()}`,
     "",
     values.message.trim(),
-  ].filter((line): line is string => line !== null);
-
-  return `mailto:${recipient}?subject=${subject}&body=${encodeURIComponent(lines.join("\n"))}`;
+  ]
+    .filter((line): line is string => line !== null)
+    .join("\n");
 }
 
-function SubmissionSuccessPanel({
-  values,
-  onReset,
-}: {
-  values: EnquiryFormValues;
-  onReset: () => void;
-}) {
-  return (
-    <div
-      role="status"
-      aria-live="polite"
-      className="rounded-[var(--radius-card)] border border-brand-lime/55 bg-bg-sage-wash p-6 sm:p-8"
-    >
-      <div className="flex items-start gap-4">
-        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#184385] text-white shadow-[var(--shadow-soft)]">
-          <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
-        </span>
-        <div>
-          <Eyebrow tone="forest">Message Sent</Eyebrow>
-          <h3 className="text-heading-2 mt-3 text-text-primary">
-            Thank you, {values.fullName.trim()}.
-          </h3>
-          <p className="mt-2 text-sm leading-relaxed text-text-secondary sm:text-base">
-            Your message about <strong>{values.category}</strong> has been
-            sent. We will reply to{" "}
-            <strong className="text-text-primary">{values.email.trim()}</strong>.
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-6 flex flex-wrap gap-3 border-t border-brand-lime/30 pt-5">
-        <Button type="button" variant="secondary" size="md" onClick={onReset}>
-          <RefreshCw className="h-4 w-4" aria-hidden="true" />
-          <span>Send Another Message</span>
-        </Button>
-      </div>
-    </div>
+function buildMailtoHref(values: EnquiryFormValues, recipient: string): string {
+  const subjectPrefix = values.category ? `[${values.category}] ` : "";
+  const subject = encodeURIComponent(
+    `${subjectPrefix}${values.subject.trim()}`
   );
+  return `mailto:${recipient}?subject=${subject}&body=${encodeURIComponent(
+    buildFormattedBody(values)
+  )}`;
 }
 
 export function ContactEnquiryForm() {
@@ -170,8 +126,8 @@ export function ContactEnquiryForm() {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({});
   const [status, setStatus] = useState<FormStatus>("idle");
-  const [statusMessage, setStatusMessage] = useState<string>("");
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedMessage, setCopiedMessage] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -214,7 +170,18 @@ export function ContactEnquiryForm() {
     }
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleCopyMessage() {
+    try {
+      const fullDraft = `To: ${correspondenceEmail}\nSubject: [${values.category || "General Enquiry"}] ${values.subject.trim()}\n\n${buildFormattedBody(values)}`;
+      await navigator.clipboard.writeText(fullDraft);
+      setCopiedMessage(true);
+      window.setTimeout(() => setCopiedMessage(false), 2500);
+    } catch {
+      setCopiedMessage(false);
+    }
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const validationErrors = validateEnquiry(values);
@@ -240,17 +207,8 @@ export function ContactEnquiryForm() {
       return;
     }
 
-    // Never pretend enquiries are delivered when no backend exists.
-    if (!BACKEND_DELIVERY_ENABLED) {
-      setStatus("error");
-      setStatusMessage(
-        "This form cannot send messages by itself yet, so your message has not been sent. Your details are ready. Use the button below to send them from your own email app."
-      );
-      return;
-    }
-
-    setStatus("submitting");
-    setStatusMessage("");
+    setStatus("ready");
+    window.location.href = buildMailtoHref(values, correspondenceEmail);
   }
 
   function handleReset() {
@@ -258,7 +216,8 @@ export function ContactEnquiryForm() {
     setErrors({});
     setTouched({});
     setStatus("idle");
-    setStatusMessage("");
+    setCopiedEmail(false);
+    setCopiedMessage(false);
   }
 
   return (
@@ -304,15 +263,92 @@ export function ContactEnquiryForm() {
 
       <div className="mt-6">
         <AnimatePresence mode="wait">
-          {status === "success" ? (
+          {status === "ready" ? (
             <motion.div
-              key="success-state"
+              key="ready-state"
+              role="status"
+              aria-live="polite"
               initial={prefersReduced ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={prefersReduced ? undefined : { opacity: 0, y: -8 }}
-              transition={{ duration: 0.3, ease: STATE_EASE }}
+              exit={prefersReduced ? undefined : { opacity: 0, y: -6 }}
+              transition={{ duration: 0.18, ease: STATE_EASE }}
+              className="rounded-[var(--radius-card)] border border-[#77a2e2]/45 bg-[#edf4fd] p-6 sm:p-8"
             >
-              <SubmissionSuccessPanel values={values} onReset={handleReset} />
+              <div className="flex items-start gap-4">
+                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#184385] text-white shadow-[var(--shadow-soft)]">
+                  <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
+                </span>
+                <div>
+                  <Eyebrow tone="forest">Email Draft Prepared</Eyebrow>
+                  <h3 className="text-heading-2 mt-3 text-[#0d2140]">
+                    Ready in your email app, {values.fullName.trim()}.
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[#1a3560] sm:text-base">
+                    This site has no server mailer, so your message has not been
+                    transmitted automatically. Use the actions below to send
+                    your draft to <strong>{correspondenceEmail}</strong>.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-[#77a2e2]/30 pt-5">
+                <a
+                  href={buildMailtoHref(values, correspondenceEmail)}
+                  className="inline-flex h-11 items-center gap-2 rounded-full bg-[#184385] px-5 text-sm font-semibold text-white shadow-[var(--shadow-soft)] transition-all hover:bg-[#113368]"
+                >
+                  <Mail className="h-4 w-4" aria-hidden="true" />
+                  <span>Open Email App</span>
+                </a>
+
+                <button
+                  type="button"
+                  onClick={handleCopyMessage}
+                  className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full bg-white px-4 text-sm font-medium text-[#0d2140] ring-1 ring-[#77a2e2]/50 transition-colors hover:bg-[#f4f8fe]"
+                >
+                  {copiedMessage ? (
+                    <>
+                      <Check className="h-4 w-4 text-[#184385]" aria-hidden="true" />
+                      <span>Copied Full Draft</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-4 w-4 text-[#184385]" aria-hidden="true" />
+                      <span>Copy Full Draft</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full bg-white px-4 text-sm font-medium text-[#0d2140] ring-1 ring-[#77a2e2]/50 transition-colors hover:bg-[#f4f8fe]"
+                >
+                  {copiedEmail ? (
+                    <>
+                      <Check className="h-4 w-4 text-[#184385]" aria-hidden="true" />
+                      <span>Copied Address</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-4 w-4 text-[#184385]" aria-hidden="true" />
+                      <span>Copy {correspondenceEmail}</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setStatus("idle")}
+                  className="inline-flex h-11 cursor-pointer items-center px-3 text-sm font-medium text-[#184385] underline underline-offset-4 hover:text-[#0d2140]"
+                >
+                  Edit Details
+                </button>
+
+                <Button type="button" variant="secondary" size="sm" onClick={handleReset}>
+                  <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
+                  <span>Start Over</span>
+                </Button>
+              </div>
             </motion.div>
           ) : (
             <motion.form
@@ -325,69 +361,6 @@ export function ContactEnquiryForm() {
               transition={{ duration: 0.25 }}
               className="space-y-6"
             >
-              {status === "error" ? (
-                <div
-                  role="alert"
-                  aria-live="assertive"
-                  className="rounded-2xl border border-brand-orange/60 bg-bg-orange-wash p-5"
-                >
-                  <div className="flex items-start gap-3">
-                    <AlertCircle
-                      className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange"
-                      aria-hidden="true"
-                    />
-                    <div className="flex-1 space-y-3">
-                      <div>
-                        <h3 className="font-serif text-xl font-semibold text-text-primary">
-                          Message Not Sent Yet
-                        </h3>
-                        <p className="mt-1 text-sm leading-relaxed text-text-primary/85">
-                          {statusMessage}
-                        </p>
-                      </div>
-
-                      <div className="flex flex-wrap items-center gap-3 pt-1">
-                        <a
-                          href={buildMailtoHref(values, correspondenceEmail)}
-                          className="inline-flex h-10 items-center gap-2 rounded-full bg-[#184385] px-5 text-xs font-semibold text-white shadow-[var(--shadow-soft)] transition-all hover:bg-[#113368] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#184385] focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:text-sm"
-                        >
-                          <Mail className="h-4 w-4" aria-hidden="true" />
-                          <span>Open Email</span>
-                        </a>
-
-                        <button
-                          type="button"
-                          onClick={handleCopyEmail}
-                          className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-full bg-bg-white px-4 text-xs font-medium text-brand-forest ring-1 ring-border-forest transition-colors hover:bg-bg-sage-wash focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-lavender-deep sm:text-sm"
-                        >
-                          {copiedEmail ? (
-                            <>
-                              <Check className="h-3.5 w-3.5" aria-hidden="true" />
-                              <span>Copied Address</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="h-3.5 w-3.5" aria-hidden="true" />
-                              <span>Copy {correspondenceEmail}</span>
-                            </>
-                          )}
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setStatus("idle");
-                            setStatusMessage("");
-                          }}
-                          className="inline-flex h-10 cursor-pointer items-center px-3 text-xs font-medium text-text-secondary underline underline-offset-4 hover:text-text-primary sm:text-sm"
-                        >
-                          Continue Editing
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : null}
 
               <MotionStagger staggerDelay={0.07} className="space-y-6">
                 <div className="grid gap-5 sm:grid-cols-2">
@@ -627,27 +600,13 @@ export function ContactEnquiryForm() {
                       type="submit"
                       variant="primary"
                       size="lg"
-                      disabled={status === "submitting"}
-                      aria-busy={status === "submitting"}
                       className="group w-full sm:w-auto"
                     >
-                      {status === "submitting" ? (
-                        <>
-                          <Loader2
-                            className="h-4 w-4 animate-spin"
-                            aria-hidden="true"
-                          />
-                          <span>Sending Enquiry...</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>Prepare My Email</span>
-                          <Send
-                            className="h-4 w-4 text-white transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                            aria-hidden="true"
-                          />
-                        </>
-                      )}
+                      <span>Prepare My Email</span>
+                      <Send
+                        className="h-4 w-4 text-white transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                        aria-hidden="true"
+                      />
                     </Button>
                   </div>
                 </MotionStaggerItem>

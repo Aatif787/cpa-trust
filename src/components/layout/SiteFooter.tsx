@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { SITE_ROUTES } from "@/data/navigation";
 import { HOME_FOCUS_AREAS } from "@/data/home";
@@ -18,19 +19,26 @@ export function SiteFooter() {
           <div className="sm:col-span-2 lg:col-span-4">
             <Link
               href="/"
-              className="inline-block font-serif text-2xl font-semibold tracking-tight text-text-primary transition-colors hover:text-brand-forest"
+              aria-label={registration.legalName}
+              className="inline-block rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#184385]"
             >
-              {registration.legalName}
+              <Image
+                src="/brand/logo.png"
+                alt={`${registration.legalName} logo`}
+                width={519}
+                height={262}
+                className="h-16 w-auto sm:h-[4.5rem]"
+              />
             </Link>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-text-secondary">
               A new public charitable trust under{" "}
               {registration.applicableLaw}. We want to support women and help
               with education, health and community care.
             </p>
-            <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-bg-cream px-3 py-1 text-xs font-medium text-text-subtle ring-1 ring-border-warm">
+            <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#edf4fd] px-3 py-1 text-xs font-medium text-[#0d2140] ring-1 ring-[#77a2e2]/45">
               <span
                 aria-hidden="true"
-                className="h-1.5 w-1.5 rounded-full bg-brand-lime"
+                className="h-1.5 w-1.5 rounded-full bg-[#184385]"
               />
               DARPAN ID: {registration.darpanId} ({registration.darpanStatus})
             </p>

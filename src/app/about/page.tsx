@@ -6,7 +6,6 @@ import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ButtonLink } from "@/components/ui/Button";
 import { MotionReveal, MotionStagger, MotionStaggerItem } from "@/components/ui/MotionReveal";
-import { LiquidReveal } from "@/components/ui/LiquidReveal";
 import { EditorialImage } from "@/components/interior/EditorialImage";
 import { EditorialHeroReveal } from "@/components/interior/EditorialHeroReveal";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -127,8 +126,8 @@ export default function AboutPage() {
                 </p>
               </EditorialHeroReveal>
 
-              <EditorialHeroReveal variant="rise" delay={0.24}>
-                <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/15 pt-6 text-xs text-white/75 sm:text-sm">
+              <EditorialHeroReveal variant="rise" delay={0.14}>
+                <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/25 pt-6 text-xs text-white/95 sm:text-sm">
                   <span>
                     <strong className="font-semibold text-white">Type:</strong>{" "}
                     {registration.entityType}
@@ -439,15 +438,14 @@ export default function AboutPage() {
                   className={`group border-t-2 ${topBorders[index % topBorders.length]} pt-5`}
                 >
                   <div className="relative mb-5 aspect-[3/4] w-full overflow-hidden rounded-2xl bg-bg-white ring-1 ring-border-warm">
-                    <LiquidReveal delay={index * 0.08} duration={1.35} replay>
-                      <Image
-                        src={trustee.photo}
-                        alt={`Portrait of ${trustee.fullName}, ${trustee.deedRole} of Santosh Arora Trust`}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 24vw"
-                        className="object-cover object-[50%_15%] transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-                      />
-                    </LiquidReveal>
+                    <Image
+                      src={trustee.photo}
+                      alt={`Portrait of ${trustee.fullName}, ${trustee.deedRole} of Santosh Arora Trust`}
+                      fill
+                      quality={90}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 24vw"
+                      className="object-cover object-[50%_15%] transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                    />
                   </div>
                   <h3 className="font-serif text-2xl font-semibold text-text-primary">
                     {trustee.fullName}

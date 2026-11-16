@@ -55,11 +55,12 @@ export function EditorialImage({
   className = "",
   imageClassName = "",
 }: EditorialImageProps) {
+  const effectiveReplay = replay && !priority;
   const frameRef = useRef<HTMLDivElement>(null);
   const { isMobile } = useViewportFlags();
   const { isVisible, prefersReduced } = useReplayInView(
     frameRef,
-    replay,
+    effectiveReplay,
     priority
   );
 
@@ -125,8 +126,8 @@ export function EditorialImage({
         {direction === "liquidBottom" ? (
           <LiquidReveal
             delay={delay}
-            duration={1.35}
-            replay={replay}
+            duration={priority ? 0.78 : 0.95}
+            replay={effectiveReplay}
             priority={priority}
           >
             {img}
@@ -139,7 +140,7 @@ export function EditorialImage({
               prefersReduced
                 ? { duration: 0 }
                 : isVisible
-                  ? { duration: 1.15, delay, ease: IMAGE_EASE }
+                  ? { duration: priority ? 0.68 : 0.85, delay, ease: IMAGE_EASE }
                   : { duration: 0 }
             }
             className="relative h-full w-full will-change-transform motion-reduce:!transform-none motion-reduce:!opacity-100 motion-reduce:[clip-path:none!important]"

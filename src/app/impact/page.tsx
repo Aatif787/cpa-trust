@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, Compass, FileCheck2, HeartHandshake, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { ButtonLink } from "@/components/ui/Button";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { EditorialImage } from "@/components/interior/EditorialImage";
 import { EditorialHeroReveal } from "@/components/interior/EditorialHeroReveal";
@@ -254,49 +252,6 @@ export default function ImpactPage() {
             ))}
           </div>
         </div>
-      </Section>
-
-      {/* 4. Luminous Closing Commitment & Internal Navigation */}
-      <Section surface="luminous" spacing="md">
-        <MotionReveal variant="softScale">
-          <div className="mx-auto max-w-4xl rounded-[var(--radius-panel)] border border-border-warm bg-bg-white/90 p-7 shadow-[var(--shadow-elevated)] backdrop-blur-sm sm:p-10">
-            <div className="flex items-start gap-4">
-              <span className="hidden h-12 w-12 shrink-0 place-items-center rounded-full bg-bg-sage-wash text-brand-forest sm:grid">
-                <FileCheck2 className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <div>
-                <Eyebrow tone="forest">Honest Reporting</Eyebrow>
-                <h2 className="text-heading-2 mt-3 text-text-primary">
-                  Real Results Only, After the Work Is Done
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-base">
-                  We have not run any programmes yet, so this website does not
-                  show any numbers about people helped. Once our work starts and
-                  our accounts are audited (Clauses 10 and 13), we will share
-                  yearly reports here.
-                </p>
-
-                <div className="mt-7 flex flex-wrap items-center gap-3">
-                  <ButtonLink href="/initiatives" variant="primary" size="md">
-                    <Compass className="h-4 w-4" aria-hidden="true" />
-                    <span>See Our Plans</span>
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </ButtonLink>
-                  <ButtonLink href="/contact" variant="secondary" size="md">
-                    <HeartHandshake className="h-4 w-4" aria-hidden="true" />
-                    <span>Contact Us</span>
-                  </ButtonLink>
-                  <Link
-                    href="/governance"
-                    className="px-3 text-sm font-medium text-brand-forest underline decoration-brand-lime underline-offset-4 hover:text-text-primary"
-                  >
-                    How We Are Run
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </MotionReveal>
       </Section>
     </>
   );

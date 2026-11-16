@@ -15,7 +15,7 @@ export function EditorialHeroReveal({
   delay = 0,
   yOffset,
   variant = "bottomMask",
-  replay = true,
+  replay = false,
   className = "",
 }: {
   children: ReactNode;
@@ -27,11 +27,12 @@ export function EditorialHeroReveal({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const { isMobile } = useViewportFlags();
-  // Start visible on mount so hero animates immediately, then replays on full exit & re-entry
+  // Start visible on mount so above-the-fold hero content never slices or stays dim on load
   const { isVisible, prefersReduced } = useReplayInView(ref, replay, true);
 
-  const dx = isMobile ? 26 : 64;
-  const dy = yOffset ?? (isMobile ? 22 : 44);
+  const dx = isMobile ? 20 : 40;
+  const dy = yOffset ?? (isMobile ? 16 : 24);
+  const clampedDelay = Math.min(delay, 0.16);
 
   const hidden = (() => {
     switch (variant) {
@@ -40,29 +41,15 @@ export function EditorialHeroReveal({
       case "fromRight":
         return { opacity: 0, x: dx, y: 0 };
       case "eyebrow":
-        return {
-          opacity: 0,
-          x: -(isMobile ? 22 : 52),
-          y: 0,
-          clipPath: "inset(0% 100% 0% 0%)",
-        };
+        return { opacity: 0, x: -(isMobile ? 16 : 28), y: 0 };
       case "rise":
-        return { opacity: 0, x: 0, y: dy };
       case "bottomMask":
       default:
-        return {
-          opacity: 0,
-          x: 0,
-          y: dy,
-          clipPath: "inset(100% 0% 0% 0%)",
-        };
+        return { opacity: 0, x: 0, y: dy };
     }
   })();
 
-  const visible =
-    variant === "bottomMask" || variant === "eyebrow"
-      ? { opacity: 1, x: 0, y: 0, clipPath: "inset(0% 0% 0% 0%)" }
-      : { opacity: 1, x: 0, y: 0 };
+  const visible = { opacity: 1, x: 0, y: 0 };
 
   return (
     <div ref={ref} className={className}>
@@ -73,10 +60,10 @@ export function EditorialHeroReveal({
           prefersReduced
             ? { duration: 0 }
             : isVisible
-              ? { duration: 0.78, delay, ease: HERO_EASE }
+              ? { duration: 0.55, delay: clampedDelay, ease: HERO_EASE }
               : { duration: 0 }
         }
-        className="will-change-transform motion-reduce:!transform-none motion-reduce:!opacity-100 motion-reduce:[clip-path:none!important]"
+        className="will-change-transform motion-reduce:!transform-none motion-reduce:!opacity-100"
       >
         {children}
       </motion.div>

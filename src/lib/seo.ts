@@ -144,6 +144,8 @@ export function buildOrganizationJsonLd() {
     name: registration.legalName,
     legalName: registration.legalName,
     url: SITE_URL,
+    logo: absoluteUrl("/brand/logo.png"),
+    image: absoluteUrl("/brand/logo.png"),
     description:
       "Santosh Arora Trust is a newly registered irrevocable public charitable trust in New Delhi under the Indian Trusts Act, 1882 (Reg. No. 2026/22/IV/1415, NGO DARPAN ID DL/2026/1252835), established for education and literacy, women empowerment, skill development, healthcare and medical relief, social welfare, and community development.",
     email: registration.correspondenceEmail,

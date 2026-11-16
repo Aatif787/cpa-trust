@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Cormorant_Garamond } from "next/font/google";
 import localFont from "next/font/local";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -28,6 +29,14 @@ const authorFont = localFont({
     { path: "../../public/font/Author-Bold.otf", weight: "700", style: "normal" },
   ],
   variable: "--font-author",
+  display: "swap",
+});
+
+const heroDisplayFont = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  style: "normal",
+  variable: "--font-hero-display",
   display: "swap",
 });
 
@@ -84,7 +93,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={authorFont.variable}>
+    <html lang="en" className={`${authorFont.variable} ${heroDisplayFont.variable}`}>
       <body className="flex min-h-screen flex-col bg-bg-cream text-text-primary">
         <JsonLd data={[buildOrganizationJsonLd(), buildWebsiteJsonLd()]} />
         <a

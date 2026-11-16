@@ -138,19 +138,20 @@
 }
 
 .hero-display {
-  max-width: 16ch;
-  font-family: var(--font-serif);
-  font-size: clamp(2.6rem, 4.8vw, 4.75rem);
+  max-width: 17ch;
+  font-family: var(--font-hero-display), Georgia, serif;
+  font-size: clamp(2.85rem, 5.1vw, 5rem);
   font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -0.026em;
+  font-style: normal;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
   color: #ffffff;
   text-shadow: none;
 }
 
 .hero-display-glow {
-  font-style: italic;
-  font-weight: 500;
+  font-style: normal;
+  font-weight: 600;
   color: #0d2140;
 }
 
@@ -159,30 +160,32 @@
   display: inline-block;
   overflow: hidden;
   vertical-align: bottom;
+  padding: 0.08em 0 0.18em;
+  margin: -0.08em 0 -0.18em;
 }
 
 .hero-line {
   display: inline-block;
   will-change: transform, opacity;
-  animation: heroLineRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: heroLineRise 0.58s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .hero-line-1 {
-  animation-delay: 0.04s;
+  animation-delay: 0.02s;
 }
 
 .hero-line-2 {
-  animation-delay: 0.2s;
+  animation-delay: 0.1s;
 }
 
 .hero-enter-subcopy {
   will-change: transform, opacity;
-  animation: heroFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.34s both;
+  animation: heroFadeUp 0.56s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
 }
 
 .hero-enter-actions {
   will-change: transform, opacity;
-  animation: heroFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+  animation: heroFadeUp 0.56s cubic-bezier(0.16, 1, 0.3, 1) 0.24s both;
 }
 
 .hero-subcopy {
@@ -318,7 +321,7 @@
   display: flex;
   width: max-content;
   animation: heroMarquee 36s linear infinite;
-  padding: 11px 0;
+  padding: 10px 0 16px;
 }
 
 .hero-bottom-dock:hover .hero-marquee-track,
@@ -349,8 +352,7 @@
 .hero-scroll-anchor {
   position: absolute;
   right: clamp(14px, 2.4vw, 28px);
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 3px;
   z-index: 8;
   display: inline-flex;
   align-items: center;
@@ -367,7 +369,7 @@
 }
 
 .hero-scroll-anchor:hover {
-  transform: translateY(calc(-50% + 2px));
+  transform: translateY(2px);
   background: #edf4fd;
 }
 
@@ -452,7 +454,7 @@
     min-height: calc(100svh - 64px);
   }
   .hero-display {
-    font-size: clamp(2.1rem, 9.5vw, 2.85rem);
+    font-size: clamp(2.35rem, 10.2vw, 3.15rem);
   }
   .hero-scroll-anchor {
     display: none;

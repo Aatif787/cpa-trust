@@ -25,7 +25,7 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/governance",
   title: "Governance, Registration & NGO DARPAN Disclosures",
   description:
-    "Verified registration number (2026/22/IV/1415), NGO DARPAN Unique ID (DL/2026/1252835), Board of Trustees, Trust Deed provisions, annual audit rules, and transparent statutory status of Santosh Arora Trust.",
+    "Registration No. 2026/22/IV/1415, NGO DARPAN DL/2026/1252835, Board of Trustees, audit rules, and statutory disclosures for Santosh Arora Trust.",
   keywords: [
     "Santosh Arora Trust Governance",
     "Charitable Trust in Delhi",
@@ -115,12 +115,12 @@ export default function GovernancePage() {
                 </p>
               </EditorialHeroReveal>
 
-              <EditorialHeroReveal variant="rise" delay={0.24}>
-                <div className="mt-8 flex flex-wrap gap-3 text-xs font-medium text-white/85 sm:text-sm">
-                  <span className="rounded-full bg-white/10 px-4 py-1.5 ring-1 ring-white/20">
+              <EditorialHeroReveal variant="rise" delay={0.14}>
+                <div className="mt-8 flex flex-wrap gap-3 text-xs font-medium text-white sm:text-sm">
+                  <span className="rounded-full bg-white/16 px-4 py-1.5 ring-1 ring-white/35">
                     Reg. No. {registration.registrationNumber}
                   </span>
-                  <span className="rounded-full bg-white/10 px-4 py-1.5 ring-1 ring-white/20">
+                  <span className="rounded-full bg-white/16 px-4 py-1.5 ring-1 ring-white/35">
                     DARPAN: {registration.darpanId} ({registration.darpanStatus})
                   </span>
                 </div>

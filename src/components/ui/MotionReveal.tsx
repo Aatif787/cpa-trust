@@ -173,7 +173,7 @@ export function MotionReveal({
           prefersReduced
             ? { duration: 0 }
             : isVisible
-              ? { duration: 0.8, delay, ease: EDITORIAL_EASE }
+              ? { duration: 0.62, delay: Math.min(delay, 0.18), ease: EDITORIAL_EASE }
               : { duration: 0 }
         }
         className="will-change-transform motion-reduce:!transform-none motion-reduce:!opacity-100 motion-reduce:[clip-path:none!important]"
@@ -210,7 +210,7 @@ export function TextReveal({
           prefersReduced
             ? { duration: 0 }
             : isVisible
-              ? { duration: 0.85, delay, ease: EDITORIAL_EASE }
+              ? { duration: 0.65, delay: Math.min(delay, 0.16), ease: EDITORIAL_EASE }
               : { duration: 0 }
         }
         className="will-change-transform motion-reduce:!transform-none motion-reduce:!opacity-100 motion-reduce:[clip-path:none!important]"

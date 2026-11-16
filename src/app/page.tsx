@@ -8,7 +8,7 @@ export const metadata: Metadata = buildPageMetadata({
   absoluteTitle:
     "Santosh Arora Trust — Charitable Trust in New Delhi for Social Welfare",
   description:
-    "Official website of Santosh Arora Trust, a newly registered public charitable trust in Delhi working towards education and literacy, women empowerment, skill development, healthcare and medical relief, and community development.",
+    "Santosh Arora Trust is a registered public charitable trust in New Delhi for women empowerment, education, skill development, and healthcare relief.",
   keywords: [
     "Santosh Arora Trust",
     "Charitable Trust in Delhi",

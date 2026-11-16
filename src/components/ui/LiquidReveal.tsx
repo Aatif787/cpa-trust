@@ -24,7 +24,7 @@ function buildWaveClipPath(p: number): string {
 export function LiquidReveal({
   children,
   delay = 0,
-  duration = 1.4,
+  duration = 0.95,
   replay = true,
   priority = false,
   className = "",
@@ -36,18 +36,19 @@ export function LiquidReveal({
   priority?: boolean;
   className?: string;
 }) {
+  const effectiveReplay = replay && !priority;
   const rawId = useId();
   const clipId = `liquid-wave-${rawId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const containerRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const { isVisible: inView, prefersReduced } = useReplayInView(
     containerRef,
-    replay,
+    effectiveReplay,
     priority
   );
   const hasPlayedInitialRef = useRef(false);
 
-  const initialP = priority ? 0.18 : 0;
+  const initialP = priority ? 0.35 : 0;
   const progress = useMotionValue(initialP);
   const sheenY = useTransform(progress, [0, 1], ["100%", "-35%"]);
   const sheenOpacity = useTransform(progress, [0, 0.18, 0.78, 1], [0, 0.85, 0.6, 0]);
@@ -72,21 +73,21 @@ export function LiquidReveal({
     }
 
     if (inView) {
-      const startP = priority && !hasPlayedInitialRef.current ? 0.18 : 0;
+      const startP = priority && !hasPlayedInitialRef.current ? 0.35 : 0;
       hasPlayedInitialRef.current = true;
       progress.set(startP);
       const controls = animate(progress, 1, {
-        duration: priority && startP > 0 ? 1.25 : duration,
+        duration: priority && startP > 0 ? 0.72 : duration,
         delay,
         ease: LIQUID_EASE,
       });
       return () => controls.stop();
     }
 
-    if (replay) {
+    if (effectiveReplay) {
       progress.set(0);
     }
-  }, [inView, priority, replay, duration, delay, prefersReduced, progress]);
+  }, [inView, priority, effectiveReplay, duration, delay, prefersReduced, progress]);
 
   return (
     <div ref={containerRef} className={`relative h-full w-full overflow-hidden ${className}`}>

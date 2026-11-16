@@ -14,7 +14,7 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/initiatives",
   title: "Planned Charitable Activities & Initiatives",
   description:
-    "Review the planned charitable activities and community programmes being prepared by Santosh Arora Trust in women empowerment, education, vocational skills, and medical relief, alongside honest status disclosures.",
+    "Review upcoming charitable programmes planned by Santosh Arora Trust in women empowerment, education, vocational skills, and health, with honest disclosures.",
   keywords: [
     "Charitable Activities",
     "Planned Initiatives",
@@ -75,7 +75,7 @@ export default function InitiativesPage() {
                 </p>
               </EditorialHeroReveal>
 
-              <EditorialHeroReveal variant="rise" delay={0.24}>
+              <EditorialHeroReveal variant="rise" delay={0.14}>
                 <div className="mt-8 grid grid-cols-2 gap-6 border-t border-border-warm pt-6">
                   <div>
                     <p className="text-eyebrow text-text-subtle">Plans</p>

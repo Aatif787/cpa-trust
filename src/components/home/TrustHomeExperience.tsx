@@ -27,7 +27,6 @@ import { LiquidReveal } from "@/components/ui/LiquidReveal";
 import { EditorialImage } from "@/components/interior/EditorialImage";
 import { FounderSection } from "@/components/home/FounderSection";
 import { HeroAtelier } from "@/components/home/HeroAtelier";
-import { ParentCompanySection } from "@/components/home/ParentCompanySection";
 import { ElegantContactDetails } from "@/components/contact/ElegantContactDetails";
 
 const { registration, trustees, deedObjectives, plannedInitiatives } =
@@ -163,10 +162,10 @@ export function TrustHomeExperience() {
                 </p>
               </MotionReveal>
 
-              <MotionReveal variant="fromRight" delay={0.2}>
+              <MotionReveal variant="fromRight" delay={0.14}>
                 <Link
                   href="/about"
-                  className="group mt-8 inline-flex items-center gap-2 font-semibold text-brand-forest underline decoration-brand-orange decoration-2 underline-offset-[6px] transition-colors hover:text-brand-orange"
+                  className="group mt-6 inline-flex min-h-[44px] items-center gap-2 py-2 font-semibold text-brand-forest underline decoration-brand-orange decoration-2 underline-offset-[6px] transition-colors hover:text-brand-orange"
                 >
                   Read our story
                   <ArrowRight
@@ -257,7 +256,7 @@ export function TrustHomeExperience() {
               </p>
               <Link
                 href="/governance"
-                className="group mt-8 inline-flex items-center gap-2 font-semibold text-white underline decoration-white/70 decoration-2 underline-offset-[6px] hover:text-white/85"
+                className="group mt-6 inline-flex min-h-[44px] items-center gap-2 py-2 font-semibold text-white underline decoration-white/70 decoration-2 underline-offset-[6px] hover:text-white/85"
               >
                 See how the trust is run
                 <ArrowRight
@@ -291,9 +290,6 @@ export function TrustHomeExperience() {
           </div>
         </Container>
       </section>
-
-      {/* ================= PARENT COMPANY: C P ARORA PRIVATE LIMITED ================= */}
-      <ParentCompanySection />
 
       {/* ================= PLANNED PROGRAMMES ================= */}
       <section aria-labelledby="home-plans-heading" className="bg-bg-cream py-20 sm:py-28">
@@ -355,92 +351,8 @@ export function TrustHomeExperience() {
         </Container>
       </section>
 
-      {/* ================= TRUSTEES ================= */}
-      <section
-        aria-labelledby="home-trustees-heading"
-        className="ambient-field bg-bg-sage-wash py-20 sm:py-28"
-      >
-        <div
-          aria-hidden="true"
-          className="ambient-orb ambient-orb-lavender -right-24 top-16 h-72 w-72"
-        />
-        <Container size="wide" className="relative z-10">
-          <MotionReveal variant="bottomMask" className="mx-auto max-w-2xl text-center">
-            <Eyebrow tone="forest">The People Behind the Trust</Eyebrow>
-            <TextReveal delay={0.05}>
-              <h2
-                id="home-trustees-heading"
-                className="text-heading-1 mt-5 text-brand-forest"
-              >
-                Meet our trustees.
-              </h2>
-            </TextReveal>
-            <p className="mt-4 text-lg leading-relaxed text-text-secondary">
-              The four people who started the trust and look after it
-              together.
-            </p>
-          </MotionReveal>
-
-          <MotionStagger className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {trustees.map((trustee, index) => (
-              <MotionStaggerItem
-                key={trustee.fullName}
-                direction={
-                  index === 0
-                    ? "fromLeft"
-                    : index === 3
-                      ? "fromRight"
-                      : index === 1
-                        ? "rise"
-                        : "softScale"
-                }
-              >
-                <div
-                  data-cursor="media"
-                  className="group flex h-full flex-col rounded-2xl bg-bg-white p-5 ring-1 ring-border-warm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:ring-[#77a2e2]"
-                >
-                  <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl bg-bg-cream ring-1 ring-border-warm">
-                    <LiquidReveal delay={index * 0.08} duration={1.35} replay>
-                      <Image
-                        src={trustee.photo}
-                        alt={`Portrait of ${trustee.fullName}, ${trustee.deedRole} of Santosh Arora Trust`}
-                        fill
-                        quality={90}
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 24vw"
-                        className="object-cover object-[50%_15%] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07]"
-                      />
-                    </LiquidReveal>
-                    <span
-                      className={`absolute left-3 top-3 rounded-full px-3 py-1 text-[11px] font-semibold ${
-                        index === 0
-                          ? "bg-[#184385] text-white"
-                          : "bg-white text-[#0d2140] ring-1 ring-[#77a2e2]/40"
-                      }`}
-                    >
-                      {index === 0 ? "Settlor · Trustee" : "Trustee"}
-                    </span>
-                  </div>
-
-                  <div className="mt-5 flex flex-1 flex-col text-center">
-                    <h3 className="font-serif text-2xl font-semibold text-brand-forest">
-                      {trustee.fullName}
-                    </h3>
-                    <p className="mt-1 text-xs font-semibold uppercase tracking-[0.12em] text-brand-orange">
-                      {trustee.deedRole}
-                    </p>
-                    <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-                      {trustee.summary}
-                    </p>
-                  </div>
-                </div>
-              </MotionStaggerItem>
-            ))}
-          </MotionStagger>
-        </Container>
-      </section>
-
       {/* ================= SHARED CARE SHOWCASE ================= */}
-      <section aria-labelledby="home-care-heading" className="bg-bg-cream pt-16 pb-8 sm:pt-24 sm:pb-10">
+      <section aria-labelledby="home-care-heading" className="border-t border-white/25 bg-bg-cream pt-16 pb-8 sm:pt-24 sm:pb-10">
         <Container size="wide">
           <div className="grid items-center gap-8 rounded-[var(--radius-panel)] bg-bg-white p-6 ring-1 ring-white sm:p-10 lg:grid-cols-12 lg:gap-12">
             <MotionReveal variant="fromLeft" className="lg:col-span-5">
@@ -527,7 +439,7 @@ export function TrustHomeExperience() {
 
                 <Link
                   href="/governance"
-                  className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-forest underline decoration-brand-orange underline-offset-4 hover:text-brand-orange"
+                  className="group mt-4 inline-flex min-h-[44px] items-center gap-2 py-2 text-sm font-semibold text-brand-forest underline decoration-brand-orange underline-offset-4 hover:text-brand-orange"
                 >
                   View all registration details
                   <ArrowRight
@@ -549,9 +461,9 @@ export function TrustHomeExperience() {
                     id="home-cta-heading"
                     className="mt-5 font-serif text-4xl font-semibold leading-tight text-white sm:text-5xl"
                   >
-                    Together, we can make a{" "}
-                    <em className="font-medium italic text-white/85">
-                      real difference.
+                    Start a conversation{" "}
+                    <em className="font-medium italic text-white/90">
+                      with us.
                     </em>
                   </h2>
                   <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/75">
