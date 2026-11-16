@@ -118,7 +118,6 @@ export function EditorialImage({
     <figure className={`m-0 ${className}`}>
       <div
         ref={frameRef}
-        data-cursor="media"
         className={`group relative overflow-hidden rounded-[var(--radius-media)] border border-white/80 ${
           tone === "dark" ? "bg-white/10" : "bg-bg-cream-deep"
         } ${ASPECT_CLASSES[aspect]}`}

@@ -109,7 +109,6 @@ export function ContactHero() {
               />
 
               <div
-                data-cursor="media"
                 className="group relative aspect-[4/3] overflow-hidden rounded-[var(--radius-card)] bg-[#2b589d]"
               >
                 <LiquidReveal priority duration={1.35} replay>

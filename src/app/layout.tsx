@@ -4,7 +4,6 @@ import localFont from "next/font/local";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { MotionProvider } from "@/components/ui/MotionProvider";
-import { CustomCursor } from "@/components/ui/CustomCursor";
 import { PageTransition } from "@/components/ui/PageTransition";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SANTOSH_ARORA_TRUST } from "@/data/trust";
@@ -103,7 +102,6 @@ export default function RootLayout({
           Skip to main content
         </a>
         <MotionProvider>
-          <CustomCursor />
           <SiteHeader />
           <main id="main-content" className="flex-1">
             <PageTransition>{children}</PageTransition>

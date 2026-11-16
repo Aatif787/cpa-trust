@@ -358,7 +358,6 @@ export function TrustHomeExperience() {
             <MotionReveal variant="fromLeft" className="lg:col-span-5">
               <ParallaxMedia offset={24}>
                 <div
-                  data-cursor="media"
                   className="group relative aspect-[3/2] w-full overflow-hidden rounded-[var(--radius-media)] border border-[#d7e5fb] bg-[#edf4fd]"
                 >
                   <LiquidReveal duration={1.45} replay>
@@ -499,7 +498,6 @@ function FocusTile({
   return (
     <Link
       href={`/focus-areas#${area.id}`}
-      data-cursor="media"
       className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] bg-white ring-1 ring-white/90 transition-all duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:ring-[#184385] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#184385] focus-visible:ring-offset-2 focus-visible:ring-offset-[#77a2e2]"
     >
       <div

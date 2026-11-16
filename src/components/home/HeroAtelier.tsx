@@ -246,10 +246,7 @@ export function HeroAtelier() {
         </div>
 
         <div className="hero-media-col">
-          <div
-            data-cursor="media"
-            className="hero-photo-frame hero-photo-frame-square"
-          >
+          <div className="hero-photo-frame hero-photo-frame-square">
             <Image
               src="/images/home/children-care.jpg"
               alt="Smiling Indian children cradled in caring hands beneath a white world globe against a clear sky-blue background"
@@ -266,13 +263,20 @@ export function HeroAtelier() {
 
       {/* Bottom Ticker Dock & Founder Scroll Trigger */}
       <div className="hero-bottom-dock">
-        <div className="hero-marquee-track" aria-hidden="true">
-          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, idx) => (
-            <span key={`${item}-${idx}`} className="hero-marquee-item">
-              <span>{item}</span>
-              <span className="hero-marquee-dot" />
-            </span>
-          ))}
+        <div className="hero-marquee-viewport" aria-hidden="true">
+          <div className="hero-marquee-track">
+            {[
+              ...MARQUEE_ITEMS,
+              ...MARQUEE_ITEMS,
+              ...MARQUEE_ITEMS,
+              ...MARQUEE_ITEMS,
+            ].map((item, idx) => (
+              <span key={`${item}-${idx}`} className="hero-marquee-item">
+                <span>{item}</span>
+                <span className="hero-marquee-dot" />
+              </span>
+            ))}
+          </div>
         </div>
 
         <a href="#founder" className="hero-scroll-anchor">

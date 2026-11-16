@@ -434,7 +434,6 @@ export default function AboutPage() {
                 delay={index * 0.06}
               >
                 <div
-                  data-cursor="media"
                   className={`group border-t-2 ${topBorders[index % topBorders.length]} pt-5`}
                 >
                   <div className="relative mb-5 aspect-[3/4] w-full overflow-hidden rounded-2xl bg-bg-white ring-1 ring-border-warm">

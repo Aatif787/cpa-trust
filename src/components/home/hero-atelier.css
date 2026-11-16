@@ -3,11 +3,13 @@
    ================================================== */
 .hero-cinema {
   position: relative;
-  min-height: calc(100svh - 72px);
+  z-index: 2;
+  min-height: calc(100svh - 94px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   background: #77a2e2;
   color: #ffffff;
 }
@@ -313,20 +315,22 @@
 .hero-bottom-dock {
   position: relative;
   z-index: 4;
+  overflow: visible;
   border-top: 1px solid rgba(255, 255, 255, 0.65);
   background: rgba(255, 255, 255, 0.22);
+}
+
+.hero-marquee-viewport {
+  width: 100%;
+  overflow: hidden;
 }
 
 .hero-marquee-track {
   display: flex;
   width: max-content;
-  animation: heroMarquee 36s linear infinite;
-  padding: 10px 0 16px;
-}
-
-.hero-bottom-dock:hover .hero-marquee-track,
-.hero-bottom-dock:focus-within .hero-marquee-track {
-  animation-play-state: paused;
+  will-change: transform;
+  animation: heroMarquee 32s linear infinite;
+  padding: 12px 0 22px;
 }
 
 .hero-marquee-item {
@@ -352,19 +356,19 @@
 .hero-scroll-anchor {
   position: absolute;
   right: clamp(14px, 2.4vw, 28px);
-  bottom: 3px;
-  z-index: 8;
+  bottom: -14px;
+  z-index: 12;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 14px;
+  padding: 6px 15px;
   border-radius: 999px;
   background: #ffffff;
-  border: 1px solid #ffffff;
+  border: 1px solid rgba(119, 162, 226, 0.45);
   color: #0d2140;
   font-size: 11.5px;
   font-weight: 700;
-  box-shadow: none;
+  box-shadow: 0 8px 20px -4px rgba(13, 33, 64, 0.14);
   transition: transform 0.25s ease, background-color 0.25s ease;
 }
 
@@ -393,7 +397,10 @@
 }
 
 @keyframes heroMarquee {
-  to {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
     transform: translate3d(-50%, 0, 0);
   }
 }
