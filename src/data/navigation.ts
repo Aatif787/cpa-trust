@@ -47,15 +47,6 @@ export const SITE_ROUTES: readonly NavItem[] = [
 ] as const;
 
 /**
- * Top navigation items (includes Parent Company external link right before Contact).
+ * Top navigation items matching canonical site routes.
  */
-export const HEADER_NAV_ITEMS: readonly NavItem[] = [
-  ...SITE_ROUTES.slice(0, -1),
-  {
-    label: "Parent Company",
-    href: "https://cparora.vercel.app/",
-    description: "C P Arora Private Limited — official website.",
-    external: true,
-  },
-  SITE_ROUTES[SITE_ROUTES.length - 1],
-] as const;
+export const HEADER_NAV_ITEMS: readonly NavItem[] = SITE_ROUTES;
