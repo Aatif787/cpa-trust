@@ -61,7 +61,7 @@ export function SiteHeader() {
       }`}
     >
       <Container size="wide">
-        <div className="flex h-16 items-center justify-between gap-4 sm:h-[4.5rem]">
+        <div className="flex h-[4.5rem] items-center justify-between gap-4 sm:h-20 lg:h-[5.25rem] xl:h-[5.75rem]">
           <Link
             href="/"
             onClick={() => setMobileOpen(false)}
@@ -73,7 +73,7 @@ export function SiteHeader() {
               width={519}
               height={262}
               priority
-              className="h-12 w-auto shrink-0 transition-transform duration-300 group-hover:scale-[1.03] sm:h-14"
+              className="h-14 w-auto shrink-0 transition-transform duration-300 group-hover:scale-[1.03] sm:h-16 lg:h-[4.25rem] xl:h-[4.75rem]"
             />
           </Link>
 
