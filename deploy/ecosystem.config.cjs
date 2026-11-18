@@ -5,7 +5,7 @@
 // Runtime secrets (SMTP_*) live in .env.production at the repo root; `next start`
 // loads that file automatically, so they are not duplicated here.
 
-const PORT = 3001;
+const PORT = 3002;
 
 module.exports = {
   apps: [

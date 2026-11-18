@@ -1,17 +1,25 @@
 # Deployment Guide — santosharoratrust.org
 
 Hostinger KVM 4 VPS (Ubuntu) पर Nginx reverse proxy + PM2 के साथ Next.js deploy।
+यह VPS की **दूसरी website** है।
 
 ```
-Browser ──HTTPS──> Nginx :443 ──proxy──> Next.js (PM2) 127.0.0.1:3001
+Browser ──HTTPS──> Nginx :443 ──proxy──> Next.js (PM2) 127.0.0.1:3002
 ```
+
+| | |
+|---|---|
+| Clone path | `/app/cpa-trust` |
+| Port | `3002` |
+| PM2 name | `santosharoratrust` |
+| User | `root` |
 
 | File | काम |
 |---|---|
-| `deploy/setup-server.sh` | VPS पर **एक बार** — Node, pnpm, PM2, Nginx, Certbot, firewall |
-| `deploy/nginx/snippets/nextjs-proxy.conf` | सभी Next.js sites के लिए common proxy settings (एक बार copy) |
-| `deploy/nginx/santosharoratrust.org.conf` | इस domain का Nginx server block |
-| `deploy/ecosystem.config.cjs` | PM2 process (port 3001) |
+| `deploy/setup-server.sh` | नए/खाली VPS के लिए bootstrap — **इस server पर मत चलाएँ** (पहली site पहले से है) |
+| `deploy/nginx/snippets/nextjs-proxy.conf` | सभी Next.js sites के लिए common proxy settings |
+| `deploy/nginx/santosharoratrust.org.conf` | इस domain का Nginx server block (→ 3002) |
+| `deploy/ecosystem.config.cjs` | PM2 process (port 3002) |
 | `deploy/env.production.example` | `.env.production` का template (SMTP अभी खाली) |
 | `deploy/deploy.sh` | हर update पर — pull → install → build → reload |
 
@@ -19,125 +27,124 @@ Browser ──HTTPS──> Nginx :443 ──proxy──> Next.js (PM2) 127.0.0.1
 
 ## 1. DNS (Hostinger hPanel → Domains → DNS)
 
-| Type | Name | Value | TTL |
-|---|---|---|---|
-| A | `@` | `<VPS IP>` | 300 |
-| A | `www` | `<VPS IP>` | 300 |
+| Type | Name | Value |
+|---|---|---|
+| A | `@` | `<VPS IP>` |
+| A | `www` | `<VPS IP>` |
 
-पुराने parking `A`/`CNAME` records हटा दें। Check करें: `dig +short santosharoratrust.org` और `dig +short www.santosharoratrust.org` दोनों VPS IP दें।
+Check: `dig +short santosharoratrust.org` और `dig +short www.santosharoratrust.org` दोनों VPS IP दें।
 
-## 2. Server setup (root, एक बार)
-
-```bash
-scp deploy/setup-server.sh root@<VPS IP>:/root/
-```
+## 2. Pre-checks (root)
 
 ```bash
-ssh root@<VPS IP> "bash /root/setup-server.sh"
+ss -ltnp | grep ':3002'
 ```
 
-> SSH 22 के अलावा किसी port पर है तो: `SSH_PORT=2222 bash /root/setup-server.sh`
-
-## 3. Code clone (user `deploy`)
+कुछ नहीं आना चाहिए (port खाली)।
 
 ```bash
-sudo -iu deploy
-ssh-keygen -t ed25519 -C "vps-santosharoratrust" -f ~/.ssh/santosharoratrust -N ""
-cat ~/.ssh/santosharoratrust.pub
+node -v; pnpm -v; pm2 -v; nginx -v; certbot --version
 ```
 
-यह public key GitHub repo → **Settings → Deploy keys → Add** (read-only) में डालें। फिर `~/.ssh/config`:
+जो missing हो वही install करें:
 
-```
-Host github-santosharoratrust
-    HostName github.com
-    User git
-    IdentityFile ~/.ssh/santosharoratrust
-    IdentitiesOnly yes
+```bash
+npm install -g pnpm@10.17.1 pm2
 ```
 
 ```bash
-git clone git@github-santosharoratrust:CPA-aviation/cpa-trust.git /var/www/santosharoratrust
+apt-get install -y certbot python3-certbot-nginx
 ```
 
-> GitHub एक deploy key सिर्फ़ एक repo पर allow करता है — बाकी 13 sites के लिए अलग key + अलग `Host` alias बनाएँ।
-
-## 4. Environment file
+## 3. Code + env (root)
 
 ```bash
-cd /var/www/santosharoratrust
-cp deploy/env.production.example .env.production
-chmod 600 .env.production
+cd /app/cpa-trust && git pull
 ```
-
-SMTP values अभी खाली रहेंगी — site पूरी चलेगी, बस contact form "temporarily unavailable" (503) बताएगा।
-
-## 5. पहला build + start (user `deploy`)
 
 ```bash
-bash /var/www/santosharoratrust/deploy/deploy.sh
+cp deploy/env.production.example .env.production && chmod 600 .env.production
 ```
 
-Script के अंत में `OK — app is responding on 127.0.0.1:3001` आना चाहिए।
-
-## 6. Nginx + SSL (root / sudo)
+## 4. Build + start
 
 ```bash
-sudo cp /var/www/santosharoratrust/deploy/nginx/snippets/nextjs-proxy.conf /etc/nginx/snippets/
-sudo cp /var/www/santosharoratrust/deploy/nginx/santosharoratrust.org.conf /etc/nginx/sites-available/
-sudo ln -s /etc/nginx/sites-available/santosharoratrust.org.conf /etc/nginx/sites-enabled/
-sudo nginx -t && sudo systemctl reload nginx
+bash /app/cpa-trust/deploy/deploy.sh
 ```
 
-DNS propagate होने के बाद:
+अंत में `OK — app is responding on 127.0.0.1:3002` आना चाहिए। Reboot के बाद auto-start के लिए (अगर पहले नहीं किया):
 
 ```bash
-sudo certbot --nginx -d santosharoratrust.org -d www.santosharoratrust.org --redirect
+pm2 startup systemd && pm2 save
 ```
 
-Certbot SSL lines + HTTP→HTTPS redirect खुद जोड़ देगा और auto-renew timer लगा देगा। Test: `sudo certbot renew --dry-run`
-
-Result:
-- `http://…`, `http://www…`, `https://www…` → **301** → `https://santosharoratrust.org`
-
-## 7. आगे के updates
+## 5. Nginx
 
 ```bash
-sudo -iu deploy /var/www/santosharoratrust/deploy/deploy.sh
+cp -n /app/cpa-trust/deploy/nginx/snippets/nextjs-proxy.conf /etc/nginx/snippets/
 ```
 
-Build के दौरान कुछ सेकंड site धीमी/अटक सकती है (वही folder rebuild होता है) — कम traffic वाले समय पर चलाएँ।
+```bash
+cp /app/cpa-trust/deploy/nginx/santosharoratrust.org.conf /etc/nginx/sites-available/
+```
+
+```bash
+ln -s /etc/nginx/sites-available/santosharoratrust.org.conf /etc/nginx/sites-enabled/
+```
+
+```bash
+nginx -t && systemctl reload nginx
+```
+
+`nginx -t` fail हो तो reload न करें — पहली site पर कोई असर नहीं होगा।
+
+## 6. SSL (DNS propagate होने के बाद)
+
+```bash
+certbot --nginx -d santosharoratrust.org -d www.santosharoratrust.org --redirect
+```
+
+Test: `certbot renew --dry-run`
+
+## 7. Verify
+
+```bash
+curl -I https://santosharoratrust.org
+```
+
+`200` आना चाहिए; `https://www.santosharoratrust.org` → `301` → bare domain।
+
+## आगे के updates
+
+```bash
+bash /app/cpa-trust/deploy/deploy.sh
+```
+
+Build के दौरान कुछ सेकंड site धीमी हो सकती है — कम traffic वाले समय पर चलाएँ।
+
+> Nginx conf repo में बदले तो दोबारा step 5 की `cp` + `nginx -t && systemctl reload nginx` चलाएँ।
+> Certbot ने `/etc/nginx/sites-available/` वाली file में SSL lines जोड़ी हैं — उसे दोबारा overwrite करने के बाद `certbot --nginx -d santosharoratrust.org -d www.santosharoratrust.org --redirect` फिर चलाएँ।
 
 ---
 
 ## Contact form बाद में चालू करना
 
-1. `/var/www/santosharoratrust/.env.production` में `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`, `CONTACT_TO_EMAIL` भरें।
+1. `/app/cpa-trust/.env.production` में `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`, `CONTACT_TO_EMAIL` भरें।
 2. Reload (rebuild ज़रूरी नहीं):
    ```bash
-   sudo -iu deploy pm2 reload /var/www/santosharoratrust/deploy/ecosystem.config.cjs --update-env
+   pm2 reload /app/cpa-trust/deploy/ecosystem.config.cjs --update-env
    ```
 3. Error हो तो: `pm2 logs santosharoratrust | grep contact-api`
-4. Firewall: outgoing 465/587 Hostinger VPS पर आमतौर पर खुले होते हैं; `nc -vz smtp.hostinger.com 465` से check करें।
 
-## बाकी 13 sites के लिए pattern
-
-हर नई site = नया folder + unique port + नई Nginx file:
-
-1. `/var/www/<site>/` में clone
-2. उसके `ecosystem.config.cjs` में `name` और `PORT` बदलें
-3. Nginx conf copy करके `server_name`, `upstream` name और port बदलें
-4. `certbot --nginx -d <domain> -d www.<domain> --redirect`
-
-### Port register
+## Port register
 
 | Port | Site | PM2 name |
 |---|---|---|
-| 3001 | santosharoratrust.org | `santosharoratrust` |
-| 3002 | — | — |
+| ? | पहली website | — |
+| 3002 | santosharoratrust.org | `santosharoratrust` |
 | 3003 | — | — |
 
-(Static HTML sites को port नहीं चाहिए — Nginx में सीधे `root /var/www/<site>;`)
+नई site = नया folder + unique port + नई Nginx file (`server_name`, `upstream` name, port बदलें)।
 
 ## Useful commands
 
@@ -146,7 +153,6 @@ Build के दौरान कुछ सेकंड site धीमी/अट�
 | सभी apps status | `pm2 ls` |
 | Logs | `pm2 logs santosharoratrust` |
 | Restart | `pm2 restart santosharoratrust` |
-| RAM/CPU | `pm2 monit` |
-| Nginx test/reload | `sudo nginx -t && sudo systemctl reload nginx` |
-| Nginx logs | `sudo tail -f /var/log/nginx/santosharoratrust.org.error.log` |
-| SSL certs | `sudo certbot certificates` |
+| Nginx test/reload | `nginx -t && systemctl reload nginx` |
+| Nginx logs | `tail -f /var/log/nginx/santosharoratrust.org.error.log` |
+| SSL certs | `certbot certificates` |

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Build and (re)start the site. Run as the app user from anywhere:
+# Build and (re)start the site. Run from anywhere, as the user that owns PM2:
 #
-#   /var/www/santosharoratrust/deploy/deploy.sh
+#   bash /app/cpa-trust/deploy/deploy.sh
 #
 # Steps: pull latest main -> install deps -> next build -> PM2 reload.
 # Optional: BRANCH=main (default)  SKIP_PULL=1 (build current checkout only)
@@ -14,11 +14,6 @@ APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ECOSYSTEM="${APP_DIR}/deploy/ecosystem.config.cjs"
 
 log() { printf '\n\033[1;32m==> %s\033[0m\n' "$*"; }
-
-if [[ "${EUID}" -eq 0 ]]; then
-  echo "Do not run as root. Use the app user: sudo -iu deploy" >&2
-  exit 1
-fi
 
 cd "${APP_DIR}"
 
