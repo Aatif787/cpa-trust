@@ -173,7 +173,7 @@ export const SANTOSH_ARORA_TRUST: TrustProfile = {
     darpanPrimarySector: "Women's Development & Empowerment",
     darpanSecondarySector: "Education & Literacy",
     correspondenceEmail: "santosharorafoundation@gmail.com",
-    correspondencePhone: "9811004236",
+    correspondencePhone: "7428318885",
     registrationDate: null,
     registeredOfficeAddress: null,
     initialCorpusNote: null,
